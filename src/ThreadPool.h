@@ -8,10 +8,16 @@
 #include <vector>
 #include <memory>
 
+#ifdef THREAD_POOL_DLL
+#define THREAD_POOL_API __declspec(dllexport)
+#else
+#define THREAD_POOL_API
+#endif // THREAD_POOL_DLL
+
 namespace threading
 {
 	/// @brief ThreadPool
-	class ThreadPool final
+	class THREAD_POOL_API ThreadPool final
 	{
 	private:
 		std::queue<std::function<void()>> tasks;

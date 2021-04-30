@@ -8,11 +8,17 @@
 #include <array>
 #include <memory>
 
+#ifdef THREAD_POOL_DLL
+#define THREAD_POOL_API __declspec(dllexport)
+#else
+#define THREAD_POOL_API
+#endif // THREAD_POOL_DLL
+
 namespace threading
 {
 	/// @brief Singleton version of ThreadPool
 	template<uint16_t threadCount>
-	class SingletonThreadPool final
+	class THREAD_POOL_API SingletonThreadPool final
 	{
 	private:
 		std::queue<std::function<void()>> tasks;
