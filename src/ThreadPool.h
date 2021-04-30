@@ -19,6 +19,9 @@ namespace threading
 		std::vector<std::unique_ptr<std::thread>> threads;
 		bool terminate;
 
+	private:
+		void mainWorkerThread();
+
 	public:
 		/// @brief Construct ThreadPool, then calling ThreadPool::init()
 		/// @param threadCount Number of threads in ThreadPool(default is max threads for current hardware)

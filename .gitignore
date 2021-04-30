@@ -36,3 +36,6 @@
 
 # Binaries
 bin/
+
+# .sln file
+ThreadPool.sln
