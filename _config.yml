@@ -1,1 +1,2 @@
-include: [_*]
+include:
+  _singleton_thread_pool_8h_source.html
