@@ -10,6 +10,7 @@
 
 namespace threading
 {
+	/// @brief ThreadPool
 	class ThreadPool final
 	{
 	private:
