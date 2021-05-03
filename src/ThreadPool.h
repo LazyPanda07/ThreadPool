@@ -4,9 +4,10 @@
 #include <condition_variable>
 #include <queue>
 #include <mutex>
-#include <functional>
 #include <vector>
 #include <memory>
+
+#include "threadPoolTask.h"
 
 #ifdef THREAD_POOL_DLL
 #define THREAD_POOL_API __declspec(dllexport)
@@ -20,7 +21,7 @@ namespace threading
 	class THREAD_POOL_API ThreadPool final
 	{
 	private:
-		std::queue<std::function<void()>> tasks;
+		std::queue<threadPoolTask> tasks;
 		std::condition_variable hasTask;
 		std::mutex tasksMutex;
 		std::vector<std::unique_ptr<std::thread>> threads;
@@ -35,10 +36,10 @@ namespace threading
 		ThreadPool(uint32_t threadCount = std::thread::hardware_concurrency());
 
 		/// @brief Add new task to ThreadPool
-		void addTask(const std::function<void()>& task);
+		void addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to ThreadPool
-		void addTask(std::function<void()>&& task) noexcept;
+		void addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 		
 		/// @brief Initialize ThreadPool with current size of threads
 		void init();

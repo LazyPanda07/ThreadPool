@@ -6,7 +6,7 @@ namespace threading
 {
 	void ThreadPool::mainWorkerThread()
 	{
-		function<void()> currentTask;
+		threadPoolTask currentTask;
 
 		while (true)
 		{
@@ -25,7 +25,12 @@ namespace threading
 				tasks.pop();
 			}
 
-			currentTask();
+			currentTask.task();
+
+			if (currentTask.callback)
+			{
+				currentTask.callback();
+			}
 		}
 	}
 
@@ -36,23 +41,33 @@ namespace threading
 		this->init();
 	}
 
-	void ThreadPool::addTask(const std::function<void()>& task)
+	void ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
 	{
+		threadPoolTask functions;
+
+		functions.task = task;
+		functions.callback = callback;
+
 		{
 			unique_lock<mutex> lock(tasksMutex);
 
-			tasks.push(task);
+			tasks.push(move(functions));
 		}
 
 		hasTask.notify_one();
 	}
 
-	void ThreadPool::addTask(std::function<void()>&& task) noexcept
+	void ThreadPool::addTask(function<void()>&& task, const function<void()>& callback)
 	{
+		threadPoolTask functions;
+
+		functions.task = move(task);
+		functions.callback = callback;
+
 		{
 			unique_lock<mutex> lock(tasksMutex);
 
-			tasks.push(move(task));
+			tasks.push(move(functions));
 		}
 
 		hasTask.notify_one();

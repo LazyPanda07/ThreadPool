@@ -8,6 +8,8 @@
 #include <array>
 #include <memory>
 
+#include "threadPoolTask.h"
+
 #ifdef THREAD_POOL_DLL
 #define THREAD_POOL_API __declspec(dllexport)
 #else
@@ -17,11 +19,11 @@
 namespace threading
 {
 	/// @brief Singleton version of ThreadPool
-	template<uint16_t threadCount>
+	template<uint32_t threadCount>
 	class THREAD_POOL_API SingletonThreadPool final
 	{
 	private:
-		std::queue<std::function<void()>> tasks;
+		std::queue<threadPoolTask> tasks;
 		std::condition_variable hasTask;
 		std::mutex tasksMutex;
 		std::array<std::unique_ptr<std::thread>, threadCount> threads;
@@ -41,13 +43,13 @@ namespace threading
 		static SingletonThreadPool& get();
 
 		/// @brief Add new task to SingletonThreadPool
-		void addTask(const std::function<void()>& task);
+		void addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to SingletonThreadPool
-		void addTask(std::function<void()>&& task) noexcept;
+		void addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 	};
 
-	template<uint16_t threadCount>
+	template<uint32_t threadCount>
 	SingletonThreadPool<threadCount>::SingletonThreadPool() :
 		terminate(false)
 	{
@@ -57,7 +59,7 @@ namespace threading
 		}
 	}
 
-	template<uint16_t threadCount>
+	template<uint32_t threadCount>
 	SingletonThreadPool<threadCount>::~SingletonThreadPool()
 	{
 		terminate = true;
@@ -68,10 +70,10 @@ namespace threading
 		}
 	}
 
-	template<uint16_t threadCount>
+	template<uint32_t threadCount>
 	void SingletonThreadPool<threadCount>::mainWorkerThread()
 	{
-		std::function<void()> currentTask;
+		threadPoolTask currentTask;
 
 		while (true)
 		{
@@ -90,11 +92,16 @@ namespace threading
 				tasks.pop();
 			}
 
-			currentTask();
+			currentTask.task();
+
+			if (currentTask.callback)
+			{
+				currentTask.callback();
+			}
 		}
 	}
 
-	template<uint16_t threadCount>
+	template<uint32_t threadCount>
 	SingletonThreadPool<threadCount>& SingletonThreadPool<threadCount>::get()
 	{
 		static SingletonThreadPool<threadCount> instance;
@@ -102,25 +109,35 @@ namespace threading
 		return instance;
 	}
 
-	template<uint16_t threadCount>
-	void SingletonThreadPool<threadCount>::addTask(const std::function<void()>& task)
+	template<uint32_t threadCount>
+	void SingletonThreadPool<threadCount>::addTask(const std::function<void()>& task, const std::function<void()>& callback)
 	{
+		threadPoolTask functions;
+
+		functions.task = task;
+		functions.callback = callback;
+
 		{
 			std::unique_lock<std::mutex> lock(tasksMutex);
 
-			tasks.push(move(task));
+			tasks.push(std::move(functions));
 		}
 
 		hasTask.notify_one();
 	}
 
-	template<uint16_t threadCount>
-	void SingletonThreadPool<threadCount>::addTask(std::function<void()>&& task) noexcept
+	template<uint32_t threadCount>
+	void SingletonThreadPool<threadCount>::addTask(std::function<void()>&& task, const std::function<void()>& callback)
 	{
+		threadPoolTask functions;
+
+		functions.task = std::move(task);
+		functions.callback = callback;
+
 		{
 			std::unique_lock<std::mutex> lock(tasksMutex);
 
-			tasks.push(move(std::move(task)));
+			tasks.push(std::move(functions));
 		}
 
 		hasTask.notify_one();

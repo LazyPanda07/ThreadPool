@@ -435,10 +435,12 @@
   <ItemGroup>
     <ClCompile Include="src\SingletonThreadPool.cpp" />
     <ClCompile Include="src\ThreadPool.cpp" />
+    <ClCompile Include="src\threadPoolTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SingletonThreadPool.h" />
     <ClInclude Include="src\ThreadPool.h" />
+    <ClInclude Include="src\threadPoolTask.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

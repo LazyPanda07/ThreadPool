@@ -21,12 +21,18 @@
     <ClCompile Include="src\SingletonThreadPool.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\threadPoolTask.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ThreadPool.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\SingletonThreadPool.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\threadPoolTask.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
