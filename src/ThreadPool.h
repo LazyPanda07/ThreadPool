@@ -11,6 +11,8 @@
 
 #ifdef THREAD_POOL_DLL
 #define THREAD_POOL_API __declspec(dllexport)
+
+#pragma warning(disable: 4251)
 #else
 #define THREAD_POOL_API
 #endif // THREAD_POOL_DLL
