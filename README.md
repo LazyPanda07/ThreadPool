@@ -1,2 +1,2 @@
 # ThreadPool
-Thread pool in C++17
+Thread pool in C++20

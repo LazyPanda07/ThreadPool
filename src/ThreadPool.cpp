@@ -1,10 +1,12 @@
 #include "ThreadPool.h"
 
+#include <algorithm>
+
 using namespace std;
 
 namespace threading
 {
-	void ThreadPool::mainWorkerThread()
+	void ThreadPool::mainWorkerThread(size_t threadIndex)
 	{
 		threadPoolTask currentTask;
 
@@ -25,20 +27,25 @@ namespace threading
 				tasks.pop();
 			}
 
+			threadsState[threadIndex] = true;
+
 			currentTask.task();
 
 			if (currentTask.callback)
 			{
 				currentTask.callback();
 			}
+
+			threadsState[threadIndex] = false;
 		}
 	}
 
-	ThreadPool::ThreadPool(uint32_t threadCount) :
-		threads(threadCount),
+	ThreadPool::ThreadPool(uint32_t threadsCount) :
+		threads(threadsCount),
+		threadsCount(threadsCount),
 		terminate(false)
 	{
-		this->init();
+		this->reinit();
 	}
 
 	void ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
@@ -49,7 +56,7 @@ namespace threading
 		functions.callback = callback;
 
 		{
-			unique_lock<mutex> lock(tasksMutex);
+			lock_guard<mutex> lock(tasksMutex);
 
 			tasks.push(move(functions));
 		}
@@ -65,7 +72,7 @@ namespace threading
 		functions.callback = callback;
 
 		{
-			unique_lock<mutex> lock(tasksMutex);
+			lock_guard<mutex> lock(tasksMutex);
 
 			tasks.push(move(functions));
 		}
@@ -73,13 +80,26 @@ namespace threading
 		hasTask.notify_one();
 	}
 
-	void ThreadPool::init()
+	void ThreadPool::reinit(bool changeThreadsCount, uint32_t threadsCount)
 	{
 		terminate = false;
 
-		for (unique_ptr<thread>& i : threads)
+		if (changeThreadsCount && this->getThreadsCount() != threadsCount)
 		{
-			i = make_unique<thread>(&ThreadPool::mainWorkerThread, this);
+			this->threadsCount = threadsCount;
+
+			threads.clear();
+			threadsState.clear();
+
+			threads.resize(threadsCount);
+			threadsState.resize(threadsCount);
+		}
+
+		for (size_t i = 0; i < threads.size(); i++)
+		{
+			threads[i] = make_unique<thread>(&ThreadPool::mainWorkerThread, this, i);
+
+			threadsState[i] = false;
 		}
 	}
 
@@ -98,6 +118,16 @@ namespace threading
 				i.reset();
 			}
 		}
+	}
+
+	bool ThreadPool::isAnyTaskRunning() const
+	{
+		return ranges::any_of(threadsState, [](bool state) { return state; });
+	}
+
+	uint32_t ThreadPool::getThreadsCount() const
+	{
+		return threadsCount;
 	}
 
 	ThreadPool::~ThreadPool()
