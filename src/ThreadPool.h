@@ -35,17 +35,19 @@ namespace threading
 		void mainWorkerThread(size_t threadIndex);
 
 	public:
-		/// @brief Construct ThreadPool, then calling ThreadPool::init()
+		/// @brief Construct ThreadPool
 		/// @param threadCount Number of threads in ThreadPool(default is max threads for current hardware)
 		ThreadPool(uint32_t threadsCount = std::thread::hardware_concurrency());
 
-		/// @brief Add new task to ThreadPool
+		/// @brief Add new task to thread pool
 		void addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
-		/// @brief Add new task to ThreadPool
+		/// @brief Add new task to thread pool
 		void addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 		
-		/// @brief Initialize ThreadPool with current size of threads
+		/// @brief Reinitialize thread pool
+		/// @param changeThreadsCount Changes current thread pool size
+		/// @param threadsCount New thread pool size
 		void reinit(bool changeThreadsCount = false, uint32_t threadsCount = std::thread::hardware_concurrency());
 
 		/// @brief Stop ThreadPool with joining all threads
