@@ -6,8 +6,7 @@
 #include <mutex>
 #include <vector>
 #include <memory>
-
-#include "threadPoolTask.h"
+#include <functional>
 
 #ifdef THREAD_POOL_DLL
 #define THREAD_POOL_API __declspec(dllexport)
@@ -22,6 +21,26 @@ namespace threading
 	/// @brief ThreadPool
 	class THREAD_POOL_API ThreadPool final
 	{
+	private:
+		struct threadPoolTask
+		{
+			std::function<void()> task;
+			std::function<void()> callback;
+
+		public:
+			threadPoolTask() = default;
+
+			threadPoolTask(const threadPoolTask& other);
+
+			threadPoolTask(threadPoolTask&& other) noexcept;
+
+			threadPoolTask& operator = (const threadPoolTask& other);
+
+			threadPoolTask& operator = (threadPoolTask&& other) noexcept;
+
+			~threadPoolTask() = default;
+		};
+
 	private:
 		std::queue<threadPoolTask> tasks;
 		std::condition_variable hasTask;

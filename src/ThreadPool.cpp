@@ -42,6 +42,7 @@ namespace threading
 
 	ThreadPool::ThreadPool(uint32_t threadsCount) :
 		threads(threadsCount),
+		threadsState(threadsCount),
 		threadsCount(threadsCount),
 		terminate(false)
 	{
