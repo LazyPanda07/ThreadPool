@@ -26,9 +26,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ThreadPool
-   &#160;<span id="projectnumber">1.1</span>
+   &#160;<span id="projectnumber">1.2</span>
    </div>
-   <div id="projectbrief">Thread pool in C++17</div>
+   <div id="projectbrief">Thread pool in C++20</div>
   </td>
  </tr>
  </tbody>
@@ -85,20 +85,30 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <div class="contents">
 &#160;<ul>
 <li>addTask()
-: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a6bef248c75cba064543952f12b5d695c">threading::SingletonThreadPool&lt; threadCount &gt;</a>
+: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a8b5fdbd110574b085a91c2e91c2404ff">threading::SingletonThreadPool&lt; threadsCount &gt;</a>
 , <a class="el" href="classthreading_1_1_thread_pool.html#ad2e61adae50f11859e240fa52b222246">threading::ThreadPool</a>
 </li>
 <li>get()
-: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a380951d66379a7cd1a827bb60acbcfac">threading::SingletonThreadPool&lt; threadCount &gt;</a>
+: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a02a5de74083668d3ebcda715d4040061">threading::SingletonThreadPool&lt; threadsCount &gt;</a>
 </li>
-<li>init()
-: <a class="el" href="classthreading_1_1_thread_pool.html#a249885b113c6939b2719f1c6dbc9ea48">threading::ThreadPool</a>
+<li>getThreadsCount()
+: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a3deb0123ff43cc14859b872140a76965">threading::SingletonThreadPool&lt; threadsCount &gt;</a>
+, <a class="el" href="classthreading_1_1_thread_pool.html#a24d9337a353e9c19b3909ccaf3b212a0">threading::ThreadPool</a>
+</li>
+<li>isAnyTaskRunning()
+: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a3ab06d91ff1171fc05d4874b5a3fe114">threading::SingletonThreadPool&lt; threadsCount &gt;</a>
+, <a class="el" href="classthreading_1_1_thread_pool.html#a1b5c8c9d52e359275565a3bb23033e6c">threading::ThreadPool</a>
+</li>
+<li>reinit()
+: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#ae6e85929e91855be397b0e1be025a1ca">threading::SingletonThreadPool&lt; threadsCount &gt;</a>
+, <a class="el" href="classthreading_1_1_thread_pool.html#ac7066b189ba40f19f8f74543674b8c7d">threading::ThreadPool</a>
 </li>
 <li>shutdown()
-: <a class="el" href="classthreading_1_1_thread_pool.html#acac5913f604c69cce985fa77b49426ac">threading::ThreadPool</a>
+: <a class="el" href="classthreading_1_1_singleton_thread_pool.html#a3693db8fb5ce31dc9d7720feb9645a92">threading::SingletonThreadPool&lt; threadsCount &gt;</a>
+, <a class="el" href="classthreading_1_1_thread_pool.html#acac5913f604c69cce985fa77b49426ac">threading::ThreadPool</a>
 </li>
 <li>ThreadPool()
-: <a class="el" href="classthreading_1_1_thread_pool.html#a1ba87272418a72cd4db564a7b1a8dccd">threading::ThreadPool</a>
+: <a class="el" href="classthreading_1_1_thread_pool.html#a781d9b2c12a1cbfb47a298eebd220e5c">threading::ThreadPool</a>
 </li>
 </ul>
 </div><!-- contents -->

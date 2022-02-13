@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['threadpool_5',['ThreadPool',['../md__r_e_a_d_m_e.html',1,'(Global Namespace)'],['../classthreading_1_1_thread_pool.html',1,'threading::ThreadPool'],['../classthreading_1_1_thread_pool.html#a1ba87272418a72cd4db564a7b1a8dccd',1,'threading::ThreadPool::ThreadPool()']]],
-  ['threadpooltask_6',['threadPoolTask',['../structthreading_1_1thread_pool_task.html',1,'threading']]]
+  ['shutdown_5',['shutdown',['../classthreading_1_1_singleton_thread_pool.html#a3693db8fb5ce31dc9d7720feb9645a92',1,'threading::SingletonThreadPool::shutdown()'],['../classthreading_1_1_thread_pool.html#acac5913f604c69cce985fa77b49426ac',1,'threading::ThreadPool::shutdown()']]],
+  ['singletonthreadpool_6',['SingletonThreadPool',['../classthreading_1_1_singleton_thread_pool.html',1,'threading']]]
 ];

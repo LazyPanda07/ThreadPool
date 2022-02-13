@@ -26,9 +26,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ThreadPool
-   &#160;<span id="projectnumber">1.1</span>
+   &#160;<span id="projectnumber">1.2</span>
    </div>
-   <div id="projectbrief">Thread pool in C++17</div>
+   <div id="projectbrief">Thread pool in C++20</div>
   </td>
  </tr>
  </tbody>
@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('classthreading_1_1_thread_pool.html','
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classthreading_1_1_thread_pool-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -98,31 +99,36 @@ $(document).ready(function(){initNavTree('classthreading_1_1_thread_pool.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1ba87272418a72cd4db564a7b1a8dccd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#a1ba87272418a72cd4db564a7b1a8dccd">ThreadPool</a> (uint32_t threadCount=std::thread::hardware_concurrency())</td></tr>
-<tr class="memdesc:a1ba87272418a72cd4db564a7b1a8dccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>, then calling <a class="el" href="classthreading_1_1_thread_pool.html#a249885b113c6939b2719f1c6dbc9ea48" title="Initialize ThreadPool with current size of threads.">ThreadPool::init()</a>  <a href="classthreading_1_1_thread_pool.html#a1ba87272418a72cd4db564a7b1a8dccd">More...</a><br /></td></tr>
-<tr class="separator:a1ba87272418a72cd4db564a7b1a8dccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a781d9b2c12a1cbfb47a298eebd220e5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#a781d9b2c12a1cbfb47a298eebd220e5c">ThreadPool</a> (uint32_t threadsCount=std::thread::hardware_concurrency())</td></tr>
+<tr class="memdesc:a781d9b2c12a1cbfb47a298eebd220e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  <a href="classthreading_1_1_thread_pool.html#a781d9b2c12a1cbfb47a298eebd220e5c">More...</a><br /></td></tr>
+<tr class="separator:a781d9b2c12a1cbfb47a298eebd220e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2e61adae50f11859e240fa52b222246"><td class="memItemLeft" align="right" valign="top"><a id="ad2e61adae50f11859e240fa52b222246"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#ad2e61adae50f11859e240fa52b222246">addTask</a> (const std::function&lt; void()&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
-<tr class="memdesc:ad2e61adae50f11859e240fa52b222246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. <br /></td></tr>
+<tr class="memdesc:ad2e61adae50f11859e240fa52b222246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
 <tr class="separator:ad2e61adae50f11859e240fa52b222246"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe2d835850c15f92c243ed0bdbae524d"><td class="memItemLeft" align="right" valign="top"><a id="afe2d835850c15f92c243ed0bdbae524d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#afe2d835850c15f92c243ed0bdbae524d">addTask</a> (std::function&lt; void()&gt; &amp;&amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
-<tr class="memdesc:afe2d835850c15f92c243ed0bdbae524d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. <br /></td></tr>
+<tr class="memdesc:afe2d835850c15f92c243ed0bdbae524d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
 <tr class="separator:afe2d835850c15f92c243ed0bdbae524d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a249885b113c6939b2719f1c6dbc9ea48"><td class="memItemLeft" align="right" valign="top"><a id="a249885b113c6939b2719f1c6dbc9ea48"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#a249885b113c6939b2719f1c6dbc9ea48">init</a> ()</td></tr>
-<tr class="memdesc:a249885b113c6939b2719f1c6dbc9ea48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a> with current size of threads. <br /></td></tr>
-<tr class="separator:a249885b113c6939b2719f1c6dbc9ea48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7066b189ba40f19f8f74543674b8c7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#ac7066b189ba40f19f8f74543674b8c7d">reinit</a> (bool changeThreadsCount=false, uint32_t threadsCount=std::thread::hardware_concurrency())</td></tr>
+<tr class="memdesc:ac7066b189ba40f19f8f74543674b8c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinitialize thread pool.  <a href="classthreading_1_1_thread_pool.html#ac7066b189ba40f19f8f74543674b8c7d">More...</a><br /></td></tr>
+<tr class="separator:ac7066b189ba40f19f8f74543674b8c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acac5913f604c69cce985fa77b49426ac"><td class="memItemLeft" align="right" valign="top"><a id="acac5913f604c69cce985fa77b49426ac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#acac5913f604c69cce985fa77b49426ac">shutdown</a> ()</td></tr>
 <tr class="memdesc:acac5913f604c69cce985fa77b49426ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a> with joining all threads. <br /></td></tr>
 <tr class="separator:acac5913f604c69cce985fa77b49426ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5c8c9d52e359275565a3bb23033e6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#a1b5c8c9d52e359275565a3bb23033e6c">isAnyTaskRunning</a> () const</td></tr>
+<tr class="memdesc:a1b5c8c9d52e359275565a3bb23033e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check is thread pool has task that running in some thread.  <a href="classthreading_1_1_thread_pool.html#a1b5c8c9d52e359275565a3bb23033e6c">More...</a><br /></td></tr>
+<tr class="separator:a1b5c8c9d52e359275565a3bb23033e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d9337a353e9c19b3909ccaf3b212a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#a24d9337a353e9c19b3909ccaf3b212a0">getThreadsCount</a> () const</td></tr>
+<tr class="memdesc:a24d9337a353e9c19b3909ccaf3b212a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for threadsCount.  <a href="classthreading_1_1_thread_pool.html#a24d9337a353e9c19b3909ccaf3b212a0">More...</a><br /></td></tr>
+<tr class="separator:a24d9337a353e9c19b3909ccaf3b212a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1ba87272418a72cd4db564a7b1a8dccd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ba87272418a72cd4db564a7b1a8dccd">&#9670;&nbsp;</a></span>ThreadPool()</h2>
+<a id="a781d9b2c12a1cbfb47a298eebd220e5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781d9b2c12a1cbfb47a298eebd220e5c">&#9670;&nbsp;</a></span>ThreadPool()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,16 +137,94 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">threading::ThreadPool::ThreadPool </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>threadCount</em> = <code>std::thread::hardware_concurrency()</code></td><td>)</td>
+          <td class="paramname"><em>threadsCount</em> = <code>std::thread::hardware_concurrency()</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>, then calling <a class="el" href="classthreading_1_1_thread_pool.html#a249885b113c6939b2719f1c6dbc9ea48" title="Initialize ThreadPool with current size of threads.">ThreadPool::init()</a> </p>
+<p>Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">threadCount</td><td>Number of threads in ThreadPool(default is max threads for current hardware) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a24d9337a353e9c19b3909ccaf3b212a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d9337a353e9c19b3909ccaf3b212a0">&#9670;&nbsp;</a></span>getThreadsCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t threading::ThreadPool::getThreadsCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Getter for threadsCount. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current count of threads in thread pool </dd></dl>
+
+</div>
+</div>
+<a id="a1b5c8c9d52e359275565a3bb23033e6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b5c8c9d52e359275565a3bb23033e6c">&#9670;&nbsp;</a></span>isAnyTaskRunning()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool threading::ThreadPool::isAnyTaskRunning </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check is thread pool has task that running in some thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns true if thread pool has task </dd></dl>
+
+</div>
+</div>
+<a id="ac7066b189ba40f19f8f74543674b8c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7066b189ba40f19f8f74543674b8c7d">&#9670;&nbsp;</a></span>reinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void threading::ThreadPool::reinit </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>changeThreadsCount</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>threadsCount</em> = <code>std::thread::hardware_concurrency()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reinitialize thread pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">changeThreadsCount</td><td>Changes current thread pool size </td></tr>
+    <tr><td class="paramname">threadsCount</td><td>New thread pool size </td></tr>
   </table>
   </dd>
 </dl>
