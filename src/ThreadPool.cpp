@@ -27,7 +27,7 @@ namespace threading
 				tasks.pop();
 			}
 
-			threadsState[threadIndex] = true;
+			threadStates[threadIndex] = threadState::running;
 
 			currentTask.task();
 
@@ -36,17 +36,14 @@ namespace threading
 				currentTask.callback();
 			}
 
-			threadsState[threadIndex] = false;
+			threadStates[threadIndex] = threadState::waiting;
 		}
 	}
 
 	ThreadPool::ThreadPool(uint32_t threadsCount) :
-		threads(threadsCount),
-		threadsState(threadsCount),
-		threadsCount(threadsCount),
 		terminate(false)
 	{
-		this->reinit();
+		this->reinit(true, threadsCount);
 	}
 
 	void ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
@@ -57,7 +54,7 @@ namespace threading
 		functions.callback = callback;
 
 		{
-			lock_guard<mutex> lock(tasksMutex);
+			unique_lock<mutex> lock(tasksMutex);
 
 			tasks.push(move(functions));
 		}
@@ -73,7 +70,7 @@ namespace threading
 		functions.callback = callback;
 
 		{
-			lock_guard<mutex> lock(tasksMutex);
+			unique_lock<mutex> lock(tasksMutex);
 
 			tasks.push(move(functions));
 		}
@@ -83,52 +80,55 @@ namespace threading
 
 	void ThreadPool::reinit(bool changeThreadsCount, uint32_t threadsCount)
 	{
+		this->shutdown();
+
 		terminate = false;
 
 		if (changeThreadsCount && this->getThreadsCount() != threadsCount)
 		{
-			this->threadsCount = threadsCount;
-
 			threads.clear();
-			threadsState.clear();
+			threadStates.clear();
 
-			threads.resize(threadsCount);
-			threadsState.resize(threadsCount);
+			threads.reserve(threadsCount);
+			threadStates.resize(threadsCount);
 		}
 
-		for (size_t i = 0; i < threads.size(); i++)
+		for (size_t i = 0; i < threadStates.size(); i++)
 		{
-			threads[i] = make_unique<thread>(&ThreadPool::mainWorkerThread, this, i);
+			threads.emplace_back(&ThreadPool::mainWorkerThread, this, i);
 
-			threadsState[i] = false;
+			threadStates[i] = threadState::waiting;
 		}
 	}
 
 	void ThreadPool::shutdown()
 	{
-		terminate = true;
+		{
+			unique_lock<mutex> lock(tasksMutex);
+
+			terminate = true;
+		}
 
 		hasTask.notify_all();
 
-		for (unique_ptr<thread>& i : threads)
-		{
-			if (i)
-			{
-				i->join();
+		threads.clear();
 
-				i.reset();
-			}
-		}
+		threadStates.clear();
 	}
 
 	bool ThreadPool::isAnyTaskRunning() const
 	{
-		return ranges::any_of(threadsState, [](bool state) { return state; });
+		return ranges::any_of(threadStates, [](threadState state) { return state == threadState::running; });
+	}
+
+	ThreadPool::threadState ThreadPool::getThreadState(uint32_t threadIndex) const
+	{
+		return threadStates[static_cast<uint32_t>(threadIndex)];
 	}
 
 	uint32_t ThreadPool::getThreadsCount() const
 	{
-		return threadsCount;
+		return static_cast<uint32_t>(threads.size());
 	}
 
 	ThreadPool::~ThreadPool()

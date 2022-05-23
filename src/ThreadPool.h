@@ -21,6 +21,13 @@ namespace threading
 	/// @brief ThreadPool
 	class THREAD_POOL_API ThreadPool final
 	{
+	public:
+		enum class threadState
+		{
+			running,
+			waiting
+		};
+
 	private:
 		struct threadPoolTask
 		{
@@ -45,9 +52,8 @@ namespace threading
 		std::queue<threadPoolTask> tasks;
 		std::condition_variable hasTask;
 		std::mutex tasksMutex;
-		std::vector<std::unique_ptr<std::thread>> threads;
-		std::vector<bool> threadsState;
-		uint32_t threadsCount;
+		std::vector<std::jthread> threads;
+		std::vector<threadState> threadStates;
 		bool terminate;
 
 	private:
@@ -75,6 +81,11 @@ namespace threading
 		/// @brief Check is thread pool has task that running in some thread
 		/// @return Returns true if thread pool has task
 		bool isAnyTaskRunning() const;
+
+		/// @brief Check specific thread state
+		/// @param threadIndex Index of thread between 0 and threadsCount
+		/// @return Thread state
+		threadState getThreadState(uint32_t threadIndex) const;
 
 		/// @brief Getter for threadsCount
 		/// @return Current count of threads in thread pool
