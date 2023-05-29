@@ -25,13 +25,13 @@ namespace threading
 		std::future<void> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(const std::function<void()>& task, std::function<void()>&& callback = nullptr);
+		std::future<void> addTask(const std::function<void()>& task, std::function<void()>&& callback);
 
 		/// @brief Add new task to thread pool
 		std::future<void> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(std::function<void()>&& task, std::function<void()>&& callback = nullptr);
+		std::future<void> addTask(std::function<void()>&& task, std::function<void()>&& callback);
 
 		/// @brief Reinitialize thread pool
 		void reinit();
