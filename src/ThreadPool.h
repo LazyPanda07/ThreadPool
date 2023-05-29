@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <future>
 
 #ifdef THREAD_POOL_DLL
 #define THREAD_POOL_API __declspec(dllexport)
@@ -33,15 +34,16 @@ namespace threading
 		{
 			std::function<void()> task;
 			std::function<void()> callback;
+			std::promise<void> notify;
 
 		public:
 			threadPoolTask() = default;
 
-			threadPoolTask(const threadPoolTask& other);
+			threadPoolTask(const threadPoolTask& other) = delete;
 
 			threadPoolTask(threadPoolTask&& other) noexcept;
 
-			threadPoolTask& operator = (const threadPoolTask& other);
+			threadPoolTask& operator = (const threadPoolTask& other) = delete;
 
 			threadPoolTask& operator = (threadPoolTask&& other) noexcept;
 
@@ -57,7 +59,9 @@ namespace threading
 		bool terminate;
 
 	private:
-		void mainWorkerThread(size_t threadIndex);
+		void workerThread(size_t threadIndex);
+
+		std::future<void> addTask(threadPoolTask&& task);
 
 	public:
 		/// @brief Construct ThreadPool
@@ -65,11 +69,17 @@ namespace threading
 		ThreadPool(uint32_t threadsCount = std::thread::hardware_concurrency());
 
 		/// @brief Add new task to thread pool
-		void addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
+		std::future<void> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		void addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
-		
+		std::future<void> addTask(const std::function<void()>& task, std::function<void()>&& callback = nullptr);
+
+		/// @brief Add new task to thread pool
+		std::future<void> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
+
+		/// @brief Add new task to thread pool
+		std::future<void> addTask(std::function<void()>&& task, std::function<void()>&& callback = nullptr);
+
 		/// @brief Reinitialize thread pool
 		/// @param changeThreadsCount Changes current thread pool size
 		/// @param threadsCount New thread pool size

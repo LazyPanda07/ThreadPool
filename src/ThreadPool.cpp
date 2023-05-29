@@ -6,7 +6,7 @@ using namespace std;
 
 namespace threading
 {
-	void ThreadPool::mainWorkerThread(size_t threadIndex)
+	void ThreadPool::workerThread(size_t threadIndex)
 	{
 		threadPoolTask currentTask;
 
@@ -36,8 +36,25 @@ namespace threading
 				currentTask.callback();
 			}
 
+			currentTask.notify.set_value();
+
 			threadStates[threadIndex] = threadState::waiting;
 		}
+	}
+
+	future<void> ThreadPool::addTask(threadPoolTask&& task)
+	{
+		future<void> result = task.notify.get_future();
+
+		{
+			unique_lock<mutex> lock(tasksMutex);
+
+			tasks.push(move(task));
+		}
+
+		hasTask.notify_one();
+
+		return result;
 	}
 
 	ThreadPool::ThreadPool(uint32_t threadsCount) :
@@ -46,36 +63,44 @@ namespace threading
 		this->reinit(true, threadsCount);
 	}
 
-	void ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
+	future<void> ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
+	{
+		threadPoolTask functions;
+		
+		functions.task = task;
+		functions.callback = callback;
+
+		return this->addTask(move(functions));
+	}
+
+	future<void> ThreadPool::addTask(const function<void()>& task, function<void()>&& callback)
 	{
 		threadPoolTask functions;
 
 		functions.task = task;
-		functions.callback = callback;
+		functions.callback = move(callback);
 
-		{
-			unique_lock<mutex> lock(tasksMutex);
-
-			tasks.push(move(functions));
-		}
-
-		hasTask.notify_one();
+		return this->addTask(move(functions));
 	}
 
-	void ThreadPool::addTask(function<void()>&& task, const function<void()>& callback)
+	future<void> ThreadPool::addTask(function<void()>&& task, const function<void()>& callback)
+	{
+		threadPoolTask functions;
+		
+		functions.task = move(task);
+		functions.callback = callback;
+
+		return this->addTask(move(functions));
+	}
+
+	future<void> ThreadPool::addTask(function<void()>&& task, function<void()>&& callback)
 	{
 		threadPoolTask functions;
 
 		functions.task = move(task);
-		functions.callback = callback;
+		functions.callback = move(callback);
 
-		{
-			unique_lock<mutex> lock(tasksMutex);
-
-			tasks.push(move(functions));
-		}
-
-		hasTask.notify_one();
+		return this->addTask(move(functions));
 	}
 
 	void ThreadPool::reinit(bool changeThreadsCount, uint32_t threadsCount)
@@ -95,7 +120,7 @@ namespace threading
 
 		for (size_t i = 0; i < threadStates.size(); i++)
 		{
-			threads.emplace_back(&ThreadPool::mainWorkerThread, this, i);
+			threads.emplace_back(&ThreadPool::workerThread, this, i);
 
 			threadStates[i] = threadState::waiting;
 		}
