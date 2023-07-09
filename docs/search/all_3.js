@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['reinit_0',['reinit',['../classthreading_1_1_singleton_thread_pool.html#ae6e85929e91855be397b0e1be025a1ca',1,'threading::SingletonThreadPool::reinit()'],['../classthreading_1_1_thread_pool.html#ac7066b189ba40f19f8f74543674b8c7d',1,'threading::ThreadPool::reinit()']]]
+  ['get_0',['get',['../classthreading_1_1_singleton_thread_pool.html#a02a5de74083668d3ebcda715d4040061',1,'threading::SingletonThreadPool']]],
+  ['getthreadscount_1',['getThreadsCount',['../classthreading_1_1_singleton_thread_pool.html#a3deb0123ff43cc14859b872140a76965',1,'threading::SingletonThreadPool::getThreadsCount()'],['../classthreading_1_1_thread_pool.html#a24d9337a353e9c19b3909ccaf3b212a0',1,'threading::ThreadPool::getThreadsCount() const']]],
+  ['getthreadstate_2',['getThreadState',['../classthreading_1_1_thread_pool.html#a85b31d062ecba1be827151a2db7d2af2',1,'threading::ThreadPool']]]
 ];

@@ -5,17 +5,9 @@
 #include <queue>
 #include <mutex>
 #include <vector>
-#include <memory>
 #include <functional>
-#include <future>
 
-#ifdef THREAD_POOL_DLL
-#define THREAD_POOL_API __declspec(dllexport)
-
-#pragma warning(disable: 4251)
-#else
-#define THREAD_POOL_API
-#endif // THREAD_POOL_DLL
+#include "Tasks/FunctionWrapperTask.h"
 
 namespace threading
 {
@@ -30,28 +22,7 @@ namespace threading
 		};
 
 	private:
-		struct threadPoolTask
-		{
-			std::function<void()> task;
-			std::function<void()> callback;
-			std::promise<void> notify;
-
-		public:
-			threadPoolTask() = default;
-
-			threadPoolTask(const threadPoolTask& other) = delete;
-
-			threadPoolTask(threadPoolTask&& other) noexcept;
-
-			threadPoolTask& operator = (const threadPoolTask& other) = delete;
-
-			threadPoolTask& operator = (threadPoolTask&& other) noexcept;
-
-			~threadPoolTask() = default;
-		};
-
-	private:
-		std::queue<threadPoolTask> tasks;
+		std::queue<std::unique_ptr<BaseTask>> tasks;
 		std::condition_variable hasTask;
 		std::mutex tasksMutex;
 		std::vector<std::jthread> threads;
@@ -61,7 +32,7 @@ namespace threading
 	private:
 		void workerThread(size_t threadIndex);
 
-		std::future<void> addTask(threadPoolTask&& task);
+		std::unique_ptr<Future> addTask(std::unique_ptr<BaseTask>&& task);
 
 	public:
 		/// @brief Construct ThreadPool
@@ -69,16 +40,24 @@ namespace threading
 		ThreadPool(uint32_t threadsCount = std::thread::hardware_concurrency());
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
+		std::unique_ptr<Future> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(const std::function<void()>& task, std::function<void()>&& callback);
+		std::unique_ptr<Future> addTask(const std::function<void()>& task, std::function<void()>&& callback);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
+		std::unique_ptr<Future> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(std::function<void()>&& task, std::function<void()>&& callback);
+		std::unique_ptr<Future> addTask(std::function<void()>&& task, std::function<void()>&& callback);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, const std::function<void()>& callback, Args&&... args);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args);
 
 		/// @brief Reinitialize thread pool
 		/// @param changeThreadsCount Changes current thread pool size
@@ -103,4 +82,22 @@ namespace threading
 
 		~ThreadPool();
 	};
+
+	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(const std::function<R(ArgsT...)>& task, const std::function<void()>& callback, Args&&... args)
+	{
+		return this->addTask
+		(
+			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), callback)
+		);
+	}
+
+	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args)
+	{
+		return this->addTask
+		(
+			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), std::move(callback))
+		);
+	}
 }

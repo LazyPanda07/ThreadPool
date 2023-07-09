@@ -22,16 +22,24 @@ namespace threading
 		static SingletonThreadPool& get();
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
+		std::unique_ptr<Future> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(const std::function<void()>& task, std::function<void()>&& callback);
+		std::unique_ptr<Future> addTask(const std::function<void()>& task, std::function<void()>&& callback);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
+		std::unique_ptr<Future> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::future<void> addTask(std::function<void()>&& task, std::function<void()>&& callback);
+		std::unique_ptr<Future> addTask(std::function<void()>&& task, std::function<void()>&& callback);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, const std::function<void()>& callback, Args&&... args);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args);
 
 		/// @brief Reinitialize thread pool
 		void reinit();
@@ -64,27 +72,41 @@ namespace threading
 	}
 
 	template<uint32_t threadsCount>
-	std::future<void> SingletonThreadPool<threadsCount>::addTask(const std::function<void()>& task, const std::function<void()>& callback)
+	std::unique_ptr<Future> SingletonThreadPool<threadsCount>::addTask(const std::function<void()>& task, const std::function<void()>& callback)
 	{
 		return threadPool.addTask(task, callback);
 	}
 
 	template<uint32_t threadsCount>
-	std::future<void> SingletonThreadPool<threadsCount>::addTask(const std::function<void()>& task, std::function<void()>&& callback)
+	std::unique_ptr<Future> SingletonThreadPool<threadsCount>::addTask(const std::function<void()>& task, std::function<void()>&& callback)
 	{
 		return threadPool.addTask(task, std::move(callback));
 	}
 
 	template<uint32_t threadsCount>
-	std::future<void> SingletonThreadPool<threadsCount>::addTask(std::function<void()>&& task, const std::function<void()>& callback)
+	std::unique_ptr<Future> SingletonThreadPool<threadsCount>::addTask(std::function<void()>&& task, const std::function<void()>& callback)
 	{
 		return threadPool.addTask(std::move(task), callback);
 	}
 
 	template<uint32_t threadsCount>
-	std::future<void> SingletonThreadPool<threadsCount>::addTask(std::function<void()>&& task, std::function<void()>&& callback)
+	std::unique_ptr<Future> SingletonThreadPool<threadsCount>::addTask(std::function<void()>&& task, std::function<void()>&& callback)
 	{
 		return threadPool.addTask(std::move(task), std::move(callback));
+	}
+
+	template<uint32_t threadsCount>
+	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> SingletonThreadPool<threadsCount>::addTask(const std::function<R(ArgsT...)>& task, const std::function<void()>& callback, Args&&... args)
+	{
+		return threadPool.addTask(task, callback, std::forward<Args>(args)...);
+	}
+
+	template<uint32_t threadsCount>
+	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> SingletonThreadPool<threadsCount>::addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args)
+	{
+		return threadPool.addTask(task, std::move(callback), std::forward<Args>(args)...);
 	}
 
 	template<uint32_t threadsCount>

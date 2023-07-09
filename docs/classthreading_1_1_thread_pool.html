@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.2</span>
+   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.3</span>
    </div>
    <div id="projectbrief">Thread pool in C++20</div>
   </td>
@@ -91,7 +91,6 @@ $(document).ready(function(){initNavTree('classthreading_1_1_thread_pool.html','
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classthreading_1_1_thread_pool-members.html">List of all members</a>  </div>
@@ -116,22 +115,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a781d9b2c12a1cbfb47a298eebd220e5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#a781d9b2c12a1cbfb47a298eebd220e5c">ThreadPool</a> (uint32_t threadsCount=std::thread::hardware_concurrency())</td></tr>
 <tr class="memdesc:a781d9b2c12a1cbfb47a298eebd220e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  <br /></td></tr>
 <tr class="separator:a781d9b2c12a1cbfb47a298eebd220e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a347925e28b851fb8b161d01554444393"><td class="memItemLeft" align="right" valign="top"><a id="a347925e28b851fb8b161d01554444393" name="a347925e28b851fb8b161d01554444393"></a>
-std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
-<tr class="memdesc:a347925e28b851fb8b161d01554444393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
-<tr class="separator:a347925e28b851fb8b161d01554444393"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3c3211b1f21da0068e968ace3d804bd"><td class="memItemLeft" align="right" valign="top"><a id="ae3c3211b1f21da0068e968ace3d804bd" name="ae3c3211b1f21da0068e968ace3d804bd"></a>
-std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback=nullptr)</td></tr>
-<tr class="memdesc:ae3c3211b1f21da0068e968ace3d804bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
-<tr class="separator:ae3c3211b1f21da0068e968ace3d804bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27753c9255ebde5ee4f5774da54a0cb1"><td class="memItemLeft" align="right" valign="top"><a id="a27753c9255ebde5ee4f5774da54a0cb1" name="a27753c9255ebde5ee4f5774da54a0cb1"></a>
-std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
-<tr class="memdesc:a27753c9255ebde5ee4f5774da54a0cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
-<tr class="separator:a27753c9255ebde5ee4f5774da54a0cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af837b833e760e93f48a34f3dc76544ab"><td class="memItemLeft" align="right" valign="top"><a id="af837b833e760e93f48a34f3dc76544ab" name="af837b833e760e93f48a34f3dc76544ab"></a>
-std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, std::function&lt; void()&gt; &amp;&amp;callback=nullptr)</td></tr>
-<tr class="memdesc:af837b833e760e93f48a34f3dc76544ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
-<tr class="separator:af837b833e760e93f48a34f3dc76544ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88c68a02fb5660232fe50c4bc422291"><td class="memItemLeft" align="right" valign="top"><a id="ac88c68a02fb5660232fe50c4bc422291" name="ac88c68a02fb5660232fe50c4bc422291"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
+<tr class="memdesc:ac88c68a02fb5660232fe50c4bc422291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:ac88c68a02fb5660232fe50c4bc422291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34b35558da0d79b075849bbfafb46059"><td class="memItemLeft" align="right" valign="top"><a id="a34b35558da0d79b075849bbfafb46059" name="a34b35558da0d79b075849bbfafb46059"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback)</td></tr>
+<tr class="memdesc:a34b35558da0d79b075849bbfafb46059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a34b35558da0d79b075849bbfafb46059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3367d921c683533dc7edd6253618de2"><td class="memItemLeft" align="right" valign="top"><a id="aa3367d921c683533dc7edd6253618de2" name="aa3367d921c683533dc7edd6253618de2"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
+<tr class="memdesc:aa3367d921c683533dc7edd6253618de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:aa3367d921c683533dc7edd6253618de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab2e46f394b1f1daf5b0ba22b4242e0"><td class="memItemLeft" align="right" valign="top"><a id="aeab2e46f394b1f1daf5b0ba22b4242e0" name="aeab2e46f394b1f1daf5b0ba22b4242e0"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, std::function&lt; void()&gt; &amp;&amp;callback)</td></tr>
+<tr class="memdesc:aeab2e46f394b1f1daf5b0ba22b4242e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:aeab2e46f394b1f1daf5b0ba22b4242e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65fcaebc9dca87b1db08068df299c804"><td class="memTemplParams" colspan="2"><a id="a65fcaebc9dca87b1db08068df299c804" name="a65fcaebc9dca87b1db08068df299c804"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:a65fcaebc9dca87b1db08068df299c804"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; R(ArgsT...)&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a65fcaebc9dca87b1db08068df299c804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a65fcaebc9dca87b1db08068df299c804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5457897173044cb63d00e3c06cab46d9"><td class="memTemplParams" colspan="2"><a id="a5457897173044cb63d00e3c06cab46d9" name="a5457897173044cb63d00e3c06cab46d9"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:a5457897173044cb63d00e3c06cab46d9"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; R(ArgsT...)&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a5457897173044cb63d00e3c06cab46d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a5457897173044cb63d00e3c06cab46d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7066b189ba40f19f8f74543674b8c7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_thread_pool.html#ac7066b189ba40f19f8f74543674b8c7d">reinit</a> (bool changeThreadsCount=false, uint32_t threadsCount=std::thread::hardware_concurrency())</td></tr>
 <tr class="memdesc:ac7066b189ba40f19f8f74543674b8c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinitialize thread pool.  <br /></td></tr>
 <tr class="separator:ac7066b189ba40f19f8f74543674b8c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>

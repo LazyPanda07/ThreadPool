@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['singletonthreadpool_0',['SingletonThreadPool',['../classthreading_1_1_singleton_thread_pool.html',1,'threading']]]
+  ['basetask_0',['BaseTask',['../classthreading_1_1_base_task.html',1,'threading']]]
 ];

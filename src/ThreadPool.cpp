@@ -8,7 +8,7 @@ namespace threading
 {
 	void ThreadPool::workerThread(size_t threadIndex)
 	{
-		threadPoolTask currentTask;
+		unique_ptr<BaseTask> currentTask;
 
 		while (true)
 		{
@@ -29,22 +29,17 @@ namespace threading
 
 			threadStates[threadIndex] = threadState::running;
 
-			currentTask.task();
-
-			if (currentTask.callback)
-			{
-				currentTask.callback();
-			}
-
-			currentTask.notify.set_value();
+			currentTask->execute();
 
 			threadStates[threadIndex] = threadState::waiting;
 		}
 	}
 
-	future<void> ThreadPool::addTask(threadPoolTask&& task)
+	unique_ptr<Future> ThreadPool::addTask(unique_ptr<BaseTask>&& task)
 	{
-		future<void> result = task.notify.get_future();
+		task->taskPromise = task->createTaskPromise();
+
+		unique_ptr<Future> result = task->getFuture();
 
 		{
 			unique_lock<mutex> lock(tasksMutex);
@@ -63,44 +58,36 @@ namespace threading
 		this->reinit(true, threadsCount);
 	}
 
-	future<void> ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
+	unique_ptr<Future> ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
 	{
-		threadPoolTask functions;
-		
-		functions.task = task;
-		functions.callback = callback;
-
-		return this->addTask(move(functions));
+		return this->addTask
+		(
+			make_unique<FunctionWrapperTask<void>>(task, callback)
+		);
 	}
 
-	future<void> ThreadPool::addTask(const function<void()>& task, function<void()>&& callback)
+	unique_ptr<Future> ThreadPool::addTask(const function<void()>& task, function<void()>&& callback)
 	{
-		threadPoolTask functions;
-
-		functions.task = task;
-		functions.callback = move(callback);
-
-		return this->addTask(move(functions));
+		return this->addTask
+		(
+			make_unique<FunctionWrapperTask<void>>(task, move(callback))
+		);
 	}
 
-	future<void> ThreadPool::addTask(function<void()>&& task, const function<void()>& callback)
+	unique_ptr<Future> ThreadPool::addTask(function<void()>&& task, const function<void()>& callback)
 	{
-		threadPoolTask functions;
-		
-		functions.task = move(task);
-		functions.callback = callback;
-
-		return this->addTask(move(functions));
+		return this->addTask
+		(
+			make_unique<FunctionWrapperTask<void>>(move(task), callback)
+		);
 	}
 
-	future<void> ThreadPool::addTask(function<void()>&& task, function<void()>&& callback)
+	unique_ptr<Future> ThreadPool::addTask(function<void()>&& task, function<void()>&& callback)
 	{
-		threadPoolTask functions;
-
-		functions.task = move(task);
-		functions.callback = move(callback);
-
-		return this->addTask(move(functions));
+		return this->addTask
+		(
+			make_unique<FunctionWrapperTask<void>>(move(task), move(callback))
+		);
 	}
 
 	void ThreadPool::reinit(bool changeThreadsCount, uint32_t threadsCount)
