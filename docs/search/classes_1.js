@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['functionwrapperfuture_0',['FunctionWrapperFuture',['../classthreading_1_1_function_wrapper_future.html',1,'threading']]],
-  ['functionwrapperpromise_1',['FunctionWrapperPromise',['../classthreading_1_1_function_wrapper_promise.html',1,'threading']]],
-  ['functionwrappertask_2',['FunctionWrapperTask',['../classthreading_1_1_function_wrapper_task.html',1,'threading']]],
-  ['future_3',['Future',['../classthreading_1_1_future.html',1,'threading']]]
+  ['concurrentqueue_0',['ConcurrentQueue',['../classthreading_1_1utility_1_1_concurrent_queue.html',1,'threading::utility']]],
+  ['concurrentqueue_3c_20std_3a_3aunique_5fptr_3c_20threading_3a_3abasetask_20_3e_20_3e_1',['ConcurrentQueue&lt; std::unique_ptr&lt; threading::BaseTask &gt; &gt;',['../classthreading_1_1utility_1_1_concurrent_queue.html',1,'threading::utility']]]
 ];

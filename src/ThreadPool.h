@@ -2,12 +2,12 @@
 
 #include <thread>
 #include <condition_variable>
-#include <queue>
 #include <mutex>
 #include <vector>
 #include <functional>
 
 #include "Tasks/FunctionWrapperTask.h"
+#include "Utility/ConcurrentQueue.h"
 
 namespace threading
 {
@@ -22,22 +22,47 @@ namespace threading
 		};
 
 	private:
-		std::queue<std::unique_ptr<BaseTask>> tasks;
-		std::condition_variable hasTask;
-		std::mutex tasksMutex;
-		std::vector<std::jthread> threads;
-		std::vector<threadState> threadStates;
-		bool terminate;
+		struct Worker
+		{
+		private:
+			std::thread thread;
+
+		public:
+			mutable std::mutex stateMutex;
+			std::unique_ptr<BaseTask> task;
+			threadState state;
+			std::atomic_bool running;
+			std::function<void(Worker*)> onEnd;
+
+		public:
+			Worker(ThreadPool* threadPool);
+
+			Worker(const Worker& other);
+
+			Worker& operator = (const Worker& other);
+
+			void join();
+
+			void detach();
+
+			~Worker() = default;
+		};
 
 	private:
-		void workerThread(size_t threadIndex);
+		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
+		std::condition_variable hasTask;
+		std::mutex workerMutex;
+		std::vector<Worker*> workers;
+
+	private:
+		void workerThread(Worker* worker);
 
 		std::unique_ptr<Future> addTask(std::unique_ptr<BaseTask>&& task);
 
 	public:
 		/// @brief Construct ThreadPool
 		/// @param threadCount Number of threads in ThreadPool(default is max threads for current hardware)
-		ThreadPool(uint32_t threadsCount = std::thread::hardware_concurrency());
+		ThreadPool(size_t threadsCount = std::thread::hardware_concurrency());
 
 		/// @brief Add new task to thread pool
 		std::unique_ptr<Future> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
@@ -60,12 +85,16 @@ namespace threading
 		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args);
 
 		/// @brief Reinitialize thread pool
-		/// @param changeThreadsCount Changes current thread pool size
+		/// @param Wait all threads execution
 		/// @param threadsCount New thread pool size
-		void reinit(bool changeThreadsCount = false, uint32_t threadsCount = std::thread::hardware_concurrency());
+		void reinit(bool wait = true, size_t threadsCount = std::thread::hardware_concurrency());
 
-		/// @brief Stop ThreadPool with joining all threads
-		void shutdown();
+		/// @brief Change thread pool size
+		bool resize(size_t threadsCount);
+
+		/// @brief Stop ThreadPool
+		/// @param wait Wait all threads execution
+		void shutdown(bool wait = true);
 
 		/// @brief Check is thread pool has task that running in some thread
 		/// @return Returns true if thread pool has task
@@ -74,11 +103,18 @@ namespace threading
 		/// @brief Check specific thread state
 		/// @param threadIndex Index of thread between 0 and threadsCount
 		/// @return Thread state
-		threadState getThreadState(uint32_t threadIndex) const;
+		/// @exception std::out_of_range
+		threadState getThreadState(size_t threadIndex) const;
+
+		/// @brief Check specific thread progress
+		/// @param threadIndex Index of thread between 0 and threadsCount
+		/// @return Thread progress or -1 if thread not running any task
+		/// @exception std::out_of_range
+		float getThreadProgress(size_t threadIndex) const;
 
 		/// @brief Getter for threadsCount
 		/// @return Current count of threads in thread pool
-		uint32_t getThreadsCount() const;
+		size_t getThreadsCount() const;
 
 		~ThreadPool();
 	};

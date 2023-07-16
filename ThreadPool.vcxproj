@@ -210,6 +210,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /e /i $(ProjectDir)src\*.h $(OutDir)include\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ProductionReleaseDLL|x64'">
     <ClCompile>
@@ -229,6 +232,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /e /i $(ProjectDir)src\*.h $(OutDir)include\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Utility\Future.cpp" />
@@ -239,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Tasks\FunctionWrapperTask.h" />
+    <ClInclude Include="src\Utility\ConcurrentQueue.h" />
     <ClInclude Include="src\Utility\FunctionWrapperFuture.h" />
     <ClInclude Include="src\Utility\FunctionWrapperPromise.h" />
     <ClInclude Include="src\Utility\Future.h" />

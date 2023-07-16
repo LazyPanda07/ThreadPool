@@ -101,10 +101,50 @@ $(document).ready(function(){initNavTree('classthreading_1_1_singleton_thread_po
 <p>Singleton version of <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  
  <a href="classthreading_1_1_singleton_thread_pool.html#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="_singleton_thread_pool_8h_source.html">SingletonThreadPool.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="bin_2_production_release-x64_2_thread_pool_2include_2_singleton_thread_pool_8h_source.html">SingletonThreadPool.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aa722852380248803056ce238cf99fb8b"><td class="memItemLeft" align="right" valign="top"><a id="aa722852380248803056ce238cf99fb8b" name="aa722852380248803056ce238cf99fb8b"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
+<tr class="memdesc:aa722852380248803056ce238cf99fb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:aa722852380248803056ce238cf99fb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cdae577b1cf5ea2a444e3600bbba2e0"><td class="memItemLeft" align="right" valign="top"><a id="a2cdae577b1cf5ea2a444e3600bbba2e0" name="a2cdae577b1cf5ea2a444e3600bbba2e0"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback)</td></tr>
+<tr class="memdesc:a2cdae577b1cf5ea2a444e3600bbba2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a2cdae577b1cf5ea2a444e3600bbba2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d4b0cdaa7e2e0814fc7c254799ebd07"><td class="memItemLeft" align="right" valign="top"><a id="a1d4b0cdaa7e2e0814fc7c254799ebd07" name="a1d4b0cdaa7e2e0814fc7c254799ebd07"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
+<tr class="memdesc:a1d4b0cdaa7e2e0814fc7c254799ebd07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a1d4b0cdaa7e2e0814fc7c254799ebd07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e254ced7ebafc1ec96b81b51365f18c"><td class="memItemLeft" align="right" valign="top"><a id="a3e254ced7ebafc1ec96b81b51365f18c" name="a3e254ced7ebafc1ec96b81b51365f18c"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, std::function&lt; void()&gt; &amp;&amp;callback)</td></tr>
+<tr class="memdesc:a3e254ced7ebafc1ec96b81b51365f18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a3e254ced7ebafc1ec96b81b51365f18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83d02a0efdb9f052ea5abe98bcb1e38c"><td class="memTemplParams" colspan="2"><a id="a83d02a0efdb9f052ea5abe98bcb1e38c" name="a83d02a0efdb9f052ea5abe98bcb1e38c"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:a83d02a0efdb9f052ea5abe98bcb1e38c"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; R(ArgsT...)&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a83d02a0efdb9f052ea5abe98bcb1e38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a83d02a0efdb9f052ea5abe98bcb1e38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6a02d82aa353de26ddaf4cf6957ac9"><td class="memTemplParams" colspan="2"><a id="aca6a02d82aa353de26ddaf4cf6957ac9" name="aca6a02d82aa353de26ddaf4cf6957ac9"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:aca6a02d82aa353de26ddaf4cf6957ac9"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; R(ArgsT...)&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:aca6a02d82aa353de26ddaf4cf6957ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:aca6a02d82aa353de26ddaf4cf6957ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6e85929e91855be397b0e1be025a1ca"><td class="memItemLeft" align="right" valign="top"><a id="ae6e85929e91855be397b0e1be025a1ca" name="ae6e85929e91855be397b0e1be025a1ca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>reinit</b> ()</td></tr>
+<tr class="memdesc:ae6e85929e91855be397b0e1be025a1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinitialize thread pool. <br /></td></tr>
+<tr class="separator:ae6e85929e91855be397b0e1be025a1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3693db8fb5ce31dc9d7720feb9645a92"><td class="memItemLeft" align="right" valign="top"><a id="a3693db8fb5ce31dc9d7720feb9645a92" name="a3693db8fb5ce31dc9d7720feb9645a92"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>shutdown</b> ()</td></tr>
+<tr class="memdesc:a3693db8fb5ce31dc9d7720feb9645a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a> with joining all threads. <br /></td></tr>
+<tr class="separator:a3693db8fb5ce31dc9d7720feb9645a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab06d91ff1171fc05d4874b5a3fe114"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a3ab06d91ff1171fc05d4874b5a3fe114">isAnyTaskRunning</a> () const</td></tr>
+<tr class="memdesc:a3ab06d91ff1171fc05d4874b5a3fe114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check is thread pool has task that running in some thread.  <br /></td></tr>
+<tr class="separator:a3ab06d91ff1171fc05d4874b5a3fe114"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3deb0123ff43cc14859b872140a76965"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a3deb0123ff43cc14859b872140a76965">getThreadsCount</a> () const</td></tr>
+<tr class="memdesc:a3deb0123ff43cc14859b872140a76965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for threadsCount.  <br /></td></tr>
+<tr class="separator:a3deb0123ff43cc14859b872140a76965"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa722852380248803056ce238cf99fb8b"><td class="memItemLeft" align="right" valign="top"><a id="aa722852380248803056ce238cf99fb8b" name="aa722852380248803056ce238cf99fb8b"></a>
 std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
 <tr class="memdesc:aa722852380248803056ce238cf99fb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
@@ -151,13 +191,16 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a02a5de74083668d3ebcda715d4040061"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classthreading_1_1_singleton_thread_pool.html">SingletonThreadPool</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a02a5de74083668d3ebcda715d4040061">get</a> ()</td></tr>
 <tr class="memdesc:a02a5de74083668d3ebcda715d4040061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton get instance method.  <br /></td></tr>
 <tr class="separator:a02a5de74083668d3ebcda715d4040061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34129e744ca7f37c650f93dcf5af9668"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classthreading_1_1_singleton_thread_pool.html">SingletonThreadPool</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a34129e744ca7f37c650f93dcf5af9668">get</a> ()</td></tr>
+<tr class="memdesc:a34129e744ca7f37c650f93dcf5af9668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton get instance method.  <br /></td></tr>
+<tr class="separator:a34129e744ca7f37c650f93dcf5af9668"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;uint32_t threadsCount&gt;<br />
 class threading::SingletonThreadPool&lt; threadsCount &gt;</div><p>Singleton version of <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a02a5de74083668d3ebcda715d4040061" name="a02a5de74083668d3ebcda715d4040061"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02a5de74083668d3ebcda715d4040061">&#9670;&#160;</a></span>get()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a02a5de74083668d3ebcda715d4040061">&#9670;&#160;</a></span>get() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,8 +226,38 @@ template&lt;uint32_t threadsCount&gt; </div>
 
 </div>
 </div>
+<a id="a34129e744ca7f37c650f93dcf5af9668" name="a34129e744ca7f37c650f93dcf5af9668"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34129e744ca7f37c650f93dcf5af9668">&#9670;&#160;</a></span>get() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;uint32_t threadsCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classthreading_1_1_singleton_thread_pool.html">SingletonThreadPool</a> &amp; <a class="el" href="classthreading_1_1_singleton_thread_pool.html">threading::SingletonThreadPool</a>&lt; threadsCount &gt;::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Singleton get instance method. </p>
+<dl class="section return"><dt>Returns</dt><dd>Instance for current template argument </dd></dl>
+
+</div>
+</div>
 <a id="a3deb0123ff43cc14859b872140a76965" name="a3deb0123ff43cc14859b872140a76965"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3deb0123ff43cc14859b872140a76965">&#9670;&#160;</a></span>getThreadsCount()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3deb0123ff43cc14859b872140a76965">&#9670;&#160;</a></span>getThreadsCount() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,8 +275,30 @@ template&lt;uint32_t threadsCount&gt; </div>
 
 </div>
 </div>
+<a id="a3deb0123ff43cc14859b872140a76965" name="a3deb0123ff43cc14859b872140a76965"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3deb0123ff43cc14859b872140a76965">&#9670;&#160;</a></span>getThreadsCount() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;uint32_t threadsCount&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="classthreading_1_1_singleton_thread_pool.html">threading::SingletonThreadPool</a>&lt; threadsCount &gt;::getThreadsCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Getter for threadsCount. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current count of threads in thread pool </dd></dl>
+
+</div>
+</div>
 <a id="a3ab06d91ff1171fc05d4874b5a3fe114" name="a3ab06d91ff1171fc05d4874b5a3fe114"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ab06d91ff1171fc05d4874b5a3fe114">&#9670;&#160;</a></span>isAnyTaskRunning()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ab06d91ff1171fc05d4874b5a3fe114">&#9670;&#160;</a></span>isAnyTaskRunning() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,8 +316,31 @@ template&lt;uint32_t threadsCount&gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<a class="el" href="_singleton_thread_pool_8h_source.html">SingletonThreadPool.h</a></li>
+<a id="a3ab06d91ff1171fc05d4874b5a3fe114" name="a3ab06d91ff1171fc05d4874b5a3fe114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ab06d91ff1171fc05d4874b5a3fe114">&#9670;&#160;</a></span>isAnyTaskRunning() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;uint32_t threadsCount&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classthreading_1_1_singleton_thread_pool.html">threading::SingletonThreadPool</a>&lt; threadsCount &gt;::isAnyTaskRunning </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check is thread pool has task that running in some thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns true if thread pool has task </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>bin/ProductionRelease-x64/ThreadPool/include/<a class="el" href="bin_2_production_release-x64_2_thread_pool_2include_2_singleton_thread_pool_8h_source.html">SingletonThreadPool.h</a></li>
+<li>src/<a class="el" href="src_2_singleton_thread_pool_8h_source.html">SingletonThreadPool.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

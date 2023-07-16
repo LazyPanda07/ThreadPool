@@ -1,6 +1,9 @@
 var annotated_dup =
 [
     [ "threading", null, [
+      [ "utility", null, [
+        [ "ConcurrentQueue", "classthreading_1_1utility_1_1_concurrent_queue.html", "classthreading_1_1utility_1_1_concurrent_queue" ]
+      ] ],
       [ "BaseTask", "classthreading_1_1_base_task.html", null ],
       [ "FunctionWrapperFuture", "classthreading_1_1_function_wrapper_future.html", null ],
       [ "FunctionWrapperPromise", "classthreading_1_1_function_wrapper_promise.html", null ],

@@ -115,7 +115,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5cd68d73e9ba4af79d232c9fa9ee2c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6413da969c2520e687da22651d0a81c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_function_wrapper_future.html#ae6413da969c2520e687da22651d0a81c">wait</a> () override</td></tr>
 <tr class="separator:ae6413da969c2520e687da22651d0a81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cd68d73e9ba4af79d232c9fa9ee2c9d"><td class="memItemLeft" align="right" valign="top"><a id="a5cd68d73e9ba4af79d232c9fa9ee2c9d" name="a5cd68d73e9ba4af79d232c9fa9ee2c9d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>FunctionWrapperFuture</b> (std::future&lt; R &gt; &amp;&amp;implementation)</td></tr>
+<tr class="separator:a5cd68d73e9ba4af79d232c9fa9ee2c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8ebcbf16c86ebcf7a1ce488865b8bdd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_function_wrapper_future.html#ac8ebcbf16c86ebcf7a1ce488865b8bdd">wait</a> () override</td></tr>
+<tr class="separator:ac8ebcbf16c86ebcf7a1ce488865b8bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthreading_1_1_future"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classthreading_1_1_future')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classthreading_1_1_future.html">threading::Future</a></td></tr>
+<tr class="memitem:a83cd5af0cd836d0f38fdcf2424a74913 inherit pub_methods_classthreading_1_1_future"><td class="memItemLeft" align="right" valign="top"><a id="a83cd5af0cd836d0f38fdcf2424a74913" name="a83cd5af0cd836d0f38fdcf2424a74913"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()=0</td></tr>
+<tr class="separator:a83cd5af0cd836d0f38fdcf2424a74913 inherit pub_methods_classthreading_1_1_future"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68db063c2821c2f30e673befa29cf58b inherit pub_methods_classthreading_1_1_future"><td class="memTemplParams" colspan="2"><a id="a68db063c2821c2f30e673befa29cf58b" name="a68db063c2821c2f30e673befa29cf58b"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a68db063c2821c2f30e673befa29cf58b inherit pub_methods_classthreading_1_1_future"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>get</b> () const</td></tr>
+<tr class="separator:a68db063c2821c2f30e673befa29cf58b inherit pub_methods_classthreading_1_1_future"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cd5af0cd836d0f38fdcf2424a74913 inherit pub_methods_classthreading_1_1_future"><td class="memItemLeft" align="right" valign="top"><a id="a83cd5af0cd836d0f38fdcf2424a74913" name="a83cd5af0cd836d0f38fdcf2424a74913"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()=0</td></tr>
 <tr class="separator:a83cd5af0cd836d0f38fdcf2424a74913 inherit pub_methods_classthreading_1_1_future"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,19 +140,24 @@ template&lt;typename T &gt; </td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa8182fb45f9dec5cfb9f29e1765a0ec2"><td class="memItemLeft" align="right" valign="top">virtual std::any&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_function_wrapper_future.html#aa8182fb45f9dec5cfb9f29e1765a0ec2">getValue</a> () const override</td></tr>
 <tr class="separator:aa8182fb45f9dec5cfb9f29e1765a0ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad07c97e53200d5b6acbe5063004152dd"><td class="memItemLeft" align="right" valign="top">virtual std::any&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_function_wrapper_future.html#ad07c97e53200d5b6acbe5063004152dd">getValue</a> () const override</td></tr>
+<tr class="separator:ad07c97e53200d5b6acbe5063004152dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2842ce91ee3e8de741c4dc755824da2b"><td class="memItemLeft" align="right" valign="top"><a id="a2842ce91ee3e8de741c4dc755824da2b" name="a2842ce91ee3e8de741c4dc755824da2b"></a>
+virtual std::any&#160;</td><td class="memItemRight" valign="bottom"><b>getValue</b> () const =0</td></tr>
+<tr class="separator:a2842ce91ee3e8de741c4dc755824da2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2842ce91ee3e8de741c4dc755824da2b"><td class="memItemLeft" align="right" valign="top"><a id="a2842ce91ee3e8de741c4dc755824da2b" name="a2842ce91ee3e8de741c4dc755824da2b"></a>
 virtual std::any&#160;</td><td class="memItemRight" valign="bottom"><b>getValue</b> () const =0</td></tr>
 <tr class="separator:a2842ce91ee3e8de741c4dc755824da2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a4b40bccccba6a790dd871f9b49e8d3a5"><td class="memItemLeft" align="right" valign="top"><a id="a4b40bccccba6a790dd871f9b49e8d3a5" name="a4b40bccccba6a790dd871f9b49e8d3a5"></a>
+<tr class="memitem:a63790027d36d19d0801cb7a21cec4bb9"><td class="memItemLeft" align="right" valign="top"><a id="a63790027d36d19d0801cb7a21cec4bb9" name="a63790027d36d19d0801cb7a21cec4bb9"></a>
 std::future&lt; R &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>implementation</b></td></tr>
-<tr class="separator:a4b40bccccba6a790dd871f9b49e8d3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a63790027d36d19d0801cb7a21cec4bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa8182fb45f9dec5cfb9f29e1765a0ec2" name="aa8182fb45f9dec5cfb9f29e1765a0ec2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8182fb45f9dec5cfb9f29e1765a0ec2">&#9670;&#160;</a></span>getValue()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8182fb45f9dec5cfb9f29e1765a0ec2">&#9670;&#160;</a></span>getValue() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,8 +182,37 @@ template&lt;typename R &gt; </div>
 
 </div>
 </div>
+<a id="ad07c97e53200d5b6acbe5063004152dd" name="ad07c97e53200d5b6acbe5063004152dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad07c97e53200d5b6acbe5063004152dd">&#9670;&#160;</a></span>getValue() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::any <a class="el" href="classthreading_1_1_function_wrapper_future.html">threading::FunctionWrapperFuture</a>&lt; R &gt;::getValue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classthreading_1_1_future.html">threading::Future</a>.</p>
+
+</div>
+</div>
 <a id="ae6413da969c2520e687da22651d0a81c" name="ae6413da969c2520e687da22651d0a81c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6413da969c2520e687da22651d0a81c">&#9670;&#160;</a></span>wait()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6413da969c2520e687da22651d0a81c">&#9670;&#160;</a></span>wait() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,8 +237,38 @@ template&lt;typename R &gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/Utility/<a class="el" href="_function_wrapper_future_8h_source.html">FunctionWrapperFuture.h</a></li>
+<a id="ac8ebcbf16c86ebcf7a1ce488865b8bdd" name="ac8ebcbf16c86ebcf7a1ce488865b8bdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8ebcbf16c86ebcf7a1ce488865b8bdd">&#9670;&#160;</a></span>wait() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classthreading_1_1_function_wrapper_future.html">threading::FunctionWrapperFuture</a>&lt; R &gt;::wait </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classthreading_1_1_future.html">threading::Future</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>bin/ProductionRelease-x64/ThreadPool/include/Utility/<a class="el" href="bin_2_production_release-x64_2_thread_pool_2include_2_utility_2_function_wrapper_future_8h_source.html">FunctionWrapperFuture.h</a></li>
+<li>src/Utility/<a class="el" href="src_2_utility_2_function_wrapper_future_8h_source.html">FunctionWrapperFuture.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,37 +1,90 @@
 #include "ThreadPool.h"
 
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 namespace threading
 {
-	void ThreadPool::workerThread(size_t threadIndex)
+	ThreadPool::Worker::Worker(ThreadPool* threadPool) :
+		thread(&ThreadPool::workerThread, threadPool, this),
+		state(threadState::waiting),
+		running(true)
 	{
-		unique_ptr<BaseTask> currentTask;
 
-		while (true)
+	}
+
+	ThreadPool::Worker::Worker(const Worker& other)
+	{
+		(*this) = other;
+	}
+
+	ThreadPool::Worker& ThreadPool::Worker::operator = (const Worker& other)
+	{
+		thread = move(const_cast<Worker&>(other).thread);
+
+		return *this;
+	}
+
+	void ThreadPool::Worker::join()
+	{
+		thread.join();
+	}
+
+	void ThreadPool::Worker::detach()
+	{
+		thread.detach();
+	}
+
+	void ThreadPool::workerThread(Worker* worker)
+	{
+		while (worker->running)
 		{
 			{
-				unique_lock<mutex> lock(tasksMutex);
+				unique_lock<mutex> lock(workerMutex);
 
-				hasTask.wait(lock, [this]() { return tasks.size() || terminate; });
+				hasTask.wait
+				(
+					lock,
+					[this, worker]() 
+					{
+						if (!worker->running)
+						{
+							return true;
+						}
 
-				if (terminate)
+						if (tasks.size())
+						{
+							return true;
+						}
+
+						return false;
+					}
+				);
+
+				if (!worker->running)
 				{
-					return;
+					break;
 				}
-				
-				currentTask = move(tasks.front());
 
-				tasks.pop();
+				worker->task = move(tasks.pop());
 			}
 
-			threadStates[threadIndex] = threadState::running;
+			worker->state = threadState::running;
 
-			currentTask->execute();
+			worker->task->execute();
 
-			threadStates[threadIndex] = threadState::waiting;
+			unique_lock<mutex> threadStateLock(worker->stateMutex);
+
+			worker->task.reset();
+
+			worker->state = threadState::waiting;
+		}
+
+		if (worker->onEnd)
+		{
+			worker->onEnd(worker);
 		}
 	}
 
@@ -41,21 +94,16 @@ namespace threading
 
 		unique_ptr<Future> result = task->getFuture();
 
-		{
-			unique_lock<mutex> lock(tasksMutex);
-
-			tasks.push(move(task));
-		}
+		tasks.push(move(task));
 
 		hasTask.notify_one();
 
 		return result;
 	}
 
-	ThreadPool::ThreadPool(uint32_t threadsCount) :
-		terminate(false)
+	ThreadPool::ThreadPool(size_t threadsCount)
 	{
-		this->reinit(true, threadsCount);
+		this->reinit(threadsCount);
 	}
 
 	unique_ptr<Future> ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
@@ -90,57 +138,92 @@ namespace threading
 		);
 	}
 
-	void ThreadPool::reinit(bool changeThreadsCount, uint32_t threadsCount)
+	void ThreadPool::reinit(bool wait, size_t threadsCount)
 	{
-		this->shutdown();
+		this->shutdown(wait);
 
-		terminate = false;
-
-		if (changeThreadsCount && this->getThreadsCount() != threadsCount)
+		for (size_t i = 0; i < threadsCount; i++)
 		{
-			threads.clear();
-			threadStates.clear();
-
-			threads.reserve(threadsCount);
-			threadStates.resize(threadsCount);
-		}
-
-		for (size_t i = 0; i < threadStates.size(); i++)
-		{
-			threads.emplace_back(&ThreadPool::workerThread, this, i);
-
-			threadStates[i] = threadState::waiting;
+			workers.push_back(new Worker(this));
 		}
 	}
 
-	void ThreadPool::shutdown()
+	bool ThreadPool::resize(size_t threadsCount)
 	{
+		if (threadsCount == workers.size())
 		{
-			unique_lock<mutex> lock(tasksMutex);
+			return false;
+		}
+		else if (threadsCount > workers.size())
+		{
+			for (size_t i = workers.size(); i < threadsCount; i++)
+			{
+				workers.push_back(new Worker(this));
+			}
 
-			terminate = true;
+			return true;
 		}
 
-		hasTask.notify_all();
+		this->reinit(false, threadsCount);
 
-		threads.clear();
+		return true;
+	}
 
-		threadStates.clear();
+	void ThreadPool::shutdown(bool wait)
+	{
+		ranges::for_each
+		(
+			workers,
+			[this, wait](Worker* worker)
+			{
+				worker->running = false;
+
+				if (wait)
+				{
+					hasTask.notify_all();
+
+					worker->join();
+
+					delete worker;
+				}
+				else
+				{
+					worker->onEnd = [](Worker* worker)
+					{
+						delete worker;
+					};
+
+					worker->detach();
+
+					hasTask.notify_all();
+				}
+			}
+		);
+
+		workers.clear();
 	}
 
 	bool ThreadPool::isAnyTaskRunning() const
 	{
-		return ranges::any_of(threadStates, [](threadState state) { return state == threadState::running; });
+		return ranges::any_of(workers, [](Worker* worker) { return worker->state == threadState::running; });
 	}
 
-	ThreadPool::threadState ThreadPool::getThreadState(uint32_t threadIndex) const
+	ThreadPool::threadState ThreadPool::getThreadState(size_t threadIndex) const
 	{
-		return threadStates[static_cast<uint32_t>(threadIndex)];
+		return workers.at(threadIndex)->state;
 	}
 
-	uint32_t ThreadPool::getThreadsCount() const
+	float ThreadPool::getThreadProgress(size_t threadIndex) const
 	{
-		return static_cast<uint32_t>(threads.size());
+		const Worker* worker = workers.at(threadIndex);
+		unique_lock<mutex> threadProgressLock(worker->stateMutex);
+
+		return worker->task ? worker->task->getProgress() : -1.0f;
+	}
+
+	size_t ThreadPool::getThreadsCount() const
+	{
+		return workers.size();
 	}
 
 	ThreadPool::~ThreadPool()

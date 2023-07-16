@@ -56,5 +56,8 @@
     <ClInclude Include="src\Utility\FunctionWrapperFuture.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utility\ConcurrentQueue.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
