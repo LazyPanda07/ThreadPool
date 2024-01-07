@@ -42,7 +42,7 @@ namespace threading
 		while (worker->running)
 		{
 			{
-				unique_lock<mutex> lock(worker->workerMutex);
+				unique_lock<mutex> lock(workerMutex);
 
 				if (tasks.empty())
 				{
@@ -71,20 +71,7 @@ namespace threading
 					break;
 				}
 
-				try
-				{
-					total++;
-
-					worker->task = move(tasks.pop());
-				}
-				catch (const std::runtime_error&)
-				{
-					miss++;
-
-					printf("%d %d\n", total.load(), miss.load());
-
-					continue;
-				}
+				worker->task = move(tasks.pop());
 			}
 
 			worker->state = threadState::running;
@@ -100,13 +87,10 @@ namespace threading
 			hasTask.notify_one();
 		}
 
-#pragma warning(push)
-#pragma warning(disable: 26115)
 		if (worker->onEnd)
 		{
 			worker->onEnd(worker);
 		}
-#pragma warning(pop)
 	}
 
 	unique_ptr<Future> ThreadPool::addTask(unique_ptr<BaseTask>&& task)
@@ -210,9 +194,9 @@ namespace threading
 				else
 				{
 					worker->onEnd = [](Worker* worker)
-					{
-						delete worker;
-					};
+						{
+							delete worker;
+						};
 
 					worker->detach();
 
