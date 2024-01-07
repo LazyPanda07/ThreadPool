@@ -107,6 +107,16 @@ TEST(ThreadPool, Speed)
 	ASSERT_TRUE(first < second);
 }
 
+TEST(ThreadPool, TasksSpam)
+{
+	threading::ThreadPool threadPool(4);
+
+	for (size_t i = 0; i < 1'000'000'000; i++)
+	{
+		threadPool.addTask(get, nullptr, i);
+	}
+}
+
 TEST(ThreadPool, LongCalculation)
 {
 	threading::ThreadPool threadPool(4);
