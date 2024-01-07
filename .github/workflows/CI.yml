@@ -24,11 +24,11 @@ jobs:
     - name: Build
       run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
 
-    # - name: Upload artifacts
-      # uses: actions/upload-artifact@v4
-      # with:
-        # name: ${{ matrix.configuration }}
-        # path: bin\${{ matrix.configuration }}-x64\ThreadPool
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.configuration }}
+        path: bin\${{ matrix.configuration }}-x64\ThreadPool
       
   
   tests:
@@ -53,10 +53,10 @@ jobs:
           cmake -Dgtest_force_shared_crt=ON -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\Tests\gtest ..
           msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 INSTALL.vxcproj
 
-    # - name: Download artifacts
-      # uses: actions/download-artifact
-      # with:
-        # name: ${{ matrix.configuration }}
+    - name: Download artifacts
+      uses: actions/download-artifact
+      with:
+        name: ${{ matrix.configuration }}
 
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
