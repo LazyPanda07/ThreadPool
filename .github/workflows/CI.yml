@@ -60,13 +60,8 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: ${{ matrix.configuration }}
-
-    - name: Show artifacts
-      run: |
-          dir
-          dir ThreadPool
-          dir ThreadPool\ThreadPool
-
+        path: ThreadPool
+        
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
       run: |
