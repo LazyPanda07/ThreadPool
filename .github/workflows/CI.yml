@@ -2,7 +2,7 @@ name: CI
 
 
 on:
-  push: 
+  push:
     branches: [master, dev]
 
 
@@ -20,7 +20,7 @@ jobs:
       uses: microsoft/setup-msbuild@main
 
     - name: Build
-      run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 ThreadPool.vcxproj
+      run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -59,6 +59,6 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
       run: |
-          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platformx=x64 Tests.vxcproj
+          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platformx=x64
           bin\${{ matrix.configuration }}-x64\Tests\Tests.exe
 
