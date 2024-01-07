@@ -61,6 +61,11 @@ jobs:
       with:
         name: ${{ matrix.configuration }}
 
+    - name: Show artifacts
+      run: |
+          dir ThreadPool
+          dir ThreadPool\ThreadPool
+
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
       run: |
