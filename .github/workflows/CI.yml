@@ -65,4 +65,8 @@ jobs:
       working-directory: ${{ github.workspace }}\Tests
       run: |
           msbuild /p:Configuration=${{ env.GOOGLE_TEST_CONFIGURATION }} /p:Platform=x64
+          dir
+          dir bin\
+          dir bin\${{ env.GOOGLE_TEST_CONFIGURATION }}-x64\
+          dir bin\${{ env.GOOGLE_TEST_CONFIGURATION }}-x64\Tests\
           bin\${{ env.GOOGLE_TEST_CONFIGURATION }}-x64\Tests\Tests.exe
