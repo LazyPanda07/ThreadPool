@@ -51,7 +51,7 @@ jobs:
           mkdir build
           cd build
           cmake -Dgtest_force_shared_crt=ON -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\Tests\gtest ..
-          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 INSTALL.vxcproj
+          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 INSTALL.vcxproj
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
