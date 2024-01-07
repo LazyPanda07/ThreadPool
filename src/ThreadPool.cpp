@@ -42,7 +42,7 @@ namespace threading
 		while (worker->running)
 		{
 			{
-				unique_lock<mutex> lock(workerMutex);
+				unique_lock<mutex> lock(worker->workerMutex);
 
 				hasTask.wait
 				(
