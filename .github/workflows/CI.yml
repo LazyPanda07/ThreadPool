@@ -39,10 +39,10 @@ jobs:
         configuration: [Debug, DebugDLL, Release, ReleaseDLL]
 
     steps: 
-    - uses: actions/checkout@v4
+    # - uses: actions/checkout@v4
    
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@main
+    # - name: Add MSBuild to PATH
+      # uses: microsoft/setup-msbuild@main
 
     - name: Build GoogleTest
       run: |
