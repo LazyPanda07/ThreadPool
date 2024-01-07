@@ -16,19 +16,21 @@ jobs:
         configuration: [Debug, DebugDLL, Release, ReleaseDLL]
 
     steps:
-    - uses: actions/checkout@v4
+    # - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@main
+      run: dir
+      # uses: microsoft/setup-msbuild@main
 
     - name: Build
       run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.configuration }}
-        path: bin\${{ matrix.configuration }}-x64\ThreadPool
+      run: dir
+      # uses: actions/upload-artifact@v4
+      # with:
+        # name: ${{ matrix.configuration }}
+        # path: bin\${{ matrix.configuration }}-x64\ThreadPool
       
   
   tests:
@@ -39,10 +41,11 @@ jobs:
         configuration: [Debug, DebugDLL, Release, ReleaseDLL]
 
     steps: 
-    - uses: actions/checkout@v4
+    # - uses: actions/checkout@v4
    
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@main
+      run: dir
+      # uses: microsoft/setup-msbuild@main
 
     - name: Build GoogleTest
       run: |
@@ -54,9 +57,10 @@ jobs:
           msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 INSTALL.vxcproj
 
     - name: Download artifacts
-      uses: actions/download-artifact
-      with:
-        name: ${{ matrix.configuration }}
+      run: dir
+      # uses: actions/download-artifact
+      # with:
+        # name: ${{ matrix.configuration }}
 
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
