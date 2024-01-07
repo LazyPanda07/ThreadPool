@@ -16,11 +16,10 @@ jobs:
         configuration: [Debug, DebugDLL, Release, ReleaseDLL]
 
     steps:
-    # - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
-      run: dir
-      # uses: microsoft/setup-msbuild@main
+      uses: microsoft/setup-msbuild@main
 
     - name: Build
       run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
