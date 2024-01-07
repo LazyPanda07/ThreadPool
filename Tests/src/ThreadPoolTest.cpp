@@ -54,16 +54,6 @@ TEST(ThreadPool, AddTaskWithCallback)
 	}
 }
 
-TEST(ThreadPool, LongCalculation)
-{
-	threading::ThreadPool threadPool(4);
-	int result;
-
-	threadPool.addTask(longCalculation, nullptr, std::ref(result))->wait();
-
-	ASSERT_TRUE(result == 10);
-}
-
 TEST(ThreadPool, Speed)
 {
 #ifdef _DEBUG
@@ -115,4 +105,14 @@ TEST(ThreadPool, Speed)
 
 	ASSERT_TRUE(firstValue == secondValue);
 	ASSERT_TRUE(first < second);
+}
+
+TEST(ThreadPool, LongCalculation)
+{
+	threading::ThreadPool threadPool(4);
+	int result;
+
+	threadPool.addTask(longCalculation, nullptr, std::ref(result))->wait();
+
+	ASSERT_TRUE(result == 10);
 }
