@@ -73,10 +73,16 @@ namespace threading
 
 				try
 				{
+					total++;
+
 					worker->task = move(tasks.pop());
 				}
 				catch (const std::runtime_error&)
 				{
+					miss++;
+
+					printf("%d %d\n", total.load(), miss.load());
+
 					continue;
 				}
 			}

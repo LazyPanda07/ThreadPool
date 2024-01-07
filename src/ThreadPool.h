@@ -53,6 +53,8 @@ namespace threading
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
 		std::condition_variable hasTask;
 		std::vector<Worker*> workers;
+		std::atomic_int miss;
+		std::atomic_int total;
 
 	private:
 		void workerThread(Worker* worker);
