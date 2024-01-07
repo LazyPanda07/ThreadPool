@@ -44,8 +44,6 @@ namespace threading
 			{
 				unique_lock<mutex> lock(workerMutex);
 
-				printf("Pick task: %p\n", worker);
-
 				hasTask.wait
 				(
 					lock,
@@ -74,8 +72,6 @@ namespace threading
 			}
 
 			worker->state = threadState::running;
-
-			printf("Execute: %p\n", worker);
 
 			worker->task->execute();
 
