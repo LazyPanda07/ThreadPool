@@ -32,6 +32,7 @@ namespace threading
 			/**
 			 * @brief Give out first element from queue
 			 * @return First element in queue
+			 * @exception std::runtime_error
 			*/
 			T pop();
 
@@ -70,6 +71,12 @@ namespace threading
 		T ConcurrentQueue<T>::pop()
 		{
 			std::unique_lock<std::mutex> lock(dataMutex);
+
+			if (data.empty())
+			{
+				throw std::runtime_error("No front element");
+			}
+
 			T value = std::move(data.front());
 
 			data.pop();
