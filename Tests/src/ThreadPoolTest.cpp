@@ -23,7 +23,7 @@ TEST(ThreadPool, AddTask)
 	result.emplace_back(threadPool.addTask(sum, nullptr, 20, 30));
 	result.emplace_back(threadPool.addTask(sum, nullptr, 30, 40));
 
-	for (const auto& future : result)
+	for (const std::unique_ptr<threading::Future>& future : result)
 	{
 		int64_t value = future->get<int64_t>();
 
@@ -46,7 +46,7 @@ TEST(ThreadPool, AddTaskWithCallback)
 
 	while (finish != 4);
 
-	for (const auto& future : result)
+	for (const std::unique_ptr<threading::Future>& future : result)
 	{
 		int64_t value = future->get<int64_t>();
 
@@ -100,7 +100,7 @@ TEST(ThreadPool, Speed)
 
 			futures.emplace_back(threadPool.addTask(sum, nullptr, min + static_cast<int64_t>((threadPool.size() - 1)) * perThread, max));
 
-			for (const auto& value : futures)
+			for (const std::unique_ptr<threading::Future>& value : futures)
 			{
 				result += value->get<int64_t>();
 			}

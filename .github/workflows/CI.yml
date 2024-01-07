@@ -44,6 +44,9 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@main
 
+    - name: Setup GoogleTest configuration
+      run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
+
     - name: Build GoogleTest
       run: |
           git clone https://github.com/google/googletest.git -b v1.14.x gtest
@@ -51,7 +54,7 @@ jobs:
           mkdir build
           cd build
           cmake -Dgtest_force_shared_crt=ON -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\Tests\gtest ..
-          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 INSTALL.vcxproj
+          msbuild /p:Configuration=${{ env.GOOGLE_TEST_CONFIGURATION }} /p:Platform=x64 INSTALL.vcxproj
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
@@ -61,6 +64,5 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
       run: |
-          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platformx=x64
-          bin\${{ matrix.configuration }}-x64\Tests\Tests.exe
-
+          msbuild /p:Configuration=${{ env.GOOGLE_TEST_CONFIGURATION }} /p:Platformx=x64
+          bin\${{ env.GOOGLE_TEST_CONFIGURATION }}-x64\Tests\Tests.exe

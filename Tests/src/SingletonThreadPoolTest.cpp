@@ -15,7 +15,7 @@ TEST(SingletonThreadPool, AddTask##number##Threads) \
 	result.emplace_back(threadPool.addTask(sum, nullptr, 20, 30)); \
 	result.emplace_back(threadPool.addTask(sum, nullptr, 30, 40)); \
 	\
-	for (const auto& future : result) \
+	for (const std::unique_ptr<threading::Future>& future : result) \
 	{ \
 		int64_t value = future->get<int64_t>(); \
 		\
