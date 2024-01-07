@@ -42,7 +42,7 @@ namespace threading
 		while (worker->running)
 		{
 			{
-				unique_lock<mutex> lock(worker->workerMutex);
+				unique_lock<mutex> lock(workerMutex);
 
 				hasTask.wait
 				(
@@ -80,6 +80,8 @@ namespace threading
 			worker->task.reset();
 
 			worker->state = threadState::waiting;
+
+			hasTask.notify_one();
 		}
 
 		if (worker->onEnd)

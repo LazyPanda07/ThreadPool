@@ -25,6 +25,8 @@ TEST(SingletonThreadPool, AddTask##number##Threads) \
 	threadPool.shutdown(); \
 }
 
+ADD_TASK(1)
+
 ADD_TASK(2)
 
 ADD_TASK(3)

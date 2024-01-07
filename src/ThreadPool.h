@@ -29,7 +29,6 @@ namespace threading
 
 		public:
 			mutable std::mutex stateMutex;
-			std::mutex workerMutex;
 			std::unique_ptr<BaseTask> task;
 			threadState state;
 			std::atomic_bool running;
@@ -52,6 +51,7 @@ namespace threading
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
 		std::condition_variable hasTask;
+		std::mutex workerMutex;
 		std::vector<Worker*> workers;
 
 	private:
