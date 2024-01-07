@@ -1,0 +1,64 @@
+name: CI
+
+
+on:
+  push: 
+    branches: [master, dev]
+
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@main
+
+    - name: Build
+      run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 ThreadPool.vcxproj
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.configuration }}
+        path: bin\${{ matrix.configuration }}-x64\ThreadPool
+      
+  
+  tests:
+    runs-on: windows-latest
+    needs: [build]
+    strategy:
+      matrix:
+        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+
+    steps: 
+    - uses: actions/checkout@v4
+   
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@main
+
+    - name: Build GoogleTest
+      run: |
+          git clone https://github.com/google/googletest.git -b v1.14.x gtest
+          cd gtest
+          mkdir build
+          cd build
+          cmake -Dgtest_force_shared_crt=ON -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\Tests\gtest ..
+          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 INSTALL.vxcproj
+
+    - name: Download artifacts
+      uses: actions/download-artifact
+      with:
+        name: ${{ matrix.configuration }}
+
+    - name: Tests
+      working-directory: ${{ github.workspace }}\Tests
+      run: |
+          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platformx=x64 Tests.vxcproj
+          bin\${{ matrix.configuration }}-x64\Tests\Tests.exe
+

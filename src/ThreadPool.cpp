@@ -223,7 +223,12 @@ namespace threading
 
 	size_t ThreadPool::getThreadsCount() const
 	{
-		return workers.size();
+		return static_cast<size_t>(workers.size());
+	}
+
+	size_t ThreadPool::size() const
+	{
+		return static_cast<size_t>(workers.size());
 	}
 
 	ThreadPool::~ThreadPool()

@@ -82,7 +82,15 @@ namespace threading
 
 		/// @brief Add new task to thread pool
 		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(R(*task)(ArgsT...), const std::function<void()>& callback, Args&&... args);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
 		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(R(*task)(ArgsT...), std::function<void()>&& callback, Args&&... args);
 
 		/// @brief Reinitialize thread pool
 		/// @param Wait all threads execution
@@ -116,6 +124,10 @@ namespace threading
 		/// @return Current count of threads in thread pool
 		size_t getThreadsCount() const;
 
+		/// @brief Getter for threadsCount
+		/// @return Current count of threads in thread pool
+		size_t size() const;
+
 		~ThreadPool();
 	};
 
@@ -129,7 +141,25 @@ namespace threading
 	}
 
 	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(R(*task)(ArgsT...), const std::function<void()>& callback, Args&&... args)
+	{
+		return this->addTask
+		(
+			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), callback)
+		);
+	}
+
+	template<typename R, typename... ArgsT, typename... Args>
 	std::unique_ptr<Future> ThreadPool::addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args)
+	{
+		return this->addTask
+		(
+			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), std::move(callback))
+		);
+	}
+
+	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(R(*task)(ArgsT...), std::function<void()>&& callback, Args&&... args)
 	{
 		return this->addTask
 		(

@@ -34,8 +34,14 @@
 # VS folder
 .vs/
 
+# Visual Code folder
+.vscode/
+
 # Binaries
 bin/
 
 # .sln file
 ThreadPool.sln
+
+# Tests
+Tests/gtest/
