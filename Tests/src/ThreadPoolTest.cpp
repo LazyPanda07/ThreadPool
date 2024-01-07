@@ -109,11 +109,11 @@ TEST(ThreadPool, Speed)
 
 TEST(ThreadPool, TasksSpam)
 {
-	threading::ThreadPool threadPool(4);
+	threading::ThreadPool threadPool(8);
 
-	for (size_t i = 0; i < 1'000'000'000; i++)
+	for (int64_t i = 0; i < 1'000'000; i++)
 	{
-		threadPool.addTask(get, nullptr, i);
+		threadPool.addTask(sum, nullptr, i, i + 10);
 	}
 }
 

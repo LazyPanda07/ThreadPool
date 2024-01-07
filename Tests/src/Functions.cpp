@@ -22,8 +22,3 @@ void longCalculation(int& result)
 
 	result = 10;
 }
-
-size_t get(size_t value)
-{
-	return value;
-}
