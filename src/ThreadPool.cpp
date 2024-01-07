@@ -44,24 +44,27 @@ namespace threading
 			{
 				unique_lock<mutex> lock(workerMutex);
 
-				hasTask.wait
-				(
-					lock,
-					[this, worker]() 
-					{
-						if (!worker->running)
+				if (tasks.empty())
+				{
+					hasTask.wait
+					(
+						lock,
+						[this, worker]()
 						{
-							return true;
-						}
+							if (!worker->running)
+							{
+								return true;
+							}
 
-						if (tasks.size())
-						{
-							return true;
-						}
+							if (tasks.size())
+							{
+								return true;
+							}
 
-						return false;
-					}
-				);
+							return false;
+						}
+					);
+				}
 
 				if (!worker->running)
 				{

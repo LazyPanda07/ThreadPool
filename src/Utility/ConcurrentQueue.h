@@ -41,6 +41,12 @@ namespace threading
 			*/
 			size_t size() const;
 
+			/**
+			 * @brief Checks whether the queue is empty
+			 * @return 
+			*/
+			bool empty() const;
+
 			~ConcurrentQueue() = default;
 		};
 
@@ -77,6 +83,12 @@ namespace threading
 			std::unique_lock<std::mutex> lock(dataMutex);
 
 			return data.size();
+		}
+
+		template<typename T>
+		bool ConcurrentQueue<T>::empty() const
+		{
+			return !this->size();
 		}
 	}
 }
