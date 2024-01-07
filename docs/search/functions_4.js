@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['reinit_0',['reinit',['../classthreading_1_1_singleton_thread_pool.html#ae6e85929e91855be397b0e1be025a1ca',1,'threading::SingletonThreadPool::reinit()'],['../classthreading_1_1_thread_pool.html#add4d39d28e6e231cf845d567c01c8d28',1,'threading::ThreadPool::reinit()'],['../classthreading_1_1_singleton_thread_pool.html#ae6e85929e91855be397b0e1be025a1ca',1,'threading::SingletonThreadPool::reinit()'],['../classthreading_1_1_thread_pool.html#a6735e8a3f456b856324774ec95977a11',1,'threading::ThreadPool::reinit(bool wait=true, size_t threadsCount=std::thread::hardware_concurrency())']]],
-  ['resize_1',['resize',['../classthreading_1_1_thread_pool.html#a20556ca7d3126ebeb2b3efd1a35e94f2',1,'threading::ThreadPool::resize(size_t threadsCount)'],['../classthreading_1_1_thread_pool.html#a20556ca7d3126ebeb2b3efd1a35e94f2',1,'threading::ThreadPool::resize(size_t threadsCount)']]]
+  ['pop_0',['pop',['../classthreading_1_1utility_1_1_concurrent_queue.html#a29a6d8f40106cea744ae2f7348dcdf5a',1,'threading::utility::ConcurrentQueue']]],
+  ['push_1',['push',['../classthreading_1_1utility_1_1_concurrent_queue.html#a873fa6762a22516af0fa03ebeec9fb62',1,'threading::utility::ConcurrentQueue::push(const T &amp;value)'],['../classthreading_1_1utility_1_1_concurrent_queue.html#a6aa0f8713ef478fb2e26df55d431bac2',1,'threading::utility::ConcurrentQueue::push(T &amp;&amp;value)']]]
 ];

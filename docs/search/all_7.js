@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['reinit_0',['reinit',['../classthreading_1_1_singleton_thread_pool.html#ae6e85929e91855be397b0e1be025a1ca',1,'threading::SingletonThreadPool::reinit()'],['../classthreading_1_1_thread_pool.html#add4d39d28e6e231cf845d567c01c8d28',1,'threading::ThreadPool::reinit()'],['../classthreading_1_1_singleton_thread_pool.html#ae6e85929e91855be397b0e1be025a1ca',1,'threading::SingletonThreadPool::reinit()'],['../classthreading_1_1_thread_pool.html#a6735e8a3f456b856324774ec95977a11',1,'threading::ThreadPool::reinit(bool wait=true, size_t threadsCount=std::thread::hardware_concurrency())']]],
-  ['resize_1',['resize',['../classthreading_1_1_thread_pool.html#a20556ca7d3126ebeb2b3efd1a35e94f2',1,'threading::ThreadPool::resize(size_t threadsCount)'],['../classthreading_1_1_thread_pool.html#a20556ca7d3126ebeb2b3efd1a35e94f2',1,'threading::ThreadPool::resize(size_t threadsCount)']]]
+  ['h_20tt_0',['h tt',['../md__tests_2gtest_2include_2gmock_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md3',1,'Header &lt;tt&gt;gmock-port.h&lt;/tt&gt;'],['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md8',1,'Header &lt;tt&gt;gtest-port.h&lt;/tt&gt;'],['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md13',1,'Header &lt;tt&gt;gtest-printers.h&lt;/tt&gt;'],['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md6',1,'Header &lt;tt&gt;gtest.h&lt;/tt&gt;']]],
+  ['hasdebugstringandshortdebugstring_1',['HasDebugStringAndShortDebugString',['../classtesting_1_1internal_1_1_has_debug_string_and_short_debug_string.html',1,'testing::internal']]],
+  ['header_20tt_20gmock_20port_20h_20tt_2',['Header &lt;tt&gt;gmock-port.h&lt;/tt&gt;',['../md__tests_2gtest_2include_2gmock_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md3',1,'']]],
+  ['header_20tt_20gtest_20h_20tt_3',['Header &lt;tt&gt;gtest.h&lt;/tt&gt;',['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md6',1,'']]],
+  ['header_20tt_20gtest_20port_20h_20tt_4',['Header &lt;tt&gt;gtest-port.h&lt;/tt&gt;',['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md8',1,'']]],
+  ['header_20tt_20gtest_20printers_20h_20tt_5',['Header &lt;tt&gt;gtest-printers.h&lt;/tt&gt;',['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md13',1,'']]],
+  ['holder_6',['Holder',['../structtesting_1_1internal_1_1_impl_base_1_1_holder.html',1,'testing::internal::ImplBase']]]
 ];

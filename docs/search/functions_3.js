@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pop_0',['pop',['../classthreading_1_1utility_1_1_concurrent_queue.html#a29a6d8f40106cea744ae2f7348dcdf5a',1,'threading::utility::ConcurrentQueue']]],
-  ['push_1',['push',['../classthreading_1_1utility_1_1_concurrent_queue.html#a873fa6762a22516af0fa03ebeec9fb62',1,'threading::utility::ConcurrentQueue::push(const T &amp;value)'],['../classthreading_1_1utility_1_1_concurrent_queue.html#a6aa0f8713ef478fb2e26df55d431bac2',1,'threading::utility::ConcurrentQueue::push(T &amp;&amp;value)']]]
+  ['isanytaskrunning_0',['isanytaskrunning',['../classthreading_1_1_singleton_thread_pool.html#a3ab06d91ff1171fc05d4874b5a3fe114',1,'threading::SingletonThreadPool::isAnyTaskRunning()'],['../classthreading_1_1_thread_pool.html#a1b5c8c9d52e359275565a3bb23033e6c',1,'threading::ThreadPool::isAnyTaskRunning()']]]
 ];
