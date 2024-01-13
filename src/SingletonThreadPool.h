@@ -150,7 +150,7 @@ namespace threading
 	template<size_t threadsCount>
 	bool SingletonThreadPool<threadsCount>::isAnyTaskRunning() const
 	{
-		threadPool.isAnyTaskRunning();
+		return threadPool.isAnyTaskRunning();
 	}
 
 	template<size_t threadsCount>
