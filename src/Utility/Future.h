@@ -4,7 +4,7 @@
 
 #ifdef THREAD_POOL_DLL
 #ifdef __LINUX__
-__attribute__((visibility("default")))
+#define THREAD_POOL_API __attribute__((visibility("default")))
 #else
 #define THREAD_POOL_API __declspec(dllexport)
 #endif
