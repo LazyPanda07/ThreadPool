@@ -143,7 +143,7 @@ jobs:
           make install
 
     - name: Create CMakeLists.txt
-      run: vs_to_cmake -f Tests/Tests.vcxproj
+      run: vs_to_cmake -f Tests/Tests.vcxproj -o Tests
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
