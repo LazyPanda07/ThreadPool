@@ -52,7 +52,9 @@ jobs:
           ref: dev
 
       - name: Install vs_to_cmake
-        run: pip3 install vs_to_cmake
+        run: |
+          cd vs_to_cmake
+          pip3 install .
 
       - name: Create CMakeLists.txt
         run: vs_to_cmake -f ThreadPool.vcxproj -d __LINUX__
