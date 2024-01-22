@@ -127,11 +127,10 @@ jobs:
           ref: dev
 
     - name: Install vs_to_cmake
-      run: |
-          cd vs_to_cmake
-          pip3 install .
+      run: pip3 install $(pwd)/vs_to_cmake/
 
     - name: Setup GoogleTest configuration
+      shell: pwsh
       run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
 
     - name: Build GoogleTest
