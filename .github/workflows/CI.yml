@@ -154,9 +154,8 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
-          cat CMakeLists.txt
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} ..
+          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
           make install
-          ./bin/${{ matrix.configuration }}-x64/Tests/Tests
+          ./bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/Tests

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstddef>
 
 int64_t sum(int64_t left, int64_t right);
 
