@@ -63,17 +63,11 @@ TEST(ThreadPool, Speed)
 	threading::ThreadPool threadPool(4);
 	std::mt19937_64 random(std::time(nullptr));
 	int64_t left = random() % 100'000'000;
-	int64_t right = random() % 100'000'000 + 1'000'000;
+	int64_t right = left + 50'000'000;
 	int64_t firstValue = 0;
 	int64_t secondValue = 0;
 	double first = 0.0;
 	double second = 0.0;
-
-	while (std::abs(left - right) < 1'000'000)
-	{
-		left = random() % 1'000'000;
-		right = random() % 1'000'000 + 1'000'000;
-	}
 
 	auto threadPoolCalculation = [&threadPool](int64_t left, int64_t right) -> int64_t
 		{
