@@ -56,11 +56,14 @@ jobs:
       - name: Create CMakeLists.txt
         run: vs_to_cmake -f ThreadPool.vcxproj -d __LINUX__
 
+      - name: Remove lib prefix
+        run: echo "set(CMAKE_STATIC_LIBRARY_PREFIX "")" >> CMakeLists.txt
+
       - name: Build
         run: |
             mkdir build
             cd build
-            cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
+            cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} ..
             make install
 
       - name: Upload artifacts
@@ -136,16 +139,17 @@ jobs:
       run: |
           git clone https://github.com/google/googletest.git -b v1.14.x gtest
           cd gtest
+          echo "set(CMAKE_STATIC_LIBRARY_PREFIX "")" >> CMakeLists.txt
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
           make install
 
     - name: Create CMakeLists.txt
       run: vs_to_cmake -f Tests/Tests.vcxproj -o Tests
 
     - name: Add link libraries
-      run: echo "target_link_libraries(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/gtest/lib/gtest.a ${PROJECT_SOURCE_DIR}/gtest/lib/gtest_main.a ${PROJECT_SOURCE_DIR}../ThreadPool/ThreadPool.a)" >> Tests/CMakeLists.txt
+      run: echo "target_link_libraries('${PROJECT_NAME}' '${PROJECT_SOURCE_DIR}'/gtest/lib/gtest.a '${PROJECT_SOURCE_DIR}'/gtest/lib/gtest_main.a '${PROJECT_SOURCE_DIR}'../ThreadPool/ThreadPool.a)" >> Tests/CMakeLists.txt
 
     - name: Print CMakeLists.txt
       run: cat Tests/CMakeLists.txt
@@ -160,8 +164,9 @@ jobs:
       working-directory: ${{ github.workspace }}/Tests
       run: |
           ls ../ThreadPool
+          echo "set(CMAKE_STATIC_LIBRARY_PREFIX "")" >> CMakeLists.txt
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
+          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
           make install
           ./bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/Tests
