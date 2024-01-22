@@ -51,6 +51,9 @@ jobs:
           path: vs_to_cmake
           ref: dev
 
+      - name: Directory
+        run: ls vs_to_cmake
+
       - name: Install vs_to_cmake
         run: pip install vs_to_cmake
 
