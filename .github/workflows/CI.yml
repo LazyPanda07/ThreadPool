@@ -144,8 +144,8 @@ jobs:
     - name: Create CMakeLists.txt
       run: vs_to_cmake -f Tests/Tests.vcxproj -o Tests
 
-    - name: Replace .lib to .a
-      run: sed -i 's/.lib/.a/g' Tests/CMakeLists.txt
+    - name: Add link libraries
+      run: echo "target_link_libraries(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/gtest/lib/gtest.a ${PROJECT_SOURCE_DIR}/gtest/lib/gtest_main.a ${PROJECT_SOURCE_DIR}../ThreadPool/ThreadPool.a)" >> Tests/CMakeLists.txt
 
     - name: Print CMakeLists.txt
       run: cat Tests/CMakeLists.txt
@@ -159,7 +159,7 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
-          ls
+          ls ../ThreadPool
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
