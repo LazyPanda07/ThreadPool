@@ -154,6 +154,7 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
+          cat CMakeLists.txt
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} ..
