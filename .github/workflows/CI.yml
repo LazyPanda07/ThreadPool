@@ -2,10 +2,9 @@ name: CI
 
 
 on:
+  workflow_dispatch:
   push:
     branches: [master, dev]
-
-  workflow_dispatch:
 
 
 jobs:
@@ -61,7 +60,7 @@ jobs:
         run: |
             mkdir build
             cd build
-            cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} ..
+            cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
             make install
 
       - name: Upload artifacts
@@ -139,11 +138,17 @@ jobs:
           cd gtest
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
           make install
 
     - name: Create CMakeLists.txt
       run: vs_to_cmake -f Tests/Tests.vcxproj -o Tests
+
+    - name: Replace .lib to .a
+      run: sed -i 's/.lib/.a/g' Tests/CMakeLists.txt
+
+    - name: Print CMakeLists.txt
+      run: cat Tests/CMakeLists.txt
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
@@ -154,8 +159,9 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
+          ls
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
+          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} -DCMAKE_STATIC_LIBRARY_PREFIX="" ..
           make install
           ./bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/Tests
