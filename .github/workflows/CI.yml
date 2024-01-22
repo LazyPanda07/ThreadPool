@@ -146,8 +146,8 @@ jobs:
 
     - name: Add link libraries
       run: |
-          echo "link_directories($(pwd)/gtest/lib $(pwd)/../ThreadPool)" >> Tests/CMakeLists.txt
-          echo "target_link_libraries(Tests gtest gtest_main ThreadPool)" >> Tests/CMakeLists.txt
+          echo "target_link_directories(Tests PUBLIC $(pwd)/gtest/lib $(pwd)/../ThreadPool)" >> Tests/CMakeLists.txt
+          echo "target_link_libraries(Tests $(pwd)/gtest/lib/libgtest.a $(pwd)/gtest/lib/libgtest_main.a $(pwd)../ThreadPool/libThreadPool.a)" >> Tests/CMakeLists.txt
 
     - name: Print CMakeLists.txt
       run: cat Tests/CMakeLists.txt
