@@ -51,11 +51,8 @@ jobs:
           path: vs_to_cmake
           ref: dev
 
-      - name: Directory
-        run: ls vs_to_cmake
-
       - name: Install vs_to_cmake
-        run: pip install vs_to_cmake
+        run: pip3 install vs_to_cmake
 
       - name: Create CMakeLists.txt
         run: vs_to_cmake -f ThreadPool.vcxproj -d __LINUX__
@@ -130,7 +127,7 @@ jobs:
           ref: dev
 
     - name: Install vs_to_cmake
-      run: pip install vs_to_cmake
+      run: pip3 install vs_to_cmake
 
     - name: Setup GoogleTest configuration
       run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
