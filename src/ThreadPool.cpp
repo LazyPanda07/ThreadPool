@@ -39,52 +39,34 @@ namespace threading
 
 	void ThreadPool::workerThread(Worker* worker)
 	{
+		mutex workerMutex;
+		unique_lock<mutex> lock(workerMutex);
+
 		while (worker->running)
 		{
+			hasTask.wait
+			(
+				lock,
+				[this, worker]()
+				{
+					return !worker->running || tasks.size();
+				}
+			);
+
+			if (!worker->running)
 			{
-				unique_lock<mutex> lock(workerMutex);
-
-				if (tasks.empty())
-				{
-					hasTask.wait
-					(
-						lock,
-						[this, worker]()
-						{
-							if (!worker->running)
-							{
-								return true;
-							}
-
-							if (tasks.size())
-							{
-								return true;
-							}
-
-							return false;
-						}
-					);
-				}
-
-				if (!worker->running)
-				{
-					break;
-				}
-
-				worker->task = move(tasks.pop());
+				break;
 			}
+
+			worker->task = move(tasks.pop());
 
 			worker->state = threadState::running;
 
 			worker->task->execute();
 
-			unique_lock<mutex> threadStateLock(worker->stateMutex);
-
 			worker->task.reset();
 
 			worker->state = threadState::waiting;
-
-			hasTask.notify_one();
 		}
 
 		if (worker->onEnd)
@@ -221,7 +203,6 @@ namespace threading
 	float ThreadPool::getThreadProgress(size_t threadIndex) const
 	{
 		const Worker* worker = workers.at(threadIndex);
-		unique_lock<mutex> threadProgressLock(worker->stateMutex);
 
 		return worker->task ? worker->task->getProgress() : -1.0f;
 	}

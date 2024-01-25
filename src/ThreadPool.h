@@ -28,9 +28,8 @@ namespace threading
 			std::thread thread;
 
 		public:
-			mutable std::mutex stateMutex;
 			std::unique_ptr<BaseTask> task;
-			threadState state;
+			std::atomic<threadState> state;
 			std::atomic_bool running;
 			std::function<void(Worker*)> onEnd;
 
@@ -51,7 +50,7 @@ namespace threading
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
 		std::condition_variable hasTask;
-		std::mutex workerMutex;
+		// std::mutex workerMutex;
 		std::vector<Worker*> workers;
 
 	private:
