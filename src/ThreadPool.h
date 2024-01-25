@@ -91,8 +91,11 @@ namespace threading
 		template<typename R, typename... ArgsT, typename... Args>
 		std::unique_ptr<Future> addTask(R(*task)(ArgsT...), std::function<void()>&& callback, Args&&... args);
 
+		/**
+		* @brief Create custom new task of type TaskT and add that task to thread pool
+		*/
 		template<typename TaskT, typename... Args>
-		std::unique_ptr<Future> addTask(Args&&... args);
+		std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>;
 
 		/// @brief Reinitialize thread pool
 		/// @param Wait all threads execution
