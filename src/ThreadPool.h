@@ -50,7 +50,6 @@ namespace threading
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
 		std::condition_variable hasTask;
-		// std::mutex workerMutex;
 		std::vector<Worker*> workers;
 
 	private:

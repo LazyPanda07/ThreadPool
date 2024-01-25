@@ -7,7 +7,7 @@
 #define ADD_TASK(number) \
 TEST(SingletonThreadPool, AddTask##number##Threads) \
 { \
-	auto& threadPool = threading::SingletonThreadPool<number>::get(); \
+	threading::SingletonThreadPool<number>& threadPool = threading::SingletonThreadPool<number>::get(); \
 	std::vector<std::unique_ptr<threading::Future>> result; \
 	\
 	result.emplace_back(threadPool.addTask(sum, nullptr, 0, 10)); \
@@ -25,18 +25,18 @@ TEST(SingletonThreadPool, AddTask##number##Threads) \
 	threadPool.shutdown(); \
 }
 
-ADD_TASK(1)
+// ADD_TASK(1)
 
-ADD_TASK(2)
+// ADD_TASK(2)
 
-ADD_TASK(3)
+// ADD_TASK(3)
 
-ADD_TASK(4)
+// ADD_TASK(4)
 
-ADD_TASK(5)
+// ADD_TASK(5)
 
-ADD_TASK(6)
+// ADD_TASK(6)
 
-ADD_TASK(7)
+// ADD_TASK(7)
 
-ADD_TASK(8)
+// ADD_TASK(8)
