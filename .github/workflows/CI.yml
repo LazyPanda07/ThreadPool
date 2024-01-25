@@ -61,7 +61,7 @@ jobs:
             mkdir build
             cd build
             cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} ..
-            make install
+            make install -j  $(nproc)
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -129,7 +129,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
-          make install
+          make install -j  $(nproc)
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
@@ -143,7 +143,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
-          make install
+          make install -j  $(nproc)
           cd ../bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           ./Tests

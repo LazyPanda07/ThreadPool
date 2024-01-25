@@ -29,7 +29,10 @@ namespace threading
 
 	void ThreadPool::Worker::join()
 	{
-		thread.join();
+		if (thread.joinable())
+		{
+			thread.join();
+		}
 	}
 
 	void ThreadPool::Worker::detach()
@@ -170,29 +173,30 @@ namespace threading
 			workers,
 			[this, wait](Worker* worker)
 			{
-				worker->running = false;
-
-				if (wait)
+				if (!wait)
 				{
-					hasTask.notify_all();
-
-					worker->join();
-
-					delete worker;
-				}
-				else
-				{
-					worker->onEnd = [](Worker* worker)
-						{
-							delete worker;
-						};
-
 					worker->detach();
 
-					hasTask.notify_all();
+					worker->onEnd = [](Worker* worker) { delete worker; };
 				}
+
+				worker->running = false;
 			}
 		);
+
+		hasTask.notify_all();
+
+		if (wait)
+		{
+			ranges::for_each
+			(
+				workers,
+				[this](Worker* worker)
+				{
+					worker->join();
+				}
+			);
+		}
 
 		workers.clear();
 	}
