@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(Tests)
 
+set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/libThreadPool.so)
+
 if (${VS_BUILD_CONFIGURATION} STREQUAL Debug)
 	set(VS_CONFIGURATION Debug)
 	set(VS_PLATFORM x64)
@@ -47,3 +49,7 @@ target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib $
 target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION .)
+
+if(EXISTS ${SHARED_OBJECT})
+    install(FILES ${SHARED_OBJECT} DESTINATION .)
+endif()
