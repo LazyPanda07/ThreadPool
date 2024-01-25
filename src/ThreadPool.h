@@ -107,7 +107,7 @@ namespace threading
 
 		/// @brief Stop ThreadPool
 		/// @param wait Wait all threads execution
-		void shutdown(bool wait = false);
+		void shutdown(bool wait = true);
 
 		/// @brief Check is thread pool has task that running in some thread
 		/// @return Returns true if thread pool has task

@@ -60,7 +60,7 @@ TEST(ThreadPool, Speed)
 	return;
 #endif
 
-	threading::ThreadPool threadPool(4);
+	threading::ThreadPool threadPool(8);
 	std::mt19937_64 random(std::time(nullptr));
 	int64_t left = random() % 100'000'000;
 	int64_t right = left + 50'000'000;

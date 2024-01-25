@@ -193,7 +193,11 @@ namespace threading
 				workers,
 				[this](Worker* worker)
 				{
+					printf("Wait...\n");
+
 					worker->join();
+
+					printf("Release\n");
 				}
 			);
 		}
