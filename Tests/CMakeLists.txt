@@ -2,12 +2,23 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(Tests)
 
+add_executable(
+    ${PROJECT_NAME} 
+    src/Main.cpp 
+    src/Functions.cpp 
+    src/SingletonThreadPoolTest.cpp 
+    src/ThreadPoolTest.cpp
+)
+
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
 	${PROJECT_SOURCE_DIR}/../src/
 	${PROJECT_SOURCE_DIR}/gtest/include/
 	${PROJECT_SOURCE_DIR}/include/
 )
+
+target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib ${PROJECT_SOURCE_DIR}/../ThreadPool)
+target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
 
 if (${VS_BUILD_CONFIGURATION} STREQUAL Debug)
 	set(VS_CONFIGURATION Debug)
@@ -38,14 +49,3 @@ if (${VS_BUILD_CONFIGURATION} STREQUAL Release)
 
 	install(TARGETS ${PROJECT_NAME} DESTINATION .)
 endif()
-
-add_executable(
-    ${PROJECT_NAME} 
-    src/Main.cpp 
-    src/Functions.cpp 
-    src/SingletonThreadPoolTest.cpp 
-    src/ThreadPoolTest.cpp
-)
-
-target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib ${PROJECT_SOURCE_DIR}/../ThreadPool)
-target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
