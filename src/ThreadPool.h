@@ -177,7 +177,7 @@ namespace threading
 	{
 		return this->addTask
 		(
-			std::make_unique<TaskT>(std::forward<Args>(args)...);
+			std::make_unique<TaskT>(std::forward<Args>(args)...)
 		);
 	}
 }
