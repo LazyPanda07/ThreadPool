@@ -58,7 +58,14 @@ namespace threading
 				break;
 			}
 
-			worker->task = move(tasks.pop());
+			optional<unique_ptr<BaseTask>> task = tasks.pop();
+
+			if (!task)
+			{
+				continue;
+			}
+
+			worker->task = move(task.value());
 
 			worker->state = threadState::running;
 

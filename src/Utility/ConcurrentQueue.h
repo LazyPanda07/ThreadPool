@@ -2,6 +2,7 @@
 
 #include <queue>
 #include <mutex>
+#include <optional>
 
 namespace threading
 {
@@ -32,9 +33,8 @@ namespace threading
 			/**
 			 * @brief Give out first element from queue
 			 * @return First element in queue
-			 * @exception std::runtime_error
 			*/
-			T pop();
+			std::optional<T> pop();
 
 			/**
 			 * @brief Current size of queue
@@ -68,20 +68,24 @@ namespace threading
 		}
 
 		template<typename T>
-		T ConcurrentQueue<T>::pop()
+		std::optional<T> ConcurrentQueue<T>::pop()
 		{
-			std::unique_lock<std::mutex> lock(dataMutex);
+			std::optional<T> result;
 
-			if (data.empty())
 			{
-				throw std::runtime_error("No front element");
+				std::unique_lock<std::mutex> lock(dataMutex);
+
+				if (data.empty())
+				{
+					return result;
+				}
+
+				result = std::move(data.front());
+
+				data.pop();
 			}
 
-			T value = std::move(data.front());
-
-			data.pop();
-
-			return value;
+			return result;
 		}
 
 		template<typename T>
