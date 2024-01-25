@@ -170,7 +170,7 @@ namespace threading
 	}
 
 	template<typename TaskT, typename... Args>
-	std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>
+	std::unique_ptr<Future> ThreadPool::addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>
 	{
 		return this->addTask
 		(
