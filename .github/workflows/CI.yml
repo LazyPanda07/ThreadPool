@@ -118,16 +118,6 @@ jobs:
     steps: 
     - uses: actions/checkout@v4
 
-    - name: Get vs_to_cmake
-      uses: actions/checkout@v4
-      with: 
-          repository: LazyPanda07/vs_to_cmake
-          path: vs_to_cmake
-          ref: dev
-
-    - name: Install vs_to_cmake
-      run: pip3 install $(pwd)/vs_to_cmake/
-
     - name: Setup GoogleTest configuration
       shell: pwsh
       run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
@@ -140,17 +130,6 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
           make install
-
-    - name: Create CMakeLists.txt
-      run: vs_to_cmake -f Tests/Tests.vcxproj -o Tests
-
-    - name: Add link libraries
-      run: |
-          echo "target_link_directories(Tests PUBLIC $(pwd)/gtest/lib $(pwd)/../ThreadPool)" >> Tests/CMakeLists.txt
-          echo "target_link_libraries(Tests $(pwd)/gtest/lib/libgtest.a $(pwd)/gtest/lib/libgtest_main.a $(pwd)../ThreadPool/libThreadPool.a)" >> Tests/CMakeLists.txt
-
-    - name: Print CMakeLists.txt
-      run: cat Tests/CMakeLists.txt
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
