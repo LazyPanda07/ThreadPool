@@ -5,6 +5,7 @@
 #include <mutex>
 #include <vector>
 #include <functional>
+#include <concepts>
 
 #include "Tasks/FunctionWrapperTask.h"
 #include "Utility/ConcurrentQueue.h"
@@ -90,6 +91,9 @@ namespace threading
 		template<typename R, typename... ArgsT, typename... Args>
 		std::unique_ptr<Future> addTask(R(*task)(ArgsT...), std::function<void()>&& callback, Args&&... args);
 
+		template<typename TaskT, typename... Args>
+		std::unique_ptr<Future> addTask(Args&&... args);
+
 		/// @brief Reinitialize thread pool
 		/// @param Wait all threads execution
 		/// @param threadsCount New thread pool size
@@ -100,7 +104,7 @@ namespace threading
 
 		/// @brief Stop ThreadPool
 		/// @param wait Wait all threads execution
-		void shutdown(bool wait = true);
+		void shutdown(bool wait = false);
 
 		/// @brief Check is thread pool has task that running in some thread
 		/// @return Returns true if thread pool has task
@@ -162,6 +166,15 @@ namespace threading
 		return this->addTask
 		(
 			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), std::move(callback))
+		);
+	}
+
+	template<typename TaskT, typename... Args>
+	std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>
+	{
+		return this->addTask
+		(
+			std::make_unique<TaskT>(std::forward<Args>(args)...);
 		);
 	}
 }
