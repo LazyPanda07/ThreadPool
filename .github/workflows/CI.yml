@@ -144,5 +144,6 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
           make install
+          cd ..
           ls -R bin
           ./bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/Tests
