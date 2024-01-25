@@ -9,9 +9,6 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/include/
 )
 
-target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib ${PROJECT_SOURCE_DIR}/../ThreadPool)
-target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
-
 if (${VS_BUILD_CONFIGURATION} STREQUAL Debug)
 	set(VS_CONFIGURATION Debug)
 	set(VS_PLATFORM x64)
@@ -49,3 +46,6 @@ add_executable(
     src/SingletonThreadPoolTest.cpp 
     src/ThreadPoolTest.cpp
 )
+
+target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib ${PROJECT_SOURCE_DIR}/../ThreadPool)
+target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
