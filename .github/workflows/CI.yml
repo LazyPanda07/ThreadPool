@@ -147,3 +147,49 @@ jobs:
           cd ../bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           ./Tests
+  
+      
+  linux-leak-tests:
+    runs-on: ubuntu-latest
+    needs: [linux-build]
+    strategy:
+      matrix:
+        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+
+    steps: 
+    - uses: actions/checkout@v4
+
+    - name: Install valgrind
+      run: sudo apt install valgrind
+
+    - name: Setup GoogleTest configuration
+      shell: pwsh
+      run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
+
+    - name: Build GoogleTest
+      run: |
+          git clone https://github.com/google/googletest.git -b v1.14.x gtest
+          cd gtest
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
+          make install -j  $(nproc)
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ matrix.configuration }}_Linux
+        path: ThreadPool
+        
+    - name: Tests
+      working-directory: ${{ github.workspace }}/Tests
+      run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
+          make install -j  $(nproc)
+          cd ../bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
+          export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
+          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=leaks_result.txt ./Tests
+          cat leaks_result.txt
+          
