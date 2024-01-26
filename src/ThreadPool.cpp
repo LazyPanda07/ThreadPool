@@ -25,8 +25,8 @@ namespace threading
 	ThreadPool::Worker& ThreadPool::Worker::operator = (const Worker& other)
 	{
 		thread = move(const_cast<Worker&>(other).thread);
-		state = other.state;
-		running = other.running;
+		state = move(const_cast<Worker&>(other).state);
+		running = move(const_cast<Worker&>(other).running);
 		deleteSelf = other.deleteSelf;
 		finished = other.finished;
 
