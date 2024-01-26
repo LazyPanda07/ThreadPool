@@ -32,7 +32,8 @@ namespace threading
 			std::unique_ptr<BaseTask> task;
 			std::atomic<threadState> state;
 			std::atomic_bool running;
-			std::function<void(Worker*)> onEnd;
+			bool deleteSelf;
+			bool* finished;
 
 		public:
 			Worker(ThreadPool* threadPool);

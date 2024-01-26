@@ -10,7 +10,9 @@ namespace threading
 	ThreadPool::Worker::Worker(ThreadPool* threadPool) :
 		thread(&ThreadPool::workerThread, threadPool, this),
 		state(threadState::waiting),
-		running(true)
+		running(true),
+		deleteSelf(false),
+		finished(nullptr)
 	{
 
 	}
@@ -23,6 +25,10 @@ namespace threading
 	ThreadPool::Worker& ThreadPool::Worker::operator = (const Worker& other)
 	{
 		thread = move(const_cast<Worker&>(other).thread);
+		state = other.state;
+		running = other.running;
+		deleteSelf = other.deleteSelf;
+		finished = other.finished;
 
 		return *this;
 	}
@@ -47,10 +53,9 @@ namespace threading
 
 		while (worker->running)
 		{
-			bool taskAvailable = hasTask.wait_for
+			hasTask
 			(
 				lock,
-				1s,
 				[this, worker]()
 				{
 					worker->state = threadState::waiting;
@@ -58,11 +63,6 @@ namespace threading
 					return !worker->running || tasks.size();
 				}
 			);
-
-			if (!taskAvailable)
-			{
-				continue;
-			}
 
 			if (!worker->running)
 			{
@@ -85,9 +85,14 @@ namespace threading
 			worker->task.reset();
 		}
 
-		if (worker->onEnd)
+		if (finished)
 		{
-			worker->onEnd(worker);
+			*finished = true;
+		}
+
+		if (deleteSelf)
+		{
+			delete worker;
 		}
 	}
 
@@ -174,29 +179,42 @@ namespace threading
 
 	void ThreadPool::shutdown(bool wait)
 	{
-		for (Worker* worker : workers)
+		vector<bool> finishStatus(workers.size(), false);
+
+		for (size_t i = 0; Worker* worker : workers)
 		{
+			worker->finished = &finishStatus[i++];
+
 			if (!wait)
 			{
 				worker->detach();
 
-				worker->onEnd = [](Worker* worker) { delete worker; };
+				worker->deleteSelf = true;
 			}
 
 			worker->running = false;
 		}
 
-		hasTask.notify_all();
+		thread
+		(
+			[finishStatus = move(finishStatus), &hasTask]()
+			{ 
+				while(!ranges::all_of(finishStatus)) 
+				{ 
+					hasTask.notify_all(); 
+					
+					this_thread::sleep_for(0.1s);
+				} 
+			}
+		).detach();
 
 		if (wait)
 		{
 			for (Worker* worker : workers)
 			{
-				printf("Waiting...\n");
-
 				worker->join();
 
-				printf("Finish waiting\n");
+				delete worker;
 			}
 		}
 
