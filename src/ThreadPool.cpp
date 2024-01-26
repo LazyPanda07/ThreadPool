@@ -37,7 +37,7 @@ namespace threading
 
 		while (worker->running)
 		{
-			hasTask
+			hasTask.wait
 			(
 				lock,
 				[this, worker]()
@@ -69,12 +69,12 @@ namespace threading
 			worker->task.reset();
 		}
 
-		if (finished)
+		if (worker->finished)
 		{
-			*finished = true;
+			*worker->finished = true;
 		}
 
-		if (deleteSelf)
+		if (worker->deleteSelf)
 		{
 			delete worker;
 		}
@@ -169,7 +169,7 @@ namespace threading
 
 		for (size_t i = 0; Worker* worker : workers)
 		{
-			worker->finished = &finishStatus[i++];
+			worker->finished = &finishStatus[i];
 
 			if (!wait)
 			{
@@ -179,13 +179,14 @@ namespace threading
 			}
 
 			worker->running = false;
+			i++;
 		}
 
 		thread
 		(
 			[this, finishStatus = move(finishStatus)]()
 			{ 
-				while(!ranges::all_of(finishStatus)) 
+				while(!ranges::all_of(finishStatus, [](bool value) { return value; })) 
 				{ 
 					hasTask.notify_all();
 					
