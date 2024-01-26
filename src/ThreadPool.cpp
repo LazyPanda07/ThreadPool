@@ -52,6 +52,8 @@ namespace threading
 				lock,
 				[this, worker]()
 				{
+					worker->state = threadState::waiting;
+
 					return !worker->running || tasks.size();
 				}
 			);
@@ -75,8 +77,6 @@ namespace threading
 			worker->task->execute();
 
 			worker->task.reset();
-
-			worker->state = threadState::waiting;
 		}
 
 		if (worker->onEnd)
@@ -168,38 +168,35 @@ namespace threading
 
 	void ThreadPool::shutdown(bool wait)
 	{
-		ranges::for_each
-		(
-			workers,
-			[this, wait](Worker* worker)
+		for (Worker* worker : workers)
+		{
+			if (!wait)
 			{
-				if (!wait)
-				{
-					worker->detach();
+				worker->detach();
 
-					worker->onEnd = [](Worker* worker) { delete worker; };
-				}
-
-				worker->running = false;
+				worker->onEnd = [](Worker* worker) { delete worker; };
 			}
-		);
+
+			worker->running = false;
+		}
 
 		hasTask.notify_all();
 
 		if (wait)
 		{
-			ranges::for_each
-			(
-				workers,
-				[this](Worker* worker)
-				{
-					printf("Wait...\n");
+			while (this->isAnyTaskRunning())
+			{
+				this_thread::sleep_for(0.1s);
+			}
 
-					worker->join();
+			for (Worker* worker : workers)
+			{
+				printf("Waiting...\n");
 
-					printf("Release\n");
-				}
-			);
+				worker->join();
+
+				printf("Finish waiting\n");
+			}
 		}
 
 		workers.clear();
