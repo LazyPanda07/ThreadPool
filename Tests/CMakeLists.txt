@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.27.0)
 project(Tests)
 
 set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/libThreadPool.so)
+set(VALGRIND false CACHE BOOL "Build with valgrind")
+
+if (VALGRIND)
+	add_definitions(-D__VALGRIND__)
+endif()
 
 if (${VS_BUILD_CONFIGURATION} STREQUAL Debug)
 	set(VS_CONFIGURATION Debug)

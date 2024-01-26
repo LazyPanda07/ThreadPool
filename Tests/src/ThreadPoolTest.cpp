@@ -56,7 +56,7 @@ TEST(ThreadPool, AddTaskWithCallback)
 
 TEST(ThreadPool, Speed)
 {
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(__VALGRIND__)
 	return;
 #endif
 
