@@ -22,17 +22,6 @@ namespace threading
 		(*this) = other;
 	}
 
-	ThreadPool::Worker& ThreadPool::Worker::operator = (const Worker& other)
-	{
-		thread = move(const_cast<Worker&>(other).thread);
-		state = move(const_cast<Worker&>(other).state);
-		running = move(const_cast<Worker&>(other).running);
-		deleteSelf = other.deleteSelf;
-		finished = other.finished;
-
-		return *this;
-	}
-
 	void ThreadPool::Worker::join()
 	{
 		if (thread.joinable())
@@ -150,6 +139,8 @@ namespace threading
 	{
 		this->shutdown(wait);
 
+		workers.reserve(threadsCount);
+
 		for (size_t i = 0; i < threadsCount; i++)
 		{
 			workers.push_back(new Worker(this));
@@ -201,7 +192,7 @@ namespace threading
 			{ 
 				while(!ranges::all_of(finishStatus)) 
 				{ 
-					hasTask.notify_all(); 
+					hasTask.notify_all();
 					
 					this_thread::sleep_for(100ms);
 				} 

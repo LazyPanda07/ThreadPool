@@ -40,8 +40,6 @@ namespace threading
 
 			Worker(const Worker& other);
 
-			Worker& operator = (const Worker& other);
-
 			void join();
 
 			void detach();
