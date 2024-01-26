@@ -197,13 +197,13 @@ namespace threading
 
 		thread
 		(
-			[finishStatus = move(finishStatus), &hasTask]()
+			[this, finishStatus = move(finishStatus)]()
 			{ 
 				while(!ranges::all_of(finishStatus)) 
 				{ 
 					hasTask.notify_all(); 
 					
-					this_thread::sleep_for(0.1s);
+					this_thread::sleep_for(100ms);
 				} 
 			}
 		).detach();
