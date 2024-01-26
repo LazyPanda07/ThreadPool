@@ -47,9 +47,10 @@ namespace threading
 
 		while (worker->running)
 		{
-			hasTask.wait
+			bool taskAvailable = hasTask.wait_for
 			(
 				lock,
+				1s,
 				[this, worker]()
 				{
 					worker->state = threadState::waiting;
@@ -57,6 +58,11 @@ namespace threading
 					return !worker->running || tasks.size();
 				}
 			);
+
+			if (!taskAvailable)
+			{
+				continue;
+			}
 
 			if (!worker->running)
 			{
@@ -184,11 +190,6 @@ namespace threading
 
 		if (wait)
 		{
-			while (this->isAnyTaskRunning())
-			{
-				this_thread::sleep_for(0.1s);
-			}
-
 			for (Worker* worker : workers)
 			{
 				printf("Waiting...\n");
