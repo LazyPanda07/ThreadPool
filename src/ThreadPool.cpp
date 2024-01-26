@@ -165,11 +165,11 @@ namespace threading
 
 	void ThreadPool::shutdown(bool wait)
 	{
-		vector<bool> finishStatus(workers.size(), false);
+		vector<uint8_t> finishStatus(workers.size(), false);
 
 		for (size_t i = 0; Worker* worker : workers)
 		{
-			worker->finished = &finishStatus[i];
+			worker->finished = &finishStatus[i++];
 
 			if (!wait)
 			{
@@ -179,14 +179,13 @@ namespace threading
 			}
 
 			worker->running = false;
-			i++;
 		}
 
 		thread
 		(
 			[this, finishStatus = move(finishStatus)]()
 			{ 
-				while(!ranges::all_of(finishStatus, [](bool value) { return value; })) 
+				while(!ranges::all_of(finishStatus, [](uint8_t value) { return value; })) 
 				{ 
 					hasTask.notify_all();
 					
