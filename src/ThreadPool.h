@@ -38,8 +38,6 @@ namespace threading
 		public:
 			Worker(ThreadPool* threadPool);
 
-			Worker(const Worker& other);
-
 			void join();
 
 			void detach();

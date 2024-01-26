@@ -17,11 +17,6 @@ namespace threading
 
 	}
 
-	ThreadPool::Worker::Worker(const Worker& other)
-	{
-		(*this) = other;
-	}
-
 	void ThreadPool::Worker::join()
 	{
 		if (thread.joinable())
