@@ -33,7 +33,6 @@ namespace threading
 			std::atomic<threadState> state;
 			std::atomic_bool running;
 			bool deleteSelf;
-			std::function<void()> callback;
 
 		public:
 			Worker(ThreadPool* threadPool);
