@@ -18,6 +18,10 @@ namespace threading
 		public:
 			ConcurrentQueue() = default;
 
+			ConcurrentQueue(ConcurrentQueue&& other) noexcept;
+
+			ConcurrentQueue& operator = (ConcurrentQueue&& other) noexcept;
+
 			/**
 			 * @brief Add element to queue
 			 * @param value New element
@@ -57,6 +61,20 @@ namespace threading
 			std::unique_lock<std::mutex> lock(dataMutex);
 
 			data.push(value);
+		}
+
+		template<typename T>
+		ConcurrentQueue<T>::ConcurrentQueue(ConcurrentQueue&& other) noexcept
+		{
+			(*this) = std::move(other);
+		}
+
+		template<typename T>
+		ConcurrentQueue<T>& ConcurrentQueue<T>::operator = (ConcurrentQueue<T>&& other) noexcept
+		{
+			data = std::move(other.data);
+
+			return *this;
 		}
 
 		template<typename T>

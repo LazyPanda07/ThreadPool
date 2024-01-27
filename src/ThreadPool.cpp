@@ -11,8 +11,7 @@ namespace threading
 		thread(&ThreadPool::workerThread, threadPool, this),
 		state(threadState::waiting),
 		running(true),
-		deleteSelf(false),
-		finished(nullptr)
+		deleteSelf(false)
 	{
 
 	}
@@ -69,9 +68,9 @@ namespace threading
 			worker->task.reset();
 		}
 
-		if (worker->finished)
+		if (worker->callback)
 		{
-			*worker->finished = true;
+			worker->callback();
 		}
 
 		if (worker->deleteSelf)
@@ -165,11 +164,15 @@ namespace threading
 
 	void ThreadPool::shutdown(bool wait)
 	{
-		vector<uint8_t> finishStatus(workers.size(), false);
+		utility::ConcurrentQueue<bool> finishStatus;
+		size_t workersNumber = workers.size();
 
-		for (size_t i = 0; Worker* worker : workers)
+		for (Worker* worker : workers)
 		{
-			worker->finished = &finishStatus[i++];
+			worker->callback = [&finishStatus]()
+				{
+					finishStatus.push(true);
+				};
 
 			if (!wait)
 			{
@@ -183,14 +186,14 @@ namespace threading
 
 		thread
 		(
-			[this, finishStatus = move(finishStatus)]()
-			{ 
-				while(!ranges::all_of(finishStatus, [](uint8_t value) { return value; })) 
-				{ 
+			[this, finishStatus = move(finishStatus), workersNumber]()
+			{
+				while (finishStatus.size() != workersNumber)
+				{
 					hasTask.notify_all();
-					
-					this_thread::sleep_for(100ms);
-				} 
+
+					this_thread::sleep_for(200ms);
+				}
 			}
 		).detach();
 
