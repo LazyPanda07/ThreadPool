@@ -61,7 +61,7 @@ jobs:
             mkdir build
             cd build
             cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} ..
-            make install -j  $(nproc)
+            make install -j $(nproc)
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -129,7 +129,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
-          make install -j  $(nproc)
+          make install -j $(nproc)
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
@@ -173,7 +173,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
-          make install -j  $(nproc)
+          make install -j $(nproc)
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
@@ -187,7 +187,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} -DVALGRIND=ON ..
-          make install -j  $(nproc)
+          make install -j $(nproc)
           cd ../bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=leaks_result.txt ./Tests
@@ -197,7 +197,7 @@ jobs:
       run: |
           cd bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
           export VALGRIND_RESULT=$(grep -Rnw 'leaks_result.txt' -e 'All heap blocks were freed -- no leaks are possible')
-          echo ${VALGRIND_RESULT}
-          [ -z "${VALGRIND_RESULT}" ] && cat leaks_result.txt
-          [ -z "${VALGRIND_RESULT}" ] && exit 1
+          printf '#!/bin/bash\n\nif [[ -z "${VALGRIND_RESULT}" ]];\nthen\n    cat leaks_result.txt\n    exit 1\nfi\n' > check.sh
+          chmod +x check.sh
+          ./check.sh
           
