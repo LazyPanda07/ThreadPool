@@ -197,7 +197,7 @@ jobs:
       working-directory: ${{ github.workspace }}/Tests
       run: |
           cd bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
-          ls
           export VALGRIND_RESULT=$(grep -Rnw 'leaks_result.txt' -e 'All heap blocks were freed -- no leaks are possible')
-          [ -z "${VALGRIND_RESULT}" ] && cat leaks_result.txt && exit 1
+          [ -z "${VALGRIND_RESULT}" ] && cat leaks_result.txt
+          [ -z "${VALGRIND_RESULT}" ] && exit 1
           
