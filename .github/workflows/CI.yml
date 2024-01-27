@@ -198,5 +198,5 @@ jobs:
       run: |
           cd build
           export VALGRIND_RESULT=$(grep -Rnw 'leaks_result.txt' -e 'All heap blocks were freed -- no leaks are possible')
-          [ -z "${VALGRIND_RESULT}" ] && cat leaks_result && exit 1
+          [ -z "${VALGRIND_RESULT}" ] && cat leaks_result.txt && exit 1
           
