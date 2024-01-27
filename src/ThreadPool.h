@@ -94,7 +94,7 @@ namespace threading
 		std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>;
 
 		/// @brief Reinitialize thread pool
-		/// @param Wait all threads execution
+		/// @param wait Wait all threads execution
 		/// @param threadsCount New thread pool size
 		void reinit(bool wait = true, size_t threadsCount = std::thread::hardware_concurrency());
 

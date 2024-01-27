@@ -54,12 +54,18 @@ namespace threading
 		*/
 		template<typename TaskT, typename... Args>
 		std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>;
+		
+		/**
+		 * @brief Reinitialize thread pool
+		 * @param wait Wait all threads execution
+		*/
+		void reinit(bool wait = true);
 
-		/// @brief Reinitialize thread pool
-		void reinit();
-
-		/// @brief Stop ThreadPool with joining all threads
-		void shutdown();
+		/**
+		 * @brief Stop ThreadPool
+		 * @param wait Wait all threads execution
+		*/
+		void shutdown(bool wait = true);
 
 		/// @brief Check is thread pool has task that running in some thread
 		/// @return Returns true if thread pool has task
@@ -149,15 +155,15 @@ namespace threading
 	}
 
 	template<size_t threadsCount>
-	void SingletonThreadPool<threadsCount>::reinit()
+	void SingletonThreadPool<threadsCount>::reinit(bool wait)
 	{
-		threadPool.reinit();
+		threadPool.reinit(wait, threadsCount);
 	}
 
 	template<size_t threadsCount>
-	void SingletonThreadPool<threadsCount>::shutdown()
+	void SingletonThreadPool<threadsCount>::shutdown(bool wait)
 	{
-		threadPool.shutdown();
+		threadPool.shutdown(wait);
 	}
 
 	template<size_t threadsCount>

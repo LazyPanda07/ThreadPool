@@ -36,7 +36,7 @@ namespace threading
 
 		while (worker->running)
 		{
-			bool anyTask = hasTask.wait_for
+			bool hasAnyTask = hasTask.wait_for
 			(
 				lock,
 				1s,
@@ -48,7 +48,7 @@ namespace threading
 				}
 			);
 
-			if (!anyTask)
+			if (!hasAnyTask)
 			{
 				continue;
 			}

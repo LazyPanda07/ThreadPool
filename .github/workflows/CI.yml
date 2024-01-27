@@ -192,3 +192,11 @@ jobs:
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=leaks_result.txt ./Tests
           cat leaks_result.txt
+          
+    - name: Valgrid result
+      working-directory: ${{ github.workspace }}/Tests
+      run: |
+          cd build
+          export VALGRIND_RESULT=$(grep -Rnw 'leaks_result.txt' -e 'All heap blocks were freed -- no leaks are possible')
+          [ -z "${VALGRIND_RESULT}" ] && cat leaks_result && exit 1
+          
