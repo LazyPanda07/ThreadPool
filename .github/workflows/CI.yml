@@ -197,7 +197,7 @@ jobs:
       run: |
           cd bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
           export VALGRIND_RESULT=$(grep -Rnw 'leaks_result.txt' -e 'All heap blocks were freed -- no leaks are possible')
-          printf '#!/bin/bash\n\nif [[ -z "${VALGRIND_RESULT}" ]];\nthen\n    cat leaks_result.txt\n    exit 1\nfi\n' > check.sh
-          cat check.sh
-          source check.sh
+          printf '#!/bin/bash\n\ncat leaks_result.txt\n\nif [[ -z "${VALGRIND_RESULT}" ]];\nthen\n    exit 1\nfi\n' > check.sh
+          chmod +x check.sh
+          ./check.sh
           
