@@ -1,6 +1,7 @@
 var classthreading_1_1_thread_pool =
 [
     [ "ThreadPool", "classthreading_1_1_thread_pool.html#a90588c88de25633b35b04200db3d8a14", null ],
+    [ "addTask", "classthreading_1_1_thread_pool.html#a996ceab657c187e1950b3f1fb6040905", null ],
     [ "addTask", "classthreading_1_1_thread_pool.html#a65fcaebc9dca87b1db08068df299c804", null ],
     [ "addTask", "classthreading_1_1_thread_pool.html#a5457897173044cb63d00e3c06cab46d9", null ],
     [ "addTask", "classthreading_1_1_thread_pool.html#ac88c68a02fb5660232fe50c4bc422291", null ],

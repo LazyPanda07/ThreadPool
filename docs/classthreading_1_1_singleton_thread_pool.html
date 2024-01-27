@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.4</span>
+   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.5</span>
    </div>
    <div id="projectbrief">Thread pool in C++20</div>
   </td>
@@ -141,14 +141,18 @@ template&lt;<a class="el" href="classthreading_1_1_function_wrapper_promise.html
 <tr class="memitem:aa211213c3ace0d58c0fd54b1a88eb629"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (<a class="el" href="classthreading_1_1_function_wrapper_promise.html">R</a>(*task)(ArgsT...), std::function&lt; <a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a>()&gt; &amp;&amp;callback, <a class="el" href="classthreading_1_1_function_wrapper_promise.html">Args</a> &amp;&amp;... <a class="el" href="classthreading_1_1_function_wrapper_promise.html">args</a>)</td></tr>
 <tr class="memdesc:aa211213c3ace0d58c0fd54b1a88eb629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
 <tr class="separator:aa211213c3ace0d58c0fd54b1a88eb629"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6e85929e91855be397b0e1be025a1ca" id="r_ae6e85929e91855be397b0e1be025a1ca"><td class="memItemLeft" align="right" valign="top"><a id="ae6e85929e91855be397b0e1be025a1ca" name="ae6e85929e91855be397b0e1be025a1ca"></a>
-<a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reinit</b> ()</td></tr>
-<tr class="memdesc:ae6e85929e91855be397b0e1be025a1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinitialize thread pool. <br /></td></tr>
-<tr class="separator:ae6e85929e91855be397b0e1be025a1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3693db8fb5ce31dc9d7720feb9645a92" id="r_a3693db8fb5ce31dc9d7720feb9645a92"><td class="memItemLeft" align="right" valign="top"><a id="a3693db8fb5ce31dc9d7720feb9645a92" name="a3693db8fb5ce31dc9d7720feb9645a92"></a>
-<a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><b>shutdown</b> ()</td></tr>
-<tr class="memdesc:a3693db8fb5ce31dc9d7720feb9645a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a> with joining all threads. <br /></td></tr>
-<tr class="separator:a3693db8fb5ce31dc9d7720feb9645a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4e55e73f00d4fefaf335acdebaae087" id="r_ac4e55e73f00d4fefaf335acdebaae087"><td class="memTemplParams" colspan="2"><a id="ac4e55e73f00d4fefaf335acdebaae087" name="ac4e55e73f00d4fefaf335acdebaae087"></a>
+template&lt;<a class="el" href="classthreading_1_1_function_wrapper_promise.html">typename</a> <a class="el" href="classthreading_1_1_function_wrapper_promise.html">TaskT</a> , typename... Args&gt; <br />
+requires std::derived_from&lt;<a class="el" href="classthreading_1_1_function_wrapper_promise.html">TaskT</a>, <a class="el" href="classthreading_1_1_base_task.html">BaseTask</a>&gt;</td></tr>
+<tr class="memitem:ac4e55e73f00d4fefaf335acdebaae087"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (<a class="el" href="classthreading_1_1_function_wrapper_promise.html">Args</a> &amp;&amp;... <a class="el" href="classthreading_1_1_function_wrapper_promise.html">args</a>)</td></tr>
+<tr class="memdesc:ac4e55e73f00d4fefaf335acdebaae087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create custom new task of type TaskT and add that task to thread pool. <br /></td></tr>
+<tr class="separator:ac4e55e73f00d4fefaf335acdebaae087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41d413f8d9c991db7a31ce3dfa35621b" id="r_a41d413f8d9c991db7a31ce3dfa35621b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a41d413f8d9c991db7a31ce3dfa35621b">reinit</a> (<a class="el" href="classthreading_1_1_function_wrapper_promise.html">bool</a> wait=<a class="el" href="classthreading_1_1_function_wrapper_promise.html">true</a>)</td></tr>
+<tr class="memdesc:a41d413f8d9c991db7a31ce3dfa35621b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinitialize thread pool.  <br /></td></tr>
+<tr class="separator:a41d413f8d9c991db7a31ce3dfa35621b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86be7d57194126b512ddc76238947540" id="r_a86be7d57194126b512ddc76238947540"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a86be7d57194126b512ddc76238947540">shutdown</a> (<a class="el" href="classthreading_1_1_function_wrapper_promise.html">bool</a> wait=<a class="el" href="classthreading_1_1_function_wrapper_promise.html">true</a>)</td></tr>
+<tr class="memdesc:a86be7d57194126b512ddc76238947540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  <br /></td></tr>
+<tr class="separator:a86be7d57194126b512ddc76238947540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab06d91ff1171fc05d4874b5a3fe114" id="r_a3ab06d91ff1171fc05d4874b5a3fe114"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthreading_1_1_singleton_thread_pool.html#a3ab06d91ff1171fc05d4874b5a3fe114">isAnyTaskRunning</a> () <a class="el" href="classthreading_1_1_function_wrapper_promise.html">const</a></td></tr>
 <tr class="memdesc:a3ab06d91ff1171fc05d4874b5a3fe114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check is thread pool has task that running in some thread.  <br /></td></tr>
 <tr class="separator:a3ab06d91ff1171fc05d4874b5a3fe114"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,6 +244,62 @@ template&lt;<a class="el" href="classthreading_1_1_function_wrapper_promise.html
 
 <p>Check is thread pool has task that running in some thread. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns true if thread pool has task </dd></dl>
+
+</div>
+</div>
+<a id="a41d413f8d9c991db7a31ce3dfa35621b" name="a41d413f8d9c991db7a31ce3dfa35621b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41d413f8d9c991db7a31ce3dfa35621b">&#9670;&#160;</a></span>reinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classthreading_1_1_function_wrapper_promise.html">size_t</a> threadsCount&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a> <a class="el" href="classthreading_1_1_singleton_thread_pool.html">threading::SingletonThreadPool</a>&lt; <a class="el" href="classthreading_1_1_function_wrapper_promise.html">threadsCount</a> &gt;::reinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">bool</a>&#160;</td>
+          <td class="paramname"><em>wait</em> = <code><a class="el" href="classthreading_1_1_function_wrapper_promise.html">true</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reinitialize thread pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wait</td><td>Wait all threads execution </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86be7d57194126b512ddc76238947540" name="a86be7d57194126b512ddc76238947540"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86be7d57194126b512ddc76238947540">&#9670;&#160;</a></span>shutdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classthreading_1_1_function_wrapper_promise.html">size_t</a> threadsCount&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">void</a> <a class="el" href="classthreading_1_1_singleton_thread_pool.html">threading::SingletonThreadPool</a>&lt; <a class="el" href="classthreading_1_1_function_wrapper_promise.html">threadsCount</a> &gt;::shutdown </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classthreading_1_1_function_wrapper_promise.html">bool</a>&#160;</td>
+          <td class="paramname"><em>wait</em> = <code><a class="el" href="classthreading_1_1_function_wrapper_promise.html">true</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wait</td><td>Wait all threads execution </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
