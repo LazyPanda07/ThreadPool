@@ -28,8 +28,17 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/include/
 )
 
-target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib ${PROJECT_SOURCE_DIR}/../ThreadPool)
-target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
+target_link_directories(
+	${PROJECT_NAME} PUBLIC
+	${PROJECT_SOURCE_DIR}/gtest/lib 
+	${PROJECT_SOURCE_DIR}/../ThreadPool/lib
+)
+target_link_libraries(
+	${PROJECT_NAME} 
+	gtest 
+	gtest_main 
+	ThreadPool
+)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
