@@ -68,7 +68,7 @@
       <AdditionalDependencies>$(ProjectDir)gtest\lib\gtest.lib;$(ProjectDir)gtest\lib\gtest_main.lib;$(ProjectDir)..\ThreadPool\lib\ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y $(ProjectDir)..\ThreadPool\dll\*.dll $(OutDir)</Command>
+      <Command>if exist $(ProjectDir)..\ThreadPool\dll\ xcopy /y $(ProjectDir)..\ThreadPool\dll\*.dll $(OutDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -92,7 +92,7 @@
       <AdditionalDependencies>$(ProjectDir)gtest\lib\gtest.lib;$(ProjectDir)gtest\lib\gtest_main.lib;$(ProjectDir)..\ThreadPool\lib\ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y $(ProjectDir)..\ThreadPool\dll\*.dll $(OutDir)</Command>
+      <Command>if exist $(ProjectDir)..\ThreadPool\dll\ xcopy /y $(ProjectDir)..\ThreadPool\dll\*.dll $(OutDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

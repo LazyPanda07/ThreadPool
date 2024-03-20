@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.27.0)
 project(Tests)
 
 set(CMAKE_CXX_STANDARD 20)
-set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/libThreadPool.so)
+set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/lib/libThreadPool.so)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
 option(VALGRIND "Build with valgrind" OFF)
 
