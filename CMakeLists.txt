@@ -23,6 +23,11 @@ add_library(
     src/Tasks/BaseTask.cpp
 )
 
+target_include_directories(
+    ${PROJECT_NAME} PUBLIC
+    src/
+)
+
 install(
     TARGETS ${PROJECT_NAME}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
