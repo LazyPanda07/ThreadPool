@@ -130,54 +130,85 @@ jobs:
   
       
   memory-leak-tests:
-    runs-on: ubuntu-latest
     needs: [linux-build]
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
 
-    steps: 
+    steps:
     - uses: actions/checkout@v4
-
-    - name: Install valgrind
-      run: sudo apt install valgrind -y
-
-    - name: Setup GoogleTest configuration
-      shell: pwsh
-      run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
-
-    - name: Build GoogleTest
-      run: |
-          git clone https://github.com/google/googletest.git -b v1.14.x gtest
-          cd gtest
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
-          make install -j $(nproc)
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.configuration }}_Linux
+        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
         path: ThreadPool
-        
-    - name: Tests
+
+    - name: Get Google Tests
+      uses: LazyPanda07/get-gtest@v1
+      with:
+        install-path: Tests/gtest
+
+    - name: Build tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
           mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} -DVALGRIND=ON ..
+          cd build 
+          cmake -DCMAKE_BUILD_TYPE=Release -DVALGRIND=ON ..
           make install -j $(nproc)
-          cd ../bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
-          export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
-          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=leaks_result.txt ./Tests
-          
-    - name: Valgrid result
-      working-directory: ${{ github.workspace }}/Tests
-      run: |
-          cd bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
-          export VALGRIND_RESULT=$(grep -Rnw 'leaks_result.txt' -e 'All heap blocks were freed -- no leaks are possible')
-          printf '#!/bin/bash\n\ncat leaks_result.txt\n\nif [[ -z "${VALGRIND_RESULT}" ]];\nthen\n    exit 1\nfi\n' > check.sh
-          chmod +x check.sh
-          ./check.sh
+
+    - name: Memory leak test
+      uses: LazyPanda07/check-memory-leaks@v1
+      with:
+        path: Tests/build/bin
+        name: Tests
+        pre-execute: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
+
+
+  publish:
+    needs: [windows-tests, linux-tests, memory-leak-tests]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: LazyPanda07/extract-current-branch@master
+    
+    - name: Setup release version variable
+      shell: pwsh
+      run: echo "VERSION=$($($($(Select-String -Path .\src\ThreadPool.cpp -Pattern version) -split '( = )')[3].TrimEnd(';')).Trim('\"'))" >> $Env:GITHUB_ENV
+
+    - name: Print version
+      run: echo ${{ env.VERSION }}
+
+    - name: Download artifacts
+      if: ${{ env.CURRENT_BRANCH == 'master' }}
+      uses: actions/download-artifact@v4
+      
+    - name: Setup Windows build list
+      run: echo "WINDOWS_BUILD_LIST="$(ls | grep Windows)"" >> ${GITHUB_ENV}
+      
+    - name: Create Windows zip
+      if: ${{ env.CURRENT_BRANCH == 'master' }}
+      run: zip -r windows.zip ${{ env.WINDOWS_BUILD_LIST }}
+
+    - name: Create Linux zip
+      if: ${{ env.CURRENT_BRANCH == 'master' }}
+      run: zip -r linux.zip Release_Linux ReleaseDLL_Linux
+
+    - name: Publish Windows
+      if: ${{ env.CURRENT_BRANCH == 'master' }}
+      uses: svenstaro/upload-release-action@master
+      with:
+        tag: v${{ env.VERSION }}
+        file: windows.zip
+
+    - name: Publish Linux
+      if: ${{ env.CURRENT_BRANCH == 'master' }}
+      uses: svenstaro/upload-release-action@master
+      with:
+        tag: v${{ env.VERSION }}
+        file: linux.zip
           

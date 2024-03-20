@@ -55,6 +55,12 @@ namespace threading
 		std::unique_ptr<Future> addTask(std::unique_ptr<BaseTask>&& task);
 
 	public:
+		/**
+		* @brief Get ThreadPool library version
+		*/
+		static std::string getVersion();
+
+	public:
 		/// @brief Construct ThreadPool
 		/// @param threadCount Number of threads in ThreadPool(default is max threads for current hardware)
 		ThreadPool(size_t threadsCount = std::thread::hardware_concurrency());

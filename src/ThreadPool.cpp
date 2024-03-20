@@ -93,6 +93,13 @@ namespace threading
 		return result;
 	}
 
+	std::string ThreadPool::getVersion()
+	{
+		std::string version = "1.5.1";
+
+		return version;
+	}
+
 	ThreadPool::ThreadPool(size_t threadsCount)
 	{
 		this->reinit(threadsCount);

@@ -65,10 +65,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(ProjectDir)gtest\lib\gtest.lib;$(ProjectDir)gtest\lib\gtest_main.lib;$(ProjectDir)..\ThreadPool\ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)gtest\lib\gtest.lib;$(ProjectDir)gtest\lib\gtest_main.lib;$(ProjectDir)..\ThreadPool\lib\ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y $(ProjectDir)..\ThreadPool\*.dll $(OutDir)</Command>
+      <Command>xcopy /y $(ProjectDir)..\ThreadPool\dll\*.dll $(OutDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -89,10 +89,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(ProjectDir)gtest\lib\gtest.lib;$(ProjectDir)gtest\lib\gtest_main.lib;$(ProjectDir)..\ThreadPool\ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)gtest\lib\gtest.lib;$(ProjectDir)gtest\lib\gtest_main.lib;$(ProjectDir)..\ThreadPool\lib\ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y $(ProjectDir)..\ThreadPool\*.dll $(OutDir)</Command>
+      <Command>xcopy /y $(ProjectDir)..\ThreadPool\dll\*.dll $(OutDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
