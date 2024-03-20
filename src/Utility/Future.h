@@ -7,8 +7,8 @@
 #define THREAD_POOL_API __attribute__((visibility("default")))
 #else
 #define THREAD_POOL_API __declspec(dllexport)
-#endif
 #pragma warning(disable: 4251)
+#endif
 #else
 #define THREAD_POOL_API
 #endif // THREAD_POOL_DLL

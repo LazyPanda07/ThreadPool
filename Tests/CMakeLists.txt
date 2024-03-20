@@ -2,37 +2,15 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(Tests)
 
+set(CMAKE_CXX_STANDARD 20)
 set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/libThreadPool.so)
-set(VALGRIND false CACHE BOOL "Build with valgrind")
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
+option(VALGRIND "Build with valgrind" OFF)
 
-if (VALGRIND)
+add_definitions(-D__LINUX__)
+
+if (${VALGRIND})
 	add_definitions(-D__VALGRIND__)
-endif()
-
-if (${VS_BUILD_CONFIGURATION} STREQUAL Debug)
-	set(VS_CONFIGURATION Debug)
-	set(VS_PLATFORM x64)
-    set(CMAKE_CXX_STANDARD 20)
-	set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin/${VS_CONFIGURATION}-${VS_PLATFORM}/${PROJECT_NAME}/)
-
-	add_definitions(
-		-D_DEBUG
-		-D_CONSOLE
-        -D__LINUX__
-	)
-endif()
-
-if (${VS_BUILD_CONFIGURATION} STREQUAL Release)
-	set(VS_CONFIGURATION Release)
-	set(VS_PLATFORM x64)
-    set(CMAKE_CXX_STANDARD 20)
-	set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin/${VS_CONFIGURATION}-${VS_PLATFORM}/${PROJECT_NAME}/)
-
-	add_definitions(
-		-DNDEBUG
-		-D_CONSOLE
-        -D__LINUX__
-	)
 endif()
 
 add_executable(
@@ -53,8 +31,8 @@ target_include_directories(
 target_link_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/gtest/lib ${PROJECT_SOURCE_DIR}/../ThreadPool)
 target_link_libraries(${PROJECT_NAME} gtest gtest_main ThreadPool)
 
-install(TARGETS ${PROJECT_NAME} DESTINATION .)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 if(EXISTS ${SHARED_OBJECT})
-    install(FILES ${SHARED_OBJECT} DESTINATION .)
+    install(FILES ${SHARED_OBJECT} DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif()

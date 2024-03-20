@@ -12,62 +12,51 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@main
+    - name: Enable NMake
+      uses: ilammy/msvc-dev-cmd@v1.13.0
 
     - name: Build
-      run: msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
+      run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} -G "NMake Makefiles" ..
+          nmake install
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.configuration }}_Windows
-        path: bin\${{ matrix.configuration }}-x64\ThreadPool
+        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
+        path: build/install-dir
       
 
   linux-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup build type
-        shell: pwsh
-        run: echo "BUILD_TYPE=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
-
-      - name: Get vs_to_cmake
-        uses: actions/checkout@v4
-        with: 
-          repository: LazyPanda07/vs_to_cmake
-          path: vs_to_cmake
-          ref: dev
-
-      - name: Install vs_to_cmake
-        run: pip3 install $(pwd)/vs_to_cmake/
-
-      - name: Create CMakeLists.txt
-        run: vs_to_cmake -f ThreadPool.vcxproj -d __LINUX__
-        
       - name: Build
         run: |
             mkdir build
             cd build
-            cmake -DVS_BUILD_CONFIGURATION=${{ matrix.configuration }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} ..
+            cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} ..
             make install -j $(nproc)
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.configuration }}_Linux
-          path: bin/${{ matrix.configuration }}-x64/ThreadPool
+          name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
+          path: build/install-dir
   
 
   windows-tests:
@@ -75,37 +64,35 @@ jobs:
     needs: [windows-build]
     strategy:
       matrix:
-        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
 
     steps: 
     - uses: actions/checkout@v4
    
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@main
-
-    - name: Setup GoogleTest configuration
-      run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
-
-    - name: Build GoogleTest
-      run: |
-          git clone https://github.com/google/googletest.git -b v1.14.x gtest
-          cd gtest
-          mkdir build
-          cd build
-          cmake -Dgtest_force_shared_crt=ON -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\Tests\gtest ..
-          msbuild /p:Configuration=${{ env.GOOGLE_TEST_CONFIGURATION }} /p:Platform=x64 INSTALL.vcxproj
+    
+    - name: Enable NMake
+      uses: ilammy/msvc-dev-cmd@v1.13.0
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.configuration }}_Windows
+        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
         path: ThreadPool
+
+    - name: Get Google Tests
+      uses: LazyPanda07/get-gtest@v1
+      with:
+        install-path: Tests/gtest
+        build-type: ${{ matrix.configuration }}
         
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
       run: |
-          msbuild /p:Configuration=${{ env.GOOGLE_TEST_CONFIGURATION }} /p:Platform=x64
-          .\bin\${{ env.GOOGLE_TEST_CONFIGURATION }}-x64\Tests\Tests.exe
+          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
+          .\bin\${{ matrix.configuration }}-x64\Tests\Tests.exe
 
   
   linux-tests:
@@ -113,28 +100,21 @@ jobs:
     needs: [linux-build]
     strategy:
       matrix:
-        configuration: [Debug, DebugDLL, Release, ReleaseDLL]
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
 
     steps: 
     - uses: actions/checkout@v4
 
-    - name: Setup GoogleTest configuration
-      shell: pwsh
-      run: echo "GOOGLE_TEST_CONFIGURATION=$(if ("${{ matrix.configuration }}".Contains("Release")) { echo "Release" } else { echo "Debug" })" >> $Env:GITHUB_ENV
-
-    - name: Build GoogleTest
-      run: |
-          git clone https://github.com/google/googletest.git -b v1.14.x gtest
-          cd gtest
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/Tests/gtest ..
-          make install -j $(nproc)
+    - name: Get Google Tests
+      uses: LazyPanda07/get-gtest@v1
+      with:
+        install-path: Tests/gtest
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.configuration }}_Linux
+        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
         path: ThreadPool
         
     - name: Tests
@@ -142,9 +122,9 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DVS_BUILD_CONFIGURATION=${{ env.GOOGLE_TEST_CONFIGURATION }} ..
-          make install -j  $(nproc)
-          cd ../bin/${{ env.GOOGLE_TEST_CONFIGURATION }}-x64/Tests/
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          make install -j $(nproc)
+          cd ../build/
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           ./Tests
   

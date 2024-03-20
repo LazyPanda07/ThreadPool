@@ -39,9 +39,8 @@
 
 # Binaries
 bin/
+build/
+out/
 
-# .sln file
-ThreadPool.sln
-
-# Tests
-Tests/gtest/
+# Google Test
+gtest/
