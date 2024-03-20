@@ -180,9 +180,6 @@ jobs:
       shell: pwsh
       run: echo "VERSION=$($($($(Select-String -Path .\src\ThreadPool.cpp -Pattern version) -split '( = )')[3].TrimEnd(';')).Trim('\"'))" >> $Env:GITHUB_ENV
 
-    - name: Print version
-      run: echo ${{ env.VERSION }}
-
     - name: Download artifacts
       if: ${{ env.CURRENT_BRANCH == 'master' }}
       uses: actions/download-artifact@v4
