@@ -26,23 +26,6 @@ var NAVTREE =
 [
   [ "ThreadPool", "index.html", [
     [ "ThreadPool", "md__r_e_a_d_m_e.html", null ],
-    [ "Customization Points", "md__tests_2gtest_2include_2gmock_2internal_2custom_2_r_e_a_d_m_e.html", [
-      [ "Header <tt>gmock-port.h</tt>", "md__tests_2gtest_2include_2gmock_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md3", [
-        [ "Flag related macros:", "md__tests_2gtest_2include_2gmock_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md4", null ]
-      ] ]
-    ] ],
-    [ "Customization Points", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html", [
-      [ "Header <tt>gtest.h</tt>", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md6", [
-        [ "The following macros can be defined:", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md7", null ]
-      ] ],
-      [ "Header <tt>gtest-port.h</tt>", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md8", [
-        [ "Logging:", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md9", null ],
-        [ "Threading:", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md10", null ],
-        [ "Underlying library support features", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md11", null ],
-        [ "Exporting API symbols:", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md12", null ]
-      ] ],
-      [ "Header <tt>gtest-printers.h</tt>", "md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md13", null ]
-    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -60,8 +43,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_base_task_8h_source.html",
-"structtesting_1_1internal_1_1_find_first_printer.html"
+"_base_task_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
