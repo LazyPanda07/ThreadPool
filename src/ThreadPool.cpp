@@ -93,9 +93,9 @@ namespace threading
 		return result;
 	}
 
-	std::string ThreadPool::getVersion()
+	string ThreadPool::getVersion()
 	{
-		std::string version = "1.5.1";
+		string version = "1.5.2";
 
 		return version;
 	}

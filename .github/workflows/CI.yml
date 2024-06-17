@@ -37,6 +37,8 @@ jobs:
 
   linux-build:
     runs-on: ubuntu-latest
+    container:
+        image: lazypanda07/ubuntu_cxx20:24.04
     strategy:
       matrix:
         configuration: [Debug, Release]
@@ -98,6 +100,8 @@ jobs:
   linux-tests:
     runs-on: ubuntu-latest
     needs: [linux-build]
+    container:
+        image: lazypanda07/ubuntu_cxx20:24.04
     strategy:
       matrix:
         configuration: [Debug, Release]
@@ -105,12 +109,7 @@ jobs:
 
     steps: 
     - uses: actions/checkout@v4
-
-    - name: Get Google Tests
-      uses: LazyPanda07/get-gtest@v1
-      with:
-        install-path: Tests/gtest
-
+    
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
@@ -132,6 +131,8 @@ jobs:
   memory-leak-tests:
     needs: [linux-build]
     runs-on: ubuntu-latest
+    container:
+        image: lazypanda07/ubuntu_cxx20:24.04
     strategy:
       matrix:
         configuration: [Debug, Release]
@@ -145,12 +146,7 @@ jobs:
       with:
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
         path: ThreadPool
-
-    - name: Get Google Tests
-      uses: LazyPanda07/get-gtest@v1
-      with:
-        install-path: Tests/gtest
-
+        
     - name: Build tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
