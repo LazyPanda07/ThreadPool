@@ -13,7 +13,7 @@ var classthreading_1_1_thread_pool =
     [ "getThreadProgress", "classthreading_1_1_thread_pool.html#a2679d3c5e0614dc06a3f2db1425bb4fe", null ],
     [ "getThreadsCount", "classthreading_1_1_thread_pool.html#a462d9647d5f99afdacaa838d9a2a50e4", null ],
     [ "getThreadState", "classthreading_1_1_thread_pool.html#a81f6a48dd89deecae8c470b2dcd81e64", null ],
-    [ "getVersion", "classthreading_1_1_thread_pool.html#afd9161487e74ac0cc66a594d8012d5b3", null ],
+    [ "getVersion", "classthreading_1_1_thread_pool.html#aa59dd33f20d1fe093af915602628a5ed", null ],
     [ "isAnyTaskRunning", "classthreading_1_1_thread_pool.html#a1b5c8c9d52e359275565a3bb23033e6c", null ],
     [ "reinit", "classthreading_1_1_thread_pool.html#a6735e8a3f456b856324774ec95977a11", null ],
     [ "resize", "classthreading_1_1_thread_pool.html#a20556ca7d3126ebeb2b3efd1a35e94f2", null ],

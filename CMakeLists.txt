@@ -5,35 +5,37 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
 set(CMAKE_BUILD_TYPE Release CACHE STRING "")
 option(BUILD_SHARED_LIBS "" OFF)
 
-if (UNIX)
-    add_definitions(-D__LINUX__)
-endif (UNIX)
+if (NOT TARGET ThreadPool)
+    if (UNIX)
+        add_definitions(-D__LINUX__)
+    endif (UNIX)
 
-if (${BUILD_SHARED_LIBS})
-    add_definitions(-DTHREAD_POOL_DLL)
-endif ()
+    if (${BUILD_SHARED_LIBS})
+        add_definitions(-DTHREAD_POOL_DLL)
+    endif ()
 
-project(ThreadPool)
+    project(ThreadPool)
 
-add_library(
-    ${PROJECT_NAME}
-    src/ThreadPool.cpp
-    src/SingletonThreadPool.cpp
-    src/Utility/Promise.cpp
-    src/Utility/Future.cpp
-    src/Tasks/BaseTask.cpp
-)
+    add_library(
+        ${PROJECT_NAME}
+        src/ThreadPool.cpp
+        src/SingletonThreadPool.cpp
+        src/Utility/Promise.cpp
+        src/Utility/Future.cpp
+        src/Tasks/BaseTask.cpp
+    )
 
-target_include_directories(
-    ${PROJECT_NAME} PUBLIC
-    src/
-)
+    target_include_directories(
+        ${PROJECT_NAME} PUBLIC
+        ${PROJECT_SOURCE_DIR}/src/
+    )
 
-install(
-    TARGETS ${PROJECT_NAME}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
-)
+    install(
+        TARGETS ${PROJECT_NAME}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
+    )
 
-install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include FILES_MATCHING PATTERN "*.h")
+    install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include FILES_MATCHING PATTERN "*.h")
+endif()
