@@ -65,7 +65,7 @@ namespace threading
 				continue;
 			}
 
-			worker->task = move(task.value());
+			worker->task = move(*task);
 
 			worker->state = threadState::running;
 
@@ -95,7 +95,7 @@ namespace threading
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.5.4";
+		string version = "1.5.5";
 
 		return version;
 	}
