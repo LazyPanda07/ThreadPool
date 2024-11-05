@@ -95,7 +95,7 @@ namespace threading
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.5.3";
+		string version = "1.5.4";
 
 		return version;
 	}
@@ -216,7 +216,7 @@ namespace threading
 
 	size_t ThreadPool::getThreadsCount() const
 	{
-		return static_cast<size_t>(workers.size());
+		return this->size();
 	}
 
 	size_t ThreadPool::size() const
