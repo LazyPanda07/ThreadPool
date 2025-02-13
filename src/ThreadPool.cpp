@@ -13,7 +13,7 @@ namespace threading
 		running(true),
 		deleteSelf(false)
 	{
-
+		
 	}
 
 	void ThreadPool::Worker::join()
@@ -39,7 +39,7 @@ namespace threading
 			bool hasAnyTask = hasTask.wait_for
 			(
 				lock,
-				1s,
+				chrono::seconds(1),
 				[this, worker]()
 				{
 					worker->state = threadState::waiting;
@@ -95,7 +95,7 @@ namespace threading
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.5.5";
+		string version = "1.5.6";
 
 		return version;
 	}
