@@ -14,7 +14,7 @@ if (NOT TARGET ThreadPool)
         add_definitions(-DTHREAD_POOL_DLL)
     endif ()
 
-    project(ThreadPool VERSION 1.5.6)
+    project(ThreadPool VERSION 1.6.0)
 
     add_library(
         ${PROJECT_NAME}
@@ -24,6 +24,10 @@ if (NOT TARGET ThreadPool)
         src/Utility/Future.cpp
         src/Tasks/BaseTask.cpp
     )
+
+    if (DEFINED ENV{MARCH} AND NOT "$ENV{MARCH}" STREQUAL "")
+    	target_compile_options(${PROJECT_NAME} PRIVATE -march=$ENV{MARCH})
+    endif()
 
     target_include_directories(
         ${PROJECT_NAME} PUBLIC

@@ -95,7 +95,7 @@ namespace threading
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.5.6";
+		string version = "1.6.0";
 
 		return version;
 	}
