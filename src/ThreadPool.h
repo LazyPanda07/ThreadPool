@@ -1,7 +1,7 @@
 #pragma once
 
 #include <thread>
-#include <condition_variable>
+#include <semaphore>
 #include <mutex>
 #include <vector>
 #include <functional>
@@ -46,7 +46,7 @@ namespace threading
 
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
-		std::atomic_bool hasTask;
+		std::binary_semaphore hasTask;
 		std::vector<Worker*> workers;
 
 	private:
