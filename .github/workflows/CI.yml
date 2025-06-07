@@ -120,16 +120,19 @@ jobs:
         install-path: Tests/gtest
         build-type: ${{ matrix.configuration }}
         
-    - name: Tests
-      working-directory: ${{ github.workspace }}\Tests
+    - name: Build tests
+      working-directory: ${{ github.workspace }}/Tests
       run: |
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           nmake install
-          cd bin
-          dir
-          Tests.exe
+
+    - name: Tests
+      working-directory: ${{ github.workspace }}\Tests
+      run: |
+          cd build/bin
+          .\Tests.exe
 
   
   linux-tests:
@@ -151,16 +154,19 @@ jobs:
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
         path: ThreadPool
         
-    - name: Tests
+    - name: Build tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           make install -j $(nproc)
-          cd bin
-          export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
-          ./Tests
+
+    - name: Tests
+      working-directory: ${{ github.workspace }}/Tests
+      run: |
+          cd build/bin
+          LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd) ./Tests
   
 
   linux-aarch64-tests:
@@ -182,16 +188,19 @@ jobs:
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_LinuxARM
         path: ThreadPool
         
-    - name: Tests
+    - name: Build tests
       working-directory: ${{ github.workspace }}/Tests
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           make install -j $(nproc)
-          cd bin
-          export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
-          qemu-aarch64 ./Tests
+
+    - name: Tests
+      working-directory: ${{ github.workspace }}/Tests
+      run: |
+          cd build/bin
+          LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd) qemu-aarch64 ./Tests
           
 
   memory-leak-tests:
