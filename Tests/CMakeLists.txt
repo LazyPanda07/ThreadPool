@@ -10,9 +10,14 @@ if(NOT ${GTest_FOUND})
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
-set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/lib/libThreadPool.so)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
 option(VALGRIND "Build with valgrind" OFF)
+
+if (UNIX)
+	set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/lib/libThreadPool.so)
+else()
+	set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/dll/ThreadPool.dll)
+endif()
 
 add_definitions(-D__LINUX__)
 
