@@ -159,7 +159,7 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
           make install -j $(nproc)
 
     - name: Tests
@@ -193,7 +193,7 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
           make install -j $(nproc)
 
     - name: Tests
