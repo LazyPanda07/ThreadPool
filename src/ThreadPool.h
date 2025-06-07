@@ -46,7 +46,7 @@ namespace threading
 
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
-		std::counting_semaphore<std::numeric_limits<uint32_t>::max()> hasTask;
+		std::counting_semaphore<std::numeric_limits<int32_t>::max()> hasTask;
 		std::vector<Worker*> workers;
 
 	private:

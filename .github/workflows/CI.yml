@@ -128,7 +128,8 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           nmake install
           cd bin
-          .\Tests.exe
+          dir
+          Tests.exe
 
   
   linux-tests:
