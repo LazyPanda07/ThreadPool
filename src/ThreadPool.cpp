@@ -36,8 +36,6 @@ namespace threading
 			if (worker->state == ThreadState::waiting)
 			{
 				hasTask.acquire();
-
-				// hasTask.wait([this, worker]() { return !worker->running || tasks.size(); });
 			}
 
 			if (!worker->running)
@@ -171,6 +169,7 @@ namespace threading
 			}
 
 			worker->running = false;
+			hasTask.release();
 		}
 
 		if (wait)

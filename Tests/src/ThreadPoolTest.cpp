@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include <random>
+#include <chrono>
 
 #include "Functions.h"
 
