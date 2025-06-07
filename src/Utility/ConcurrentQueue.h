@@ -2,122 +2,132 @@
 
 #include <queue>
 #include <mutex>
+#include <atomic>
 #include <optional>
 
-namespace threading
+namespace threading::utility
 {
-	namespace utility
+	template<typename T>
+	class ConcurrentQueue
 	{
-		template<typename T>
-		class ConcurrentQueue
-		{
-		private:
-			std::queue<T> data;
-			mutable std::mutex dataMutex;
+	private:
+		std::queue<T> data;
+		std::atomic_size_t dataSize;
+		mutable std::mutex dataMutex;
 
-		public:
-			ConcurrentQueue() = default;
+	public:
+		ConcurrentQueue() = default;
 
-			ConcurrentQueue(ConcurrentQueue&& other) noexcept;
+		ConcurrentQueue(const ConcurrentQueue&) = delete;
 
-			ConcurrentQueue& operator = (ConcurrentQueue&& other) noexcept;
+		ConcurrentQueue(ConcurrentQueue&& other) noexcept;
 
-			/**
-			 * @brief Add element to queue
-			 * @param value New element
-			*/
-			void push(const T& value);
+		ConcurrentQueue& operator =(const ConcurrentQueue&) = delete;
 
-			/**
-			 * @brief Add element to queue
-			 * @param value New element
-			*/
-			void push(T&& value);
+		ConcurrentQueue& operator = (ConcurrentQueue&& other) noexcept;
 
-			/**
-			 * @brief Give out first element from queue
-			 * @return First element in queue
-			*/
-			std::optional<T> pop();
+		/**
+		 * @brief Add element to queue
+		 * @param value New element
+		*/
+		void push(const T& value);
 
-			/**
-			 * @brief Current size of queue
-			 * @return Queue size
-			*/
-			size_t size() const;
+		/**
+		 * @brief Add element to queue
+		 * @param value New element
+		*/
+		void push(T&& value);
 
-			/**
-			 * @brief Checks whether the queue is empty
-			 * @return 
-			*/
-			bool empty() const;
+		/**
+		 * @brief Give out first element from queue
+		 * @return First element in queue
+		*/
+		std::optional<T> pop();
 
-			~ConcurrentQueue() = default;
-		};
+		/**
+		 * @brief Current size of queue
+		 * @return Queue size
+		*/
+		size_t size() const;
 
-		template<typename T>
-		void ConcurrentQueue<T>::push(const T& value)
+		/**
+		 * @brief Checks whether the queue is empty
+		 * @return
+		*/
+		bool empty() const;
+
+		~ConcurrentQueue() = default;
+	};
+
+	template<typename T>
+	ConcurrentQueue<T>::ConcurrentQueue(ConcurrentQueue&& other) noexcept
+	{
+		(*this) = std::move(other);
+	}
+
+	template<typename T>
+	ConcurrentQueue<T>& ConcurrentQueue<T>::operator = (ConcurrentQueue<T>&& other) noexcept
+	{
+		data = std::move(other.data);
+		dataSize = other.dataSize.load();
+
+		other.dataSize = 0;
+
+		return *this;
+	}
+
+	template<typename T>
+	void ConcurrentQueue<T>::push(const T& value)
+	{
+		std::unique_lock<std::mutex> lock(dataMutex);
+
+		data.push(value);
+
+		dataSize++;
+	}
+
+	template<typename T>
+	void ConcurrentQueue<T>::push(T&& value)
+	{
+		std::unique_lock<std::mutex> lock(dataMutex);
+
+		data.push(std::move(value));
+
+		dataSize++;
+	}
+
+	template<typename T>
+	std::optional<T> ConcurrentQueue<T>::pop()
+	{
+		std::optional<T> result;
+
 		{
 			std::unique_lock<std::mutex> lock(dataMutex);
 
-			data.push(value);
-		}
-
-		template<typename T>
-		ConcurrentQueue<T>::ConcurrentQueue(ConcurrentQueue&& other) noexcept
-		{
-			(*this) = std::move(other);
-		}
-
-		template<typename T>
-		ConcurrentQueue<T>& ConcurrentQueue<T>::operator = (ConcurrentQueue<T>&& other) noexcept
-		{
-			data = std::move(other.data);
-
-			return *this;
-		}
-
-		template<typename T>
-		void ConcurrentQueue<T>::push(T&& value)
-		{
-			std::unique_lock<std::mutex> lock(dataMutex);
-
-			data.push(std::move(value));
-		}
-
-		template<typename T>
-		std::optional<T> ConcurrentQueue<T>::pop()
-		{
-			std::optional<T> result;
-
+			if (data.empty())
 			{
-				std::unique_lock<std::mutex> lock(dataMutex);
-
-				if (data.empty())
-				{
-					return result;
-				}
-
-				result = std::move(data.front());
-
-				data.pop();
+				return result;
 			}
 
-			return result;
+			result = std::move(data.front());
+
+			data.pop();
+
+			dataSize--;
 		}
 
-		template<typename T>
-		size_t ConcurrentQueue<T>::size() const
-		{
-			std::unique_lock<std::mutex> lock(dataMutex);
+		return result;
+	}
 
-			return data.size();
-		}
+	template<typename T>
+	size_t ConcurrentQueue<T>::size() const
+	{
+		return dataSize;
+	}
 
-		template<typename T>
-		bool ConcurrentQueue<T>::empty() const
-		{
-			return !this->size();
-		}
+	template<typename T>
+	bool ConcurrentQueue<T>::empty() const
+	{
+		return !this->size();
 	}
 }

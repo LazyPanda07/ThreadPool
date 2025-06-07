@@ -2,6 +2,13 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(Tests)
 
+find_package(GTest)
+
+if(NOT ${GTest_FOUND})
+	set(GTEST_BOTH_LIBRARIES gtest gtest_main)
+	set(GTEST_INCLUDE_DIRS gtest/include/)
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/lib/libThreadPool.so)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
@@ -25,7 +32,7 @@ target_include_directories(
 	${PROJECT_NAME} PUBLIC
 	${PROJECT_SOURCE_DIR}/../src/
 	${PROJECT_SOURCE_DIR}/gtest/include/
-	${PROJECT_SOURCE_DIR}/include/
+	${GTEST_INCLUDE_DIRS}
 )
 
 target_link_directories(
@@ -34,10 +41,9 @@ target_link_directories(
 	${PROJECT_SOURCE_DIR}/../ThreadPool/lib
 )
 target_link_libraries(
-	${PROJECT_NAME} 
-	gtest 
-	gtest_main 
+	${PROJECT_NAME}
 	ThreadPool
+	${GTEST_BOTH_LIBRARIES}
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})

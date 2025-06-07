@@ -9,11 +9,11 @@ namespace threading
 {
 	ThreadPool::Worker::Worker(ThreadPool* threadPool) :
 		thread(&ThreadPool::workerThread, threadPool, this),
-		state(threadState::waiting),
+		state(ThreadState::waiting),
 		running(true),
 		deleteSelf(false)
 	{
-		
+
 	}
 
 	void ThreadPool::Worker::join()
@@ -31,26 +31,15 @@ namespace threading
 
 	void ThreadPool::workerThread(Worker* worker)
 	{
-		mutex workerMutex;
-		unique_lock<mutex> lock(workerMutex);
-
 		while (worker->running)
 		{
-			bool hasAnyTask = hasTask.wait_for
-			(
-				lock,
-				chrono::seconds(1),
-				[this, worker]()
-				{
-					worker->state = threadState::waiting;
-
-					return !worker->running || tasks.size();
-				}
-			);
-
-			if (!hasAnyTask)
+			if (worker->state == ThreadState::waiting)
 			{
-				continue;
+				hasTask.wait(false);
+
+				hasTask = false;
+
+				// hasTask.wait([this, worker]() { return !worker->running || tasks.size(); });
 			}
 
 			if (!worker->running)
@@ -58,20 +47,21 @@ namespace threading
 				break;
 			}
 
-			optional<unique_ptr<BaseTask>> task = tasks.pop();
+			worker->state = ThreadState::running;
 
-			if (!task)
+			while (optional<unique_ptr<BaseTask>> task = tasks.pop())
 			{
-				continue;
+				if (!worker->running)
+				{
+					break;
+				}
+
+				worker->task = move(*task);
+				worker->task->execute();
+				worker->task.reset();
 			}
 
-			worker->task = move(*task);
-
-			worker->state = threadState::running;
-
-			worker->task->execute();
-
-			worker->task.reset();
+			worker->state = ThreadState::waiting;
 		}
 
 		if (worker->deleteSelf)
@@ -88,6 +78,7 @@ namespace threading
 
 		tasks.push(move(task));
 
+		hasTask = true;
 		hasTask.notify_one();
 
 		return result;
@@ -100,7 +91,8 @@ namespace threading
 		return version;
 	}
 
-	ThreadPool::ThreadPool(size_t threadsCount)
+	ThreadPool::ThreadPool(size_t threadsCount) :
+		hasTask(false)
 	{
 		this->reinit(threadsCount);
 	}
@@ -199,10 +191,10 @@ namespace threading
 
 	bool ThreadPool::isAnyTaskRunning() const
 	{
-		return ranges::any_of(workers, [](Worker* worker) { return worker->state == threadState::running; });
+		return ranges::any_of(workers, [](Worker* worker) { return worker->state == ThreadState::running; });
 	}
 
-	ThreadPool::threadState ThreadPool::getThreadState(size_t threadIndex) const
+	ThreadPool::ThreadState ThreadPool::getThreadState(size_t threadIndex) const
 	{
 		return workers.at(threadIndex)->state;
 	}

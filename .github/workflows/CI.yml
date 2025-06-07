@@ -6,6 +6,7 @@ on:
   push:
     branches: [master, dev]
 
+
 permissions:
   contents: write
 
@@ -122,8 +123,12 @@ jobs:
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
       run: |
-          msbuild /p:Configuration=${{ matrix.configuration }} /p:Platform=x64
-          .\bin\${{ matrix.configuration }}-x64\Tests\Tests.exe
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
+          nmake install
+          cd ../build/
+          .\Tests.exe
 
   
   linux-tests:

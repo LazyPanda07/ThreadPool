@@ -16,7 +16,7 @@ namespace threading
 	class THREAD_POOL_API ThreadPool final
 	{
 	public:
-		enum class threadState
+		enum class ThreadState
 		{
 			running,
 			waiting
@@ -30,7 +30,7 @@ namespace threading
 
 		public:
 			std::unique_ptr<BaseTask> task;
-			std::atomic<threadState> state;
+			std::atomic<ThreadState> state;
 			std::atomic_bool running;
 			bool deleteSelf;
 
@@ -46,7 +46,7 @@ namespace threading
 
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
-		std::condition_variable hasTask;
+		std::atomic_bool hasTask;
 		std::vector<Worker*> workers;
 
 	private:
@@ -119,7 +119,7 @@ namespace threading
 		/// @param threadIndex Index of thread between 0 and threadsCount
 		/// @return Thread state
 		/// @exception std::out_of_range
-		threadState getThreadState(size_t threadIndex) const;
+		ThreadState getThreadState(size_t threadIndex) const;
 
 		/// @brief Check specific thread progress
 		/// @param threadIndex Index of thread between 0 and threadsCount
