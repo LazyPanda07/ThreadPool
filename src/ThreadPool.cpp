@@ -79,6 +79,7 @@ namespace threading
 		tasks.push(move(task));
 
 		hasTask = true;
+
 		hasTask.notify_one();
 
 		return result;

@@ -31,7 +31,7 @@ add_executable(
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
 	${PROJECT_SOURCE_DIR}/../src/
-	${PROJECT_SOURCE_DIR}/gtest/include/
+	${PROJECT_SOURCE_DIR}/include/
 	${GTEST_INCLUDE_DIRS}
 )
 
