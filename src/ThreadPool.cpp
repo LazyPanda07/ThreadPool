@@ -1,7 +1,6 @@
 #include "ThreadPool.h"
 
 #include <algorithm>
-#include <iostream>
 
 using namespace std;
 
@@ -33,10 +32,7 @@ namespace threading
 	{
 		while (worker->running)
 		{
-			if (worker->state == ThreadState::waiting)
-			{
-				hasTask.acquire();
-			}
+			hasTask.acquire();
 
 			if (!worker->running)
 			{
@@ -87,9 +83,9 @@ namespace threading
 	}
 
 	ThreadPool::ThreadPool(size_t threadsCount) :
-		hasTask(false)
+		hasTask(0)
 	{
-		this->reinit(threadsCount);
+		this->reinit(true, threadsCount);
 	}
 
 	unique_ptr<Future> ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
@@ -169,6 +165,10 @@ namespace threading
 			}
 
 			worker->running = false;
+		}
+
+		for (size_t i = 0; i < workers.size(); i++)
+		{
 			hasTask.release();
 		}
 

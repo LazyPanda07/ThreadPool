@@ -127,7 +127,7 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           nmake install
-          cd ../build/
+          cd bin
           .\Tests.exe
 
   
@@ -157,7 +157,7 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           make install -j $(nproc)
-          cd ../build/
+          cd bin
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           ./Tests
   
@@ -188,7 +188,7 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           make install -j $(nproc)
-          cd ../build/
+          cd bin
           export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
           qemu-aarch64 ./Tests
           
