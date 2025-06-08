@@ -30,7 +30,7 @@ namespace threading
 
 	void ThreadPool::workerThread(Worker* worker)
 	{
-		while (worker->running)
+		while (true)
 		{
 			if (!worker->running)
 			{
@@ -172,7 +172,7 @@ namespace threading
 			worker->running = false;
 		}
 
-		for (size_t i = 0; i < workers.size(); i++)
+		for (size_t i = 0; i < workers.size() * 2; i++)
 		{
 			hasTask.release();
 		}
