@@ -32,6 +32,11 @@ namespace threading
 	{
 		while (worker->running)
 		{
+			if (!worker->running)
+			{
+				break;
+			}
+
 			hasTask.acquire();
 
 			if (!worker->running)
