@@ -133,6 +133,13 @@ jobs:
       run: |
           cd build/bin
           .\Tests.exe
+          .\Tests.exe
+          .\Tests.exe
+          .\Tests.exe
+          .\Tests.exe
+          .\Tests.exe
+          .\Tests.exe
+          .\Tests.exe
 
   
   linux-tests:
@@ -166,7 +173,15 @@ jobs:
       working-directory: ${{ github.workspace }}/Tests
       run: |
           cd build/bin
-          LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd) ./Tests
+          export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
+          ./Tests
+          ./Tests
+          ./Tests
+          ./Tests
+          ./Tests
+          ./Tests
+          ./Tests
+          ./Tests
   
 
   linux-aarch64-tests:
@@ -200,7 +215,15 @@ jobs:
       working-directory: ${{ github.workspace }}/Tests
       run: |
           cd build/bin
-          LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd) qemu-aarch64 ./Tests
+          export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
+          qemu-aarch64 ./Tests
           
 
   memory-leak-tests:

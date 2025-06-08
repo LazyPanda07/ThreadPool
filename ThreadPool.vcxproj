@@ -243,7 +243,6 @@
   <ItemGroup>
     <ClCompile Include="src\Utility\Future.cpp" />
     <ClCompile Include="src\Utility\Promise.cpp" />
-    <ClCompile Include="src\SingletonThreadPool.cpp" />
     <ClCompile Include="src\Tasks\BaseTask.cpp" />
     <ClCompile Include="src\ThreadPool.cpp" />
   </ItemGroup>
@@ -254,7 +253,6 @@
     <ClInclude Include="src\Utility\FunctionWrapperPromise.h" />
     <ClInclude Include="src\Utility\Future.h" />
     <ClInclude Include="src\Utility\Promise.h" />
-    <ClInclude Include="src\SingletonThreadPool.h" />
     <ClInclude Include="src\Tasks\BaseTask.h" />
     <ClInclude Include="src\ThreadPool.h" />
   </ItemGroup>
