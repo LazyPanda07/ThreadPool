@@ -19,7 +19,6 @@ if (NOT TARGET ThreadPool)
     add_library(
         ${PROJECT_NAME}
         src/ThreadPool.cpp
-        src/SingletonThreadPool.cpp
         src/Utility/Promise.cpp
         src/Utility/Future.cpp
         src/Tasks/BaseTask.cpp

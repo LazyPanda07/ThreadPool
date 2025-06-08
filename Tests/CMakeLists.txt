@@ -29,7 +29,6 @@ add_executable(
     ${PROJECT_NAME} 
     src/Main.cpp 
     src/Functions.cpp 
-    src/SingletonThreadPoolTest.cpp 
     src/ThreadPoolTest.cpp
 )
 

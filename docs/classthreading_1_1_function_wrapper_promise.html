@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.5.6</span>
+   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.6.0</span>
    </div>
    <div id="projectbrief">Thread pool in C++20</div>
   </td>
@@ -111,6 +111,7 @@ Inheritance diagram for threading::FunctionWrapperPromise&lt; R &gt;:</div>
   <img src="classthreading_1_1_function_wrapper_promise.png" usemap="#threading::FunctionWrapperPromise_3C_20R_20_3E_map" alt=""/>
   <map id="threading::FunctionWrapperPromise_3C_20R_20_3E_map" name="threading::FunctionWrapperPromise_3C_20R_20_3E_map">
 <area href="classthreading_1_1_promise.html" alt="threading::Promise" shape="rect" coords="0,0,246,24"/>
+<area href="classthreading_1_1_promise.html" alt="threading::Promise" shape="rect" coords="256,0,502,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -123,17 +124,24 @@ std::promise&lt; R &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"
 <tr class="separator:a56fcc33dcded567492ab84eec332c6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a443d21115b279455ba1ebe353027580e" id="r_a443d21115b279455ba1ebe353027580e"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a443d21115b279455ba1ebe353027580e">getFuture</a> () override</td></tr>
 <tr class="separator:a443d21115b279455ba1ebe353027580e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e41753cd114cb08c4b8fba2e8010c02" id="r_a4e41753cd114cb08c4b8fba2e8010c02"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e41753cd114cb08c4b8fba2e8010c02">notify</a> () override</td></tr>
+<tr class="separator:a4e41753cd114cb08c4b8fba2e8010c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56fcc33dcded567492ab84eec332c6f8" id="r_a56fcc33dcded567492ab84eec332c6f8"><td class="memItemLeft" align="right" valign="top"><a id="a56fcc33dcded567492ab84eec332c6f8" name="a56fcc33dcded567492ab84eec332c6f8"></a>
+std::promise&lt; R &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPromise</b> ()</td></tr>
+<tr class="separator:a56fcc33dcded567492ab84eec332c6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2257df63f4112dcfef703169982070c4" id="r_a2257df63f4112dcfef703169982070c4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2257df63f4112dcfef703169982070c4">getFuture</a> () override</td></tr>
+<tr class="separator:a2257df63f4112dcfef703169982070c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classthreading_1_1_promise"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classthreading_1_1_promise')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classthreading_1_1_promise.html">threading::Promise</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a2e7b9a620c80d602358c9df281035a7b" id="r_a2e7b9a620c80d602358c9df281035a7b"><td class="memItemLeft" align="right" valign="top"><a id="a2e7b9a620c80d602358c9df281035a7b" name="a2e7b9a620c80d602358c9df281035a7b"></a>
+<tr class="memitem:a9cd0bbcf5a20b84518836f368db32958" id="r_a9cd0bbcf5a20b84518836f368db32958"><td class="memItemLeft" align="right" valign="top"><a id="a9cd0bbcf5a20b84518836f368db32958" name="a9cd0bbcf5a20b84518836f368db32958"></a>
 std::promise&lt; R &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>implementation</b></td></tr>
-<tr class="separator:a2e7b9a620c80d602358c9df281035a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a9cd0bbcf5a20b84518836f368db32958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a443d21115b279455ba1ebe353027580e" name="a443d21115b279455ba1ebe353027580e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a443d21115b279455ba1ebe353027580e">&#9670;&#160;</a></span>getFuture()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a443d21115b279455ba1ebe353027580e">&#9670;&#160;</a></span>getFuture() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,8 +169,37 @@ template&lt;typename R &gt; </div>
 
 </div>
 </div>
+<a id="a2257df63f4112dcfef703169982070c4" name="a2257df63f4112dcfef703169982070c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2257df63f4112dcfef703169982070c4">&#9670;&#160;</a></span>getFuture() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt; <a class="el" href="classthreading_1_1_function_wrapper_promise.html">threading::FunctionWrapperPromise</a>&lt; R &gt;::getFuture </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classthreading_1_1_promise.html">threading::Promise</a>.</p>
+
+</div>
+</div>
 <a id="a17ccc3c1600a22b03d2503f685e63cac" name="a17ccc3c1600a22b03d2503f685e63cac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17ccc3c1600a22b03d2503f685e63cac">&#9670;&#160;</a></span>notify()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a17ccc3c1600a22b03d2503f685e63cac">&#9670;&#160;</a></span>notify() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,8 +227,38 @@ template&lt;typename R &gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/Utility/<a class="el" href="_function_wrapper_promise_8h_source.html">FunctionWrapperPromise.h</a></li>
+<a id="a4e41753cd114cb08c4b8fba2e8010c02" name="a4e41753cd114cb08c4b8fba2e8010c02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e41753cd114cb08c4b8fba2e8010c02">&#9670;&#160;</a></span>notify() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classthreading_1_1_function_wrapper_promise.html">threading::FunctionWrapperPromise</a>&lt; R &gt;::notify </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classthreading_1_1_promise.html">threading::Promise</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>build/install-dir/include/Utility/<a class="el" href="build_2install-dir_2include_2_utility_2_function_wrapper_promise_8h_source.html">FunctionWrapperPromise.h</a></li>
+<li>src/Utility/<a class="el" href="src_2_utility_2_function_wrapper_promise_8h_source.html">FunctionWrapperPromise.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
