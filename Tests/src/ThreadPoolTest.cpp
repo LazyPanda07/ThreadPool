@@ -16,19 +16,22 @@
 
 TEST(ThreadPool, AddTask)
 {
-	threading::ThreadPool threadPool(4);
-	std::vector<std::unique_ptr<threading::Future>> result;
-
-	result.emplace_back(threadPool.addTask(sum, nullptr, 0, 10));
-	result.emplace_back(threadPool.addTask(sum, nullptr, 10, 20));
-	result.emplace_back(threadPool.addTask(sum, nullptr, 20, 30));
-	result.emplace_back(threadPool.addTask(sum, nullptr, 30, 40));
-
-	for (const std::unique_ptr<threading::Future>& future : result)
+	for (size_t i = 1; i <= 16; i++)
 	{
-		int64_t value = future->get<int64_t>();
+		threading::ThreadPool threadPool(i);
+		std::vector<std::unique_ptr<threading::Future>> result;
 
-		ASSERT_TRUE(value == sum(0, 10) || value == sum(10, 20) || value == sum(20, 30) || value == sum(30, 40));
+		result.emplace_back(threadPool.addTask(sum, nullptr, 0, 10));
+		result.emplace_back(threadPool.addTask(sum, nullptr, 10, 20));
+		result.emplace_back(threadPool.addTask(sum, nullptr, 20, 30));
+		result.emplace_back(threadPool.addTask(sum, nullptr, 30, 40));
+
+		for (const std::unique_ptr<threading::Future>& future : result)
+		{
+			int64_t value = future->get<int64_t>();
+
+			ASSERT_TRUE(value == sum(0, 10) || value == sum(10, 20) || value == sum(20, 30) || value == sum(30, 40));
+		}
 	}
 }
 
@@ -104,11 +107,36 @@ TEST(ThreadPool, Speed)
 
 TEST(ThreadPool, TasksSpam)
 {
-	threading::ThreadPool threadPool(8);
-
-	for (int64_t i = 0; i < 1'000'000; i++)
+	for (size_t i = 1; i <= 16; i++)
 	{
-		threadPool.addTask(sum, nullptr, i, i + 10);
+		threading::ThreadPool threadPool(i);
+
+		for (int64_t i = 0; i < 1'000'000; i++)
+		{
+			threadPool.addTask(sum, nullptr, i, i + 10);
+		}
+	}
+}
+
+TEST(ThreadPool, TasksSpamWithDelay)
+{
+	using namespace std::chrono_literals;
+
+	for (size_t i = 1; i <= 16; i++)
+	{
+		threading::ThreadPool threadPool(i);
+
+		for (int64_t i = 0; i < 100; i++)
+		{
+			if (rand() % 2)
+			{
+				threadPool.addTask(sum, nullptr, i, i + 10);
+			}
+			else
+			{
+				std::this_thread::sleep_for(0.5s);
+			}
+		}
 	}
 }
 
