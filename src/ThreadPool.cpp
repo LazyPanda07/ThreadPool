@@ -30,13 +30,8 @@ namespace threading
 
 	void ThreadPool::workerThread(Worker* worker)
 	{
-		while (true)
+		while (worker->running)
 		{
-			if (!worker->running)
-			{
-				break;
-			}
-
 			hasTask.acquire();
 
 			if (!worker->running)
@@ -46,16 +41,14 @@ namespace threading
 
 			worker->state = ThreadState::running;
 
-			while (optional<unique_ptr<BaseTask>> task = tasks.pop())
+			if (optional<unique_ptr<BaseTask>> task = tasks.pop())
 			{
-				if (!worker->running)
+				if (worker->running)
 				{
-					break;
+					worker->task = move(*task);
+					worker->task->execute();
+					worker->task.reset();
 				}
-
-				worker->task = move(*task);
-				worker->task->execute();
-				worker->task.reset();
 			}
 
 			worker->state = ThreadState::waiting;
@@ -172,7 +165,7 @@ namespace threading
 			worker->running = false;
 		}
 
-		for (size_t i = 0; i < workers.size() * 2; i++)
+		for (size_t i = 0; i < workers.size(); i++)
 		{
 			hasTask.release();
 		}
