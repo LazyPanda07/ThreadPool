@@ -212,6 +212,6 @@ namespace threading
 
 	ThreadPool::~ThreadPool()
 	{
-		this->shutdown();
+		this->shutdown(false);
 	}
 }
