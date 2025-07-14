@@ -21,6 +21,8 @@ TEST(ThreadPool, AddTask)
 		threading::ThreadPool threadPool(i);
 		std::vector<std::unique_ptr<threading::Future>> result;
 
+		std::cout << "Current thread pool size: " << threadPool.size() << std::endl;
+
 		result.emplace_back(threadPool.addTask(sum, nullptr, 0, 10));
 		result.emplace_back(threadPool.addTask(sum, nullptr, 10, 20));
 		result.emplace_back(threadPool.addTask(sum, nullptr, 20, 30));
@@ -111,6 +113,8 @@ TEST(ThreadPool, TasksSpam)
 	{
 		threading::ThreadPool threadPool(i);
 
+		std::cout << "Current thread pool size: " << threadPool.size() << std::endl;
+
 		for (int64_t i = 0; i < 1'000'000; i++)
 		{
 			threadPool.addTask(sum, nullptr, i, i + 10);
@@ -125,6 +129,8 @@ TEST(ThreadPool, TasksSpamWithDelay)
 	for (size_t i = 1; i <= 16; i++)
 	{
 		threading::ThreadPool threadPool(i);
+
+		std::cout << "Current thread pool size: " << threadPool.size() << std::endl;
 
 		for (int64_t i = 0; i < 100; i++)
 		{

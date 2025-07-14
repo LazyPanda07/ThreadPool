@@ -115,7 +115,10 @@ namespace threading
 
 	void ThreadPool::reinit(bool wait, size_t threadsCount)
 	{
-		this->shutdown(wait);
+		if (workers.size())
+		{
+			this->shutdown(wait);
+		}
 
 		workers.reserve(threadsCount);
 
