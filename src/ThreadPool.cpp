@@ -176,6 +176,8 @@ namespace threading
 		}
 		else
 		{
+			// TODO: move tasks and create new thread pool
+
 			for (Worker* worker : workers)
 			{
 				worker->detach();

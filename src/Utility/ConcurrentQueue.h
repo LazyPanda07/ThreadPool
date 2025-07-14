@@ -13,7 +13,7 @@ namespace threading::utility
 	private:
 		std::queue<T> data;
 		std::atomic_size_t dataSize;
-		mutable std::recursive_mutex dataMutex;
+		std::mutex dataMutex;
 
 	public:
 		ConcurrentQueue() = default;
@@ -84,7 +84,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::push(const T& value)
 	{
-		std::unique_lock<std::recursive_mutex> lock(dataMutex);
+		std::unique_lock<std::mutex> lock(dataMutex);
 
 		data.push(value);
 
@@ -94,7 +94,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::push(T&& value)
 	{
-		std::unique_lock<std::recursive_mutex> lock(dataMutex);
+		std::unique_lock<std::mutex> lock(dataMutex);
 
 		data.push(std::move(value));
 
@@ -107,7 +107,7 @@ namespace threading::utility
 		std::optional<T> result;
 
 		{
-			std::unique_lock<std::recursive_mutex> lock(dataMutex);
+			std::unique_lock<std::mutex> lock(dataMutex);
 
 			if (data.empty())
 			{
@@ -139,11 +139,12 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::clear()
 	{
-		std::unique_lock<std::recursive_mutex> lock(dataMutex);
+		std::unique_lock<std::mutex> lock(dataMutex);
 
 		while (dataSize)
 		{
 			data.pop();
+
 			dataSize--;
 		}
 	}

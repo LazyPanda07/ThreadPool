@@ -119,6 +119,8 @@ TEST(ThreadPool, TasksSpam)
 		{
 			threadPool.addTask(sum, nullptr, i, i + 10);
 		}
+
+		std::cout << "Finish adding tasks" << std::endl;
 	}
 }
 
@@ -143,6 +145,8 @@ TEST(ThreadPool, TasksSpamWithDelay)
 				std::this_thread::sleep_for(0.5s);
 			}
 		}
+
+		std::cout << "Finish adding tasks" << std::endl;
 	}
 }
 
