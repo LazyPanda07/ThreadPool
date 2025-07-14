@@ -13,7 +13,7 @@ namespace threading::utility
 	private:
 		std::queue<T> data;
 		std::atomic_size_t dataSize;
-		mutable std::mutex dataMutex;
+		mutable std::recursive_mutex dataMutex;
 
 	public:
 		ConcurrentQueue() = default;
@@ -56,6 +56,11 @@ namespace threading::utility
 		*/
 		bool empty() const;
 
+		/**
+		 * @brief Clear queue
+		*/
+		void clear();
+
 		~ConcurrentQueue() = default;
 	};
 
@@ -79,7 +84,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::push(const T& value)
 	{
-		std::unique_lock<std::mutex> lock(dataMutex);
+		std::unique_lock<std::recursive_mutex> lock(dataMutex);
 
 		data.push(value);
 
@@ -89,7 +94,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::push(T&& value)
 	{
-		std::unique_lock<std::mutex> lock(dataMutex);
+		std::unique_lock<std::recursive_mutex> lock(dataMutex);
 
 		data.push(std::move(value));
 
@@ -102,7 +107,7 @@ namespace threading::utility
 		std::optional<T> result;
 
 		{
-			std::unique_lock<std::mutex> lock(dataMutex);
+			std::unique_lock<std::recursive_mutex> lock(dataMutex);
 
 			if (data.empty())
 			{
@@ -129,5 +134,17 @@ namespace threading::utility
 	bool ConcurrentQueue<T>::empty() const
 	{
 		return !this->size();
+	}
+
+	template<typename T>
+	void ConcurrentQueue<T>::clear()
+	{
+		std::unique_lock<std::recursive_mutex> lock(dataMutex);
+
+		while (dataSize)
+		{
+			data.pop();
+			dataSize--;
+		}
 	}
 }

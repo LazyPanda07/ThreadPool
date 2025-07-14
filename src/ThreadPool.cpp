@@ -34,21 +34,13 @@ namespace threading
 		{
 			hasTask.acquire();
 
-			if (!worker->running)
-			{
-				break;
-			}
-
 			worker->state = ThreadState::running;
 
 			if (optional<unique_ptr<BaseTask>> task = tasks.pop())
 			{
-				if (worker->running)
-				{
-					worker->task = move(*task);
-					worker->task->execute();
-					worker->task.reset();
-				}
+				worker->task = move(*task);
+				worker->task->execute();
+				worker->task.reset();
 			}
 
 			worker->state = ThreadState::waiting;
@@ -165,19 +157,29 @@ namespace threading
 			worker->running = false;
 		}
 
-		for (size_t i = 0; i < workers.size(); i++)
-		{
-			hasTask.release();
-		}
-
 		if (wait)
 		{
+			while (tasks.size())
+			{
+				std::cout << "Wait until all tasks will be finished" << std::endl;
+
+				this_thread::sleep_for(1s);
+			}
+
+			hasTask.release(workers.size());
+
 			for (Worker* worker : workers)
 			{
 				worker->join();
 
 				delete worker;
 			}
+		}
+		else
+		{
+			tasks.clear();
+
+			hasTask.release(workers.size());
 		}
 
 		workers.clear();
@@ -212,6 +214,6 @@ namespace threading
 
 	ThreadPool::~ThreadPool()
 	{
-		this->shutdown(false);
+		this->shutdown();
 	}
 }
