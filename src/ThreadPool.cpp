@@ -35,6 +35,7 @@ namespace threading
 	{
 		while (worker->running)
 		{
+			testNotify--;
 			hasTask.acquire();
 
 			worker->state = ThreadState::running;
@@ -64,6 +65,7 @@ namespace threading
 		tasks.push(move(task));
 
 		hasTask.release();
+		testNotify++;
 
 		return result;
 	}
@@ -164,7 +166,7 @@ namespace threading
 		{
 			while (tasks.size())
 			{
-				std::cout << "Remaining tasks: " << tasks.size() << std::endl;
+				std::cout << "Remaining tasks: " << tasks.size() << " testNotify: " << testNotify << std::endl;
 
 				this_thread::sleep_for(1s);
 			}
