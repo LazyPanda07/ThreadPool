@@ -164,7 +164,7 @@ namespace threading
 		{
 			while (tasks.size())
 			{
-				std::cout << "Wait until all tasks will be finished" << std::endl;
+				std::cout << "Remaining tasks: " << tasks.size() << std::endl;
 
 				this_thread::sleep_for(1s);
 			}
