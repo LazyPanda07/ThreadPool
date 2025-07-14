@@ -48,7 +48,6 @@ namespace threading
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
 		std::counting_semaphore<(std::numeric_limits<int32_t>::max)()> hasTask;
 		std::vector<Worker*> workers;
-		std::atomic_int64_t testNotify;
 
 	private:
 		void workerThread(Worker* worker);

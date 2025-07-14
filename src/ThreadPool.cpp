@@ -35,7 +35,6 @@ namespace threading
 	{
 		while (worker->running)
 		{
-			testNotify--;
 			hasTask.acquire();
 
 			worker->state = ThreadState::running;
@@ -65,7 +64,6 @@ namespace threading
 		tasks.push(move(task));
 
 		hasTask.release();
-		testNotify++;
 
 		return result;
 	}
@@ -150,25 +148,18 @@ namespace threading
 
 	void ThreadPool::shutdown(bool wait)
 	{
-		for (Worker* worker : workers)
-		{
-			if (!wait)
-			{
-				worker->detach();
-
-				worker->deleteSelf = true;
-			}
-
-			worker->running = false;
-		}
-
 		if (wait)
 		{
 			while (tasks.size())
 			{
-				std::cout << "Remaining tasks: " << tasks.size() << " testNotify: " << testNotify << std::endl;
+				std::cout << "Remaining tasks: " << tasks.size() << std::endl;
 
 				this_thread::sleep_for(1s);
+			}
+
+			for (Worker* worker : workers)
+			{
+				worker->running = false;
 			}
 
 			hasTask.release(workers.size());
@@ -182,6 +173,14 @@ namespace threading
 		}
 		else
 		{
+			for (Worker* worker : workers)
+			{
+				worker->detach();
+
+				worker->deleteSelf = true;
+				worker->running = false;
+			}
+
 			tasks.clear();
 
 			hasTask.release(workers.size());
