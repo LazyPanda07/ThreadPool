@@ -2,8 +2,10 @@
 
 #include <algorithm>
 #include <iostream>
+#include <chrono>
 
 using namespace std;
+using namespace chrono_literals;
 
 namespace threading
 {
