@@ -7,6 +7,8 @@
 
 #include "ThreadPool.h"
 
+using namespace std::chrono_literals;
+
 #define CALCULATE_TIME(function, result) \
 { \
 	auto start = std::chrono::high_resolution_clock::now(); \
@@ -120,14 +122,16 @@ TEST(ThreadPool, TasksSpam)
 			threadPool.addTask(sum, nullptr, i, i + 10);
 		}
 
-		std::cout << "Finish adding tasks" << std::endl;
+		std::cout << "Finish adding tasks" << std::endl << "Queued tasks: " << threadPool.getQueuedTasks() << std::endl;
+
+		std::this_thread::sleep_for(5s);
+
+		std::cout << "Queued tasks: " << threadPool.getQueuedTasks() << std::endl;
 	}
 }
 
 TEST(ThreadPool, TasksSpamWithDelay)
 {
-	using namespace std::chrono_literals;
-
 	for (size_t i = 1; i <= 16; i++)
 	{
 		threading::ThreadPool threadPool(i);
@@ -146,7 +150,11 @@ TEST(ThreadPool, TasksSpamWithDelay)
 			}
 		}
 
-		std::cout << "Finish adding tasks" << std::endl;
+		std::cout << "Finish adding tasks" << std::endl << "Queued tasks: " << threadPool.getQueuedTasks() << std::endl;
+
+		std::this_thread::sleep_for(5s);
+
+		std::cout << "Queued tasks: " << threadPool.getQueuedTasks() << std::endl;
 	}
 }
 

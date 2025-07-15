@@ -216,6 +216,11 @@ namespace threading
 		return this->size();
 	}
 
+	size_t ThreadPool::getQueuedTasks() const
+	{
+		return tasks.size();
+	}
+
 	size_t ThreadPool::size() const
 	{
 		return static_cast<size_t>(workers.size());

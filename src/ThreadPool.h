@@ -131,6 +131,12 @@ namespace threading
 		/// @return Current count of threads in thread pool
 		size_t getThreadsCount() const;
 
+		/**
+		 * @brief Get queued tasks
+		 * @return 
+		 */
+		size_t getQueuedTasks() const;
+
 		/// @brief Getter for threadsCount
 		/// @return Current count of threads in thread pool
 		size_t size() const;
