@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['library_20support_20features_0',['Underlying library support features',['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md11',1,'']]],
-  ['logging_3a_1',['Logging:',['../md__tests_2gtest_2include_2gtest_2internal_2custom_2_r_e_a_d_m_e.html#autotoc_md9',1,'']]],
-  ['lookupblocker_2',['LookupBlocker',['../structtesting_1_1internal_1_1internal__stream__operator__without__lexical__name__lookup_1_1_lookup_blocker.html',1,'testing::internal::internal_stream_operator_without_lexical_name_lookup']]]
+  ['shutdown_0',['shutdown',['../classthreading_1_1_thread_pool.html#a851be634f52c8ba2d97988b5f8d5365e',1,'threading::ThreadPool']]],
+  ['size_1',['size',['../classthreading_1_1_thread_pool.html#a0e3027b642ef50d6249f47809af07bf2',1,'threading::ThreadPool::size()'],['../classthreading_1_1utility_1_1_concurrent_queue.html#a904829a9bddd3e5ec550967f9fa82ed8',1,'threading::utility::ConcurrentQueue::size()']]]
 ];

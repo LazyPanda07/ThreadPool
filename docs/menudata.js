@@ -30,23 +30,7 @@ var menudata={children:[
 {text:"Class Index",url:"classes.html"},
 {text:"Class Hierarchy",url:"hierarchy.html"},
 {text:"Class Members",url:"functions.html",children:[
-{text:"All",url:"functions.html",children:[
-{text:"a",url:"functions.html#index_a"},
-{text:"e",url:"functions.html#index_e"},
-{text:"g",url:"functions.html#index_g"},
-{text:"i",url:"functions.html#index_i"},
-{text:"p",url:"functions.html#index_p"},
-{text:"r",url:"functions.html#index_r"},
-{text:"s",url:"functions.html#index_s"},
-{text:"t",url:"functions.html#index_t"}]},
-{text:"Functions",url:"functions_func.html",children:[
-{text:"a",url:"functions_func.html#index_a"},
-{text:"e",url:"functions_func.html#index_e"},
-{text:"g",url:"functions_func.html#index_g"},
-{text:"i",url:"functions_func.html#index_i"},
-{text:"p",url:"functions_func.html#index_p"},
-{text:"r",url:"functions_func.html#index_r"},
-{text:"s",url:"functions_func.html#index_s"},
-{text:"t",url:"functions_func.html#index_t"}]}]}]},
+{text:"All",url:"functions.html"},
+{text:"Functions",url:"functions_func.html"}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"File List",url:"files.html"}]}]}

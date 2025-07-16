@@ -1,7 +1,6 @@
 #include "ThreadPool.h"
 
 #include <algorithm>
-#include <iostream>
 #include <chrono>
 
 using namespace std;
@@ -75,7 +74,7 @@ namespace threading
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.6.1";
+		string version = "1.7.0";
 
 		return version;
 	}
@@ -160,8 +159,6 @@ namespace threading
 		{
 			while (tasks.size())
 			{
-				std::cout << "Remaining tasks: " << tasks.size() << std::endl;
-
 				this_thread::sleep_for(1s);
 			}
 
