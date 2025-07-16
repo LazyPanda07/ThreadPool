@@ -25,14 +25,14 @@ namespace threading
 	private:
 		struct Worker
 		{
-		private:
-			std::thread thread;
-
 		public:
 			std::unique_ptr<BaseTask> task;
 			std::atomic<ThreadState> state;
 			std::atomic_bool running;
 			bool deleteSelf;
+
+		private:
+			std::thread thread;
 
 		public:
 			Worker(ThreadPool* threadPool);
@@ -41,7 +41,7 @@ namespace threading
 
 			void detach();
 
-			~Worker() = default;
+			~Worker();
 		};
 
 	private:

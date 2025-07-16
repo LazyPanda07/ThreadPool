@@ -10,10 +10,10 @@ using namespace chrono_literals;
 namespace threading
 {
 	ThreadPool::Worker::Worker(ThreadPool* threadPool) :
-		thread(&ThreadPool::workerThread, threadPool, this),
 		state(ThreadState::waiting),
 		running(true),
-		deleteSelf(false)
+		deleteSelf(false),
+		thread(&ThreadPool::workerThread, threadPool, this)
 	{
 
 	}
@@ -29,6 +29,11 @@ namespace threading
 	void ThreadPool::Worker::detach()
 	{
 		thread.detach();
+	}
+
+	ThreadPool::Worker::~Worker()
+	{
+		this->join();
 	}
 
 	void ThreadPool::workerThread(Worker* worker)
