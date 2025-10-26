@@ -14,7 +14,7 @@ if (NOT TARGET ThreadPool)
         add_definitions(-DTHREAD_POOL_DLL)
     endif ()
 
-    project(ThreadPool VERSION 1.7.0)
+    project(ThreadPool VERSION 1.7.1)
 
     add_library(
         ${PROJECT_NAME}

@@ -12,8 +12,8 @@ namespace threading::utility
 	{
 	private:
 		std::queue<T> data;
-		std::atomic_size_t dataSize;
 		std::mutex dataMutex;
+		std::atomic_size_t dataSize;
 
 	public:
 		ConcurrentQueue() = default;
@@ -73,6 +73,8 @@ namespace threading::utility
 	template<typename T>
 	ConcurrentQueue<T>& ConcurrentQueue<T>::operator = (ConcurrentQueue<T>&& other) noexcept
 	{
+		std::scoped_lock<std::mutex, std::mutex> lock(dataMutex, other.dataMutex);
+
 		data = std::move(other.data);
 		dataSize = other.dataSize.load();
 
@@ -84,7 +86,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::push(const T& value)
 	{
-		std::unique_lock<std::mutex> lock(dataMutex);
+		std::lock_guard<std::mutex> lock(dataMutex);
 
 		data.push(value);
 
@@ -94,7 +96,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::push(T&& value)
 	{
-		std::unique_lock<std::mutex> lock(dataMutex);
+		std::lock_guard<std::mutex> lock(dataMutex);
 
 		data.push(std::move(value));
 
@@ -104,15 +106,15 @@ namespace threading::utility
 	template<typename T>
 	std::optional<T> ConcurrentQueue<T>::pop()
 	{
+		if (this->empty())
+		{
+			return std::nullopt;
+		}
+
 		std::optional<T> result;
 
 		{
-			std::unique_lock<std::mutex> lock(dataMutex);
-
-			if (data.empty())
-			{
-				return result;
-			}
+			std::lock_guard<std::mutex> lock(dataMutex);
 
 			result = std::move(data.front());
 
@@ -139,7 +141,7 @@ namespace threading::utility
 	template<typename T>
 	void ConcurrentQueue<T>::clear()
 	{
-		std::unique_lock<std::mutex> lock(dataMutex);
+		std::lock_guard<std::mutex> lock(dataMutex);
 
 		while (dataSize)
 		{
