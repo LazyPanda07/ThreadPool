@@ -113,12 +113,6 @@ jobs:
       with:
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
         path: ThreadPool
-
-    - name: Get Google Tests
-      uses: LazyPanda07/get-gtest@v1
-      with:
-        install-path: Tests/gtest
-        build-type: ${{ matrix.configuration }}
         
     - name: Build tests
       working-directory: ${{ github.workspace }}/Tests
