@@ -41,6 +41,4 @@
 bin/
 build/
 out/
-
-# Google Test
-gtest/
+ThreadPool/

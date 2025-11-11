@@ -1,17 +1,21 @@
 cmake_minimum_required(VERSION 3.27.0)
 
-project(Tests)
-
-find_package(GTest)
-
-if(NOT ${GTest_FOUND})
-	set(GTEST_BOTH_LIBRARIES gtest gtest_main)
-	set(GTEST_INCLUDE_DIRS gtest/include/)
-endif()
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
+set(GTEST_VERSION 1.17.0)
 option(VALGRIND "Build with valgrind" OFF)
+
+project(Tests)
+
+include(FetchContent)
+
+FetchContent_Declare(
+	gtest
+	GIT_REPOSITORY https://github.com/google/googletest.git
+	GIT_TAG v${GTEST_VERSION}
+)
+
+FetchContent_MakeAvailable(gtest)
 
 if (UNIX)
 	set(SHARED_OBJECT ${PROJECT_SOURCE_DIR}/../ThreadPool/lib/libThreadPool.so)
@@ -34,24 +38,23 @@ add_executable(
 
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
-	${PROJECT_SOURCE_DIR}/../src/
-	${PROJECT_SOURCE_DIR}/include/
-	${GTEST_INCLUDE_DIRS}
+	${PROJECT_SOURCE_DIR}/../include
+	include
 )
 
 target_link_directories(
 	${PROJECT_NAME} PUBLIC
-	${PROJECT_SOURCE_DIR}/gtest/lib 
 	${PROJECT_SOURCE_DIR}/../ThreadPool/lib
 )
 target_link_libraries(
 	${PROJECT_NAME}
 	ThreadPool
-	${GTEST_BOTH_LIBRARIES}
+	gtest
+	gtest_main
 )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(TARGETS ${PROJECT_NAME} DESTINATION .)
 
 if(EXISTS ${SHARED_OBJECT})
-    install(FILES ${SHARED_OBJECT} DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(FILES ${SHARED_OBJECT} DESTINATION .)
 endif()

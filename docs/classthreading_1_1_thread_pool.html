@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.7.1</span>
+   <div id="projectname">ThreadPool<span id="projectnumber">&#160;1.7.2</span>
    </div>
    <div id="projectbrief">Thread pool in C++20</div>
   </td>
@@ -109,11 +109,19 @@ $(function(){initNavTree('classthreading_1_1_thread_pool.html',''); initResizabl
 <p><a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &quot;<a class="el" href="_thread_pool_8h_source.html">ThreadPool.h</a>&quot;</code></p>
+<p><code>#include &quot;<a class="el" href="include_2_thread_pool_8h_source.html">ThreadPool.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a2d94a76553a86c20d6beda5c92ff06f7" id="r_a2d94a76553a86c20d6beda5c92ff06f7"><td class="memItemLeft" align="right" valign="top"><a id="a2d94a76553a86c20d6beda5c92ff06f7" name="a2d94a76553a86c20d6beda5c92ff06f7"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>ThreadState</b> { <b>running</b>
+, <b>waiting</b>
+, <b>running</b>
+, <b>waiting</b>
+ }</td></tr>
+<tr class="separator:a2d94a76553a86c20d6beda5c92ff06f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d94a76553a86c20d6beda5c92ff06f7" id="r_a2d94a76553a86c20d6beda5c92ff06f7"><td class="memItemLeft" align="right" valign="top"><a id="a2d94a76553a86c20d6beda5c92ff06f7" name="a2d94a76553a86c20d6beda5c92ff06f7"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>ThreadState</b> { <b>running</b>
+, <b>waiting</b>
+, <b>running</b>
 , <b>waiting</b>
  }</td></tr>
 <tr class="separator:a2d94a76553a86c20d6beda5c92ff06f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,6 +201,79 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (size_t th
 <tr class="memitem:a0e3027b642ef50d6249f47809af07bf2" id="r_a0e3027b642ef50d6249f47809af07bf2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e3027b642ef50d6249f47809af07bf2">size</a> () const</td></tr>
 <tr class="memdesc:a0e3027b642ef50d6249f47809af07bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for threadsCount.  <br /></td></tr>
 <tr class="separator:a0e3027b642ef50d6249f47809af07bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90588c88de25633b35b04200db3d8a14" id="r_a90588c88de25633b35b04200db3d8a14"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90588c88de25633b35b04200db3d8a14">ThreadPool</a> (size_t threadsCount=std::thread::hardware_concurrency())</td></tr>
+<tr class="memdesc:a90588c88de25633b35b04200db3d8a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  <br /></td></tr>
+<tr class="separator:a90588c88de25633b35b04200db3d8a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88c68a02fb5660232fe50c4bc422291" id="r_ac88c68a02fb5660232fe50c4bc422291"><td class="memItemLeft" align="right" valign="top"><a id="ac88c68a02fb5660232fe50c4bc422291" name="ac88c68a02fb5660232fe50c4bc422291"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
+<tr class="memdesc:ac88c68a02fb5660232fe50c4bc422291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:ac88c68a02fb5660232fe50c4bc422291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34b35558da0d79b075849bbfafb46059" id="r_a34b35558da0d79b075849bbfafb46059"><td class="memItemLeft" align="right" valign="top"><a id="a34b35558da0d79b075849bbfafb46059" name="a34b35558da0d79b075849bbfafb46059"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; void()&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback)</td></tr>
+<tr class="memdesc:a34b35558da0d79b075849bbfafb46059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a34b35558da0d79b075849bbfafb46059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3367d921c683533dc7edd6253618de2" id="r_aa3367d921c683533dc7edd6253618de2"><td class="memItemLeft" align="right" valign="top"><a id="aa3367d921c683533dc7edd6253618de2" name="aa3367d921c683533dc7edd6253618de2"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, const std::function&lt; void()&gt; &amp;callback=nullptr)</td></tr>
+<tr class="memdesc:aa3367d921c683533dc7edd6253618de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:aa3367d921c683533dc7edd6253618de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab2e46f394b1f1daf5b0ba22b4242e0" id="r_aeab2e46f394b1f1daf5b0ba22b4242e0"><td class="memItemLeft" align="right" valign="top"><a id="aeab2e46f394b1f1daf5b0ba22b4242e0" name="aeab2e46f394b1f1daf5b0ba22b4242e0"></a>
+std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>addTask</b> (std::function&lt; void()&gt; &amp;&amp;task, std::function&lt; void()&gt; &amp;&amp;callback)</td></tr>
+<tr class="memdesc:aeab2e46f394b1f1daf5b0ba22b4242e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:aeab2e46f394b1f1daf5b0ba22b4242e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65fcaebc9dca87b1db08068df299c804" id="r_a65fcaebc9dca87b1db08068df299c804"><td class="memTemplParams" colspan="2"><a id="a65fcaebc9dca87b1db08068df299c804" name="a65fcaebc9dca87b1db08068df299c804"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:a65fcaebc9dca87b1db08068df299c804"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; R(ArgsT...)&gt; &amp;task, const std::function&lt; void()&gt; &amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a65fcaebc9dca87b1db08068df299c804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a65fcaebc9dca87b1db08068df299c804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae03da493b9246e4d5f3e5d98c5109b71" id="r_ae03da493b9246e4d5f3e5d98c5109b71"><td class="memTemplParams" colspan="2"><a id="ae03da493b9246e4d5f3e5d98c5109b71" name="ae03da493b9246e4d5f3e5d98c5109b71"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:ae03da493b9246e4d5f3e5d98c5109b71"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (R(*task)(ArgsT...), const std::function&lt; void()&gt; &amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:ae03da493b9246e4d5f3e5d98c5109b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:ae03da493b9246e4d5f3e5d98c5109b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5457897173044cb63d00e3c06cab46d9" id="r_a5457897173044cb63d00e3c06cab46d9"><td class="memTemplParams" colspan="2"><a id="a5457897173044cb63d00e3c06cab46d9" name="a5457897173044cb63d00e3c06cab46d9"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:a5457897173044cb63d00e3c06cab46d9"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (const std::function&lt; R(ArgsT...)&gt; &amp;task, std::function&lt; void()&gt; &amp;&amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a5457897173044cb63d00e3c06cab46d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:a5457897173044cb63d00e3c06cab46d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd5866984cb713aefd74c2a583c81b12" id="r_acd5866984cb713aefd74c2a583c81b12"><td class="memTemplParams" colspan="2"><a id="acd5866984cb713aefd74c2a583c81b12" name="acd5866984cb713aefd74c2a583c81b12"></a>
+template&lt;typename R , typename... ArgsT, typename... Args&gt; </td></tr>
+<tr class="memitem:acd5866984cb713aefd74c2a583c81b12"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (R(*task)(ArgsT...), std::function&lt; void()&gt; &amp;&amp;callback, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:acd5866984cb713aefd74c2a583c81b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new task to thread pool. <br /></td></tr>
+<tr class="separator:acd5866984cb713aefd74c2a583c81b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a996ceab657c187e1950b3f1fb6040905" id="r_a996ceab657c187e1950b3f1fb6040905"><td class="memTemplParams" colspan="2"><a id="a996ceab657c187e1950b3f1fb6040905" name="a996ceab657c187e1950b3f1fb6040905"></a>
+template&lt;typename TaskT , typename... Args&gt; <br />
+requires std::derived_from&lt;TaskT, <a class="el" href="classthreading_1_1_base_task.html">BaseTask</a>&gt;</td></tr>
+<tr class="memitem:a996ceab657c187e1950b3f1fb6040905"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classthreading_1_1_future.html">Future</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addTask</b> (Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a996ceab657c187e1950b3f1fb6040905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create custom new task of type TaskT and add that task to thread pool. <br /></td></tr>
+<tr class="separator:a996ceab657c187e1950b3f1fb6040905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6735e8a3f456b856324774ec95977a11" id="r_a6735e8a3f456b856324774ec95977a11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6735e8a3f456b856324774ec95977a11">reinit</a> (bool wait=true, size_t threadsCount=std::thread::hardware_concurrency())</td></tr>
+<tr class="memdesc:a6735e8a3f456b856324774ec95977a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinitialize thread pool.  <br /></td></tr>
+<tr class="separator:a6735e8a3f456b856324774ec95977a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20556ca7d3126ebeb2b3efd1a35e94f2" id="r_a20556ca7d3126ebeb2b3efd1a35e94f2"><td class="memItemLeft" align="right" valign="top"><a id="a20556ca7d3126ebeb2b3efd1a35e94f2" name="a20556ca7d3126ebeb2b3efd1a35e94f2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (size_t threadsCount)</td></tr>
+<tr class="memdesc:a20556ca7d3126ebeb2b3efd1a35e94f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change thread pool size. <br /></td></tr>
+<tr class="separator:a20556ca7d3126ebeb2b3efd1a35e94f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a851be634f52c8ba2d97988b5f8d5365e" id="r_a851be634f52c8ba2d97988b5f8d5365e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a851be634f52c8ba2d97988b5f8d5365e">shutdown</a> (bool wait=true)</td></tr>
+<tr class="memdesc:a851be634f52c8ba2d97988b5f8d5365e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>.  <br /></td></tr>
+<tr class="separator:a851be634f52c8ba2d97988b5f8d5365e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5c8c9d52e359275565a3bb23033e6c" id="r_a1b5c8c9d52e359275565a3bb23033e6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b5c8c9d52e359275565a3bb23033e6c">isAnyTaskRunning</a> () const</td></tr>
+<tr class="memdesc:a1b5c8c9d52e359275565a3bb23033e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check is thread pool has task that running in some thread.  <br /></td></tr>
+<tr class="separator:a1b5c8c9d52e359275565a3bb23033e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98fa6d8e21cf69fd41acbd8ec3ec815d" id="r_a98fa6d8e21cf69fd41acbd8ec3ec815d"><td class="memItemLeft" align="right" valign="top">ThreadState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98fa6d8e21cf69fd41acbd8ec3ec815d">getThreadState</a> (size_t threadIndex) const</td></tr>
+<tr class="memdesc:a98fa6d8e21cf69fd41acbd8ec3ec815d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check specific thread state.  <br /></td></tr>
+<tr class="separator:a98fa6d8e21cf69fd41acbd8ec3ec815d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2679d3c5e0614dc06a3f2db1425bb4fe" id="r_a2679d3c5e0614dc06a3f2db1425bb4fe"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2679d3c5e0614dc06a3f2db1425bb4fe">getThreadProgress</a> (size_t threadIndex) const</td></tr>
+<tr class="memdesc:a2679d3c5e0614dc06a3f2db1425bb4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check specific thread progress.  <br /></td></tr>
+<tr class="separator:a2679d3c5e0614dc06a3f2db1425bb4fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a462d9647d5f99afdacaa838d9a2a50e4" id="r_a462d9647d5f99afdacaa838d9a2a50e4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a462d9647d5f99afdacaa838d9a2a50e4">getThreadsCount</a> () const</td></tr>
+<tr class="memdesc:a462d9647d5f99afdacaa838d9a2a50e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for threadsCount.  <br /></td></tr>
+<tr class="separator:a462d9647d5f99afdacaa838d9a2a50e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b28c77b24f12d7d708c427efd282226" id="r_a6b28c77b24f12d7d708c427efd282226"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b28c77b24f12d7d708c427efd282226">getQueuedTasks</a> () const</td></tr>
+<tr class="memdesc:a6b28c77b24f12d7d708c427efd282226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get queued tasks.  <br /></td></tr>
+<tr class="separator:a6b28c77b24f12d7d708c427efd282226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e3027b642ef50d6249f47809af07bf2" id="r_a0e3027b642ef50d6249f47809af07bf2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e3027b642ef50d6249f47809af07bf2">size</a> () const</td></tr>
+<tr class="memdesc:a0e3027b642ef50d6249f47809af07bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for threadsCount.  <br /></td></tr>
+<tr class="separator:a0e3027b642ef50d6249f47809af07bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -200,12 +281,41 @@ Static Public Member Functions</h2></td></tr>
 static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVersion</b> ()</td></tr>
 <tr class="memdesc:aa59dd33f20d1fe093af915602628a5ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a> library version. <br /></td></tr>
 <tr class="separator:aa59dd33f20d1fe093af915602628a5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66e02d6bf52affee5e9c2691490806dc" id="r_a66e02d6bf52affee5e9c2691490806dc"><td class="memItemLeft" align="right" valign="top"><a id="a66e02d6bf52affee5e9c2691490806dc" name="a66e02d6bf52affee5e9c2691490806dc"></a>
+static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVersion</b> ()</td></tr>
+<tr class="memdesc:a66e02d6bf52affee5e9c2691490806dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a> library version. <br /></td></tr>
+<tr class="separator:a66e02d6bf52affee5e9c2691490806dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a90588c88de25633b35b04200db3d8a14" name="a90588c88de25633b35b04200db3d8a14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90588c88de25633b35b04200db3d8a14">&#9670;&#160;</a></span>ThreadPool()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a90588c88de25633b35b04200db3d8a14">&#9670;&#160;</a></span>ThreadPool() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">threading::ThreadPool::ThreadPool </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>threadsCount</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::thread::hardware_concurrency()</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threadCount</td><td>Number of threads in ThreadPool(default is max threads for current hardware) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a90588c88de25633b35b04200db3d8a14" name="a90588c88de25633b35b04200db3d8a14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90588c88de25633b35b04200db3d8a14">&#9670;&#160;</a></span>ThreadPool() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +341,27 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6b28c77b24f12d7d708c427efd282226" name="a6b28c77b24f12d7d708c427efd282226"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b28c77b24f12d7d708c427efd282226">&#9670;&#160;</a></span>getQueuedTasks()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b28c77b24f12d7d708c427efd282226">&#9670;&#160;</a></span>getQueuedTasks() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t threading::ThreadPool::getQueuedTasks </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get queued tasks. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a6b28c77b24f12d7d708c427efd282226" name="a6b28c77b24f12d7d708c427efd282226"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b28c77b24f12d7d708c427efd282226">&#9670;&#160;</a></span>getQueuedTasks() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,7 +381,39 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <a id="a2679d3c5e0614dc06a3f2db1425bb4fe" name="a2679d3c5e0614dc06a3f2db1425bb4fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2679d3c5e0614dc06a3f2db1425bb4fe">&#9670;&#160;</a></span>getThreadProgress()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2679d3c5e0614dc06a3f2db1425bb4fe">&#9670;&#160;</a></span>getThreadProgress() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float threading::ThreadPool::getThreadProgress </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>threadIndex</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check specific thread progress. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threadIndex</td><td>Index of thread between 0 and threadsCount </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Thread progress or -1 if thread not running any task </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2679d3c5e0614dc06a3f2db1425bb4fe" name="a2679d3c5e0614dc06a3f2db1425bb4fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2679d3c5e0614dc06a3f2db1425bb4fe">&#9670;&#160;</a></span>getThreadProgress() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,7 +445,27 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <a id="a462d9647d5f99afdacaa838d9a2a50e4" name="a462d9647d5f99afdacaa838d9a2a50e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a462d9647d5f99afdacaa838d9a2a50e4">&#9670;&#160;</a></span>getThreadsCount()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a462d9647d5f99afdacaa838d9a2a50e4">&#9670;&#160;</a></span>getThreadsCount() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t threading::ThreadPool::getThreadsCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Getter for threadsCount. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current count of threads in thread pool </dd></dl>
+
+</div>
+</div>
+<a id="a462d9647d5f99afdacaa838d9a2a50e4" name="a462d9647d5f99afdacaa838d9a2a50e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a462d9647d5f99afdacaa838d9a2a50e4">&#9670;&#160;</a></span>getThreadsCount() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -303,7 +485,7 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <a id="a90fb73c3461e1863514ffd1340f56c0b" name="a90fb73c3461e1863514ffd1340f56c0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90fb73c3461e1863514ffd1340f56c0b">&#9670;&#160;</a></span>getThreadState()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a90fb73c3461e1863514ffd1340f56c0b">&#9670;&#160;</a></span>getThreadState() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -334,8 +516,60 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 
 </div>
 </div>
+<a id="a98fa6d8e21cf69fd41acbd8ec3ec815d" name="a98fa6d8e21cf69fd41acbd8ec3ec815d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98fa6d8e21cf69fd41acbd8ec3ec815d">&#9670;&#160;</a></span>getThreadState() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ThreadState threading::ThreadPool::getThreadState </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>threadIndex</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check specific thread state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threadIndex</td><td>Index of thread between 0 and threadsCount </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Thread state </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a1b5c8c9d52e359275565a3bb23033e6c" name="a1b5c8c9d52e359275565a3bb23033e6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b5c8c9d52e359275565a3bb23033e6c">&#9670;&#160;</a></span>isAnyTaskRunning()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b5c8c9d52e359275565a3bb23033e6c">&#9670;&#160;</a></span>isAnyTaskRunning() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool threading::ThreadPool::isAnyTaskRunning </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check is thread pool has task that running in some thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns true if thread pool has task </dd></dl>
+
+</div>
+</div>
+<a id="a1b5c8c9d52e359275565a3bb23033e6c" name="a1b5c8c9d52e359275565a3bb23033e6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b5c8c9d52e359275565a3bb23033e6c">&#9670;&#160;</a></span>isAnyTaskRunning() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,7 +589,37 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <a id="a6735e8a3f456b856324774ec95977a11" name="a6735e8a3f456b856324774ec95977a11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6735e8a3f456b856324774ec95977a11">&#9670;&#160;</a></span>reinit()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6735e8a3f456b856324774ec95977a11">&#9670;&#160;</a></span>reinit() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void threading::ThreadPool::reinit </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wait</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>threadsCount</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::thread::hardware_concurrency()</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reinitialize thread pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wait</td><td>Wait all threads execution </td></tr>
+    <tr><td class="paramname">threadsCount</td><td>New thread pool size </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6735e8a3f456b856324774ec95977a11" name="a6735e8a3f456b856324774ec95977a11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6735e8a3f456b856324774ec95977a11">&#9670;&#160;</a></span>reinit() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +649,32 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <a id="a851be634f52c8ba2d97988b5f8d5365e" name="a851be634f52c8ba2d97988b5f8d5365e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a851be634f52c8ba2d97988b5f8d5365e">&#9670;&#160;</a></span>shutdown()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a851be634f52c8ba2d97988b5f8d5365e">&#9670;&#160;</a></span>shutdown() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void threading::ThreadPool::shutdown </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wait</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop <a class="el" href="classthreading_1_1_thread_pool.html" title="ThreadPool.">ThreadPool</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wait</td><td>Wait all threads execution </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a851be634f52c8ba2d97988b5f8d5365e" name="a851be634f52c8ba2d97988b5f8d5365e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a851be634f52c8ba2d97988b5f8d5365e">&#9670;&#160;</a></span>shutdown() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -410,7 +699,27 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <a id="a0e3027b642ef50d6249f47809af07bf2" name="a0e3027b642ef50d6249f47809af07bf2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e3027b642ef50d6249f47809af07bf2">&#9670;&#160;</a></span>size()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e3027b642ef50d6249f47809af07bf2">&#9670;&#160;</a></span>size() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t threading::ThreadPool::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Getter for threadsCount. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current count of threads in thread pool </dd></dl>
+
+</div>
+</div>
+<a id="a0e3027b642ef50d6249f47809af07bf2" name="a0e3027b642ef50d6249f47809af07bf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e3027b642ef50d6249f47809af07bf2">&#9670;&#160;</a></span>size() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -430,7 +739,8 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getVers
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="_thread_pool_8h_source.html">ThreadPool.h</a></li>
+<li>include/<a class="el" href="include_2_thread_pool_8h_source.html">ThreadPool.h</a></li>
+<li>ThreadPool/include/<a class="el" href="_thread_pool_2include_2_thread_pool_8h_source.html">ThreadPool.h</a></li>
 <li>src/<b>ThreadPool.cpp</b></li>
 </ul>
 </div><!-- contents -->

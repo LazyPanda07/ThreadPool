@@ -24,33 +24,30 @@
     <ClCompile Include="src\Utility\Promise.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\Future.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ThreadPool.h">
+    <ClInclude Include="include\ThreadPool.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tasks\BaseTask.h">
+    <ClInclude Include="include\Tasks\BaseTask.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\Promise.h">
+    <ClInclude Include="include\Utility\Promise.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\Future.h">
+    <ClInclude Include="include\Utility\Future.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tasks\FunctionWrapperTask.h">
+    <ClInclude Include="include\Tasks\FunctionWrapperTask.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\FunctionWrapperPromise.h">
+    <ClInclude Include="include\Utility\FunctionWrapperPromise.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\FunctionWrapperFuture.h">
+    <ClInclude Include="include\Utility\FunctionWrapperFuture.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\ConcurrentQueue.h">
+    <ClInclude Include="include\Utility\ConcurrentQueue.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
