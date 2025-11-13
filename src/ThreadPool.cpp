@@ -74,7 +74,7 @@ namespace threading
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.7.2";
+		string version = "1.7.3";
 
 		return version;
 	}

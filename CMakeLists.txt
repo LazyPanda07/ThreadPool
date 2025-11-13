@@ -13,7 +13,7 @@ if (${BUILD_SHARED_LIBS})
     add_definitions(-DTHREAD_POOL_DLL)
 endif ()
 
-project(ThreadPool VERSION 1.7.2)
+project(ThreadPool VERSION 1.7.3)
 
 add_library(
     ${PROJECT_NAME}
