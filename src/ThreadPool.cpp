@@ -8,11 +8,35 @@ using namespace chrono_literals;
 
 namespace threading
 {
+	void ThreadPool::Worker::workerThread(Worker* worker, std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask)
+	{
+		while (worker->running)
+		{
+			hasTask->acquire();
+
+			worker->state = ThreadState::running;
+
+			if (optional<unique_ptr<BaseTask>> task = tasks->pop())
+			{
+				worker->task = move(*task);
+				worker->task->execute();
+				worker->task.reset();
+			}
+
+			worker->state = ThreadState::waiting;
+		}
+
+		if (worker->deleteSelf)
+		{
+			delete worker;
+		}
+	}
+
 	ThreadPool::Worker::Worker(ThreadPool* threadPool) :
 		state(ThreadState::waiting),
 		running(true),
 		deleteSelf(false),
-		thread(&ThreadPool::workerThread, threadPool, this)
+		thread(&Worker::workerThread, this, threadPool->tasks, threadPool->hasTask)
 	{
 
 	}
@@ -35,52 +59,27 @@ namespace threading
 		this->join();
 	}
 
-	void ThreadPool::workerThread(Worker* worker)
-	{
-		while (worker->running)
-		{
-			hasTask.acquire();
-
-			worker->state = ThreadState::running;
-
-			if (optional<unique_ptr<BaseTask>> task = tasks.pop())
-			{
-				worker->task = move(*task);
-				worker->task->execute();
-				worker->task.reset();
-			}
-
-			worker->state = ThreadState::waiting;
-		}
-
-		if (worker->deleteSelf)
-		{
-			delete worker;
-		}
-	}
-
 	unique_ptr<Future> ThreadPool::addTask(unique_ptr<BaseTask>&& task)
 	{
 		task->taskPromise = task->createTaskPromise();
 
 		unique_ptr<Future> result = task->getFuture();
 
-		tasks.push(move(task));
+		tasks->push(move(task));
 
-		hasTask.release();
+		hasTask->release();
 
 		return result;
 	}
 
 	string ThreadPool::getVersion()
 	{
-		string version = "1.7.3";
+		string version = "1.8.0";
 
 		return version;
 	}
 
-	ThreadPool::ThreadPool(size_t threadsCount) :
-		hasTask(0)
+	ThreadPool::ThreadPool(size_t threadsCount)
 	{
 		this->reinit(true, threadsCount);
 	}
@@ -124,6 +123,9 @@ namespace threading
 			this->shutdown(wait);
 		}
 
+		hasTask = std::make_shared<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>>(0);
+		tasks = std::make_shared<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>>();
+
 		workers.reserve(threadsCount);
 
 		for (size_t i = 0; i < threadsCount; i++)
@@ -157,7 +159,7 @@ namespace threading
 	{
 		if (wait)
 		{
-			while (tasks.size())
+			while (tasks->size())
 			{
 				this_thread::sleep_for(1s);
 			}
@@ -167,7 +169,7 @@ namespace threading
 				worker->running = false;
 			}
 
-			hasTask.release(workers.size());
+			hasTask->release(workers.size());
 
 			for (Worker* worker : workers)
 			{
@@ -178,8 +180,6 @@ namespace threading
 		}
 		else
 		{
-			// TODO: move tasks and create new thread pool
-
 			for (Worker* worker : workers)
 			{
 				worker->detach();
@@ -188,9 +188,9 @@ namespace threading
 				worker->running = false;
 			}
 
-			tasks.clear();
+			tasks->clear();
 
-			hasTask.release(workers.size());
+			hasTask->release(workers.size());
 		}
 
 		workers.clear();
@@ -220,7 +220,7 @@ namespace threading
 
 	size_t ThreadPool::getQueuedTasks() const
 	{
-		return tasks.size();
+		return tasks->size();
 	}
 
 	size_t ThreadPool::size() const

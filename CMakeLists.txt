@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
-set(CMAKE_BUILD_TYPE Release CACHE STRING "")
 option(BUILD_SHARED_LIBS "" OFF)
 
 if (UNIX)
@@ -13,7 +11,7 @@ if (${BUILD_SHARED_LIBS})
     add_definitions(-DTHREAD_POOL_DLL)
 endif ()
 
-project(ThreadPool VERSION 1.7.3)
+project(ThreadPool VERSION 1.8.0)
 
 add_library(
     ${PROJECT_NAME}

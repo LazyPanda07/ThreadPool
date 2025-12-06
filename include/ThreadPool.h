@@ -32,6 +32,9 @@ namespace threading
 			bool deleteSelf;
 
 		private:
+			static void workerThread(Worker* worker, std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask);
+
+		private:
 			std::thread thread;
 
 		public:
@@ -45,13 +48,11 @@ namespace threading
 		};
 
 	private:
-		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
-		std::counting_semaphore<(std::numeric_limits<int32_t>::max)()> hasTask;
+		std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks;
+		std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask;
 		std::vector<Worker*> workers;
 
 	private:
-		void workerThread(Worker* worker);
-
 		std::unique_ptr<Future> addTask(std::unique_ptr<BaseTask>&& task);
 
 	public:
