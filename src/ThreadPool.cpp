@@ -5,27 +5,29 @@
 
 namespace threading
 {
-	void ThreadPool::Worker::workerThread(Worker* worker, std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask)
+	void ThreadPool::Worker::workerThread(std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask)
 	{
-		while (worker->running)
+		id = std::this_thread::get_id();
+
+		while (running)
 		{
 			hasTask->acquire();
 
-			worker->state = ThreadState::running;
+			state = ThreadState::running;
 
-			if (std::optional<std::unique_ptr<BaseTask>> task = tasks->pop())
+			if (std::optional<std::unique_ptr<BaseTask>> newTask = tasks->pop())
 			{
-				worker->task = std::move(*task);
-				worker->task->execute();
-				worker->task.reset();
+				task = std::move(*newTask);
+				task->execute();
+				task.reset();
 			}
 
-			worker->state = ThreadState::waiting;
+			state = ThreadState::waiting;
 		}
 
-		if (worker->deleteSelf)
+		if (deleteSelf)
 		{
-			delete worker;
+			delete this;
 		}
 	}
 
@@ -208,8 +210,14 @@ namespace threading
 	float ThreadPool::getThreadProgress(size_t threadIndex) const
 	{
 		const Worker* worker = workers.at(threadIndex);
+		std::shared_ptr<BaseTask> task = worker->task;
 
-		return worker->task ? worker->task->getProgress() : -1.0f;
+		return task ? task->getProgress() : -1.0f;
+	}
+
+	std::thread::id ThreadPool::getThreadId(size_t threadIndex) const
+	{
+		return workers.at(threadIndex)->id;
 	}
 
 	size_t ThreadPool::getThreadsCount() const

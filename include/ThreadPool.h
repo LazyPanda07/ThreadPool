@@ -26,13 +26,14 @@ namespace threading
 		struct Worker
 		{
 		public:
-			std::unique_ptr<BaseTask> task;
+			std::shared_ptr<BaseTask> task;
 			std::atomic<ThreadState> state;
 			std::atomic_bool running;
 			bool deleteSelf;
+			std::thread::id id;
 
 		private:
-			static void workerThread(Worker* worker, std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask);
+			void workerThread(std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask);
 
 		private:
 			std::thread thread;
@@ -70,13 +71,13 @@ namespace threading
 		std::unique_ptr<Future> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::unique_ptr<Future> addTask(const std::function<void()>& task, std::function<void()>&& callback);
+		std::unique_ptr<Future> addTask(const std::function<void()>& task, std::function<void()>&& callback = nullptr);
 
 		/// @brief Add new task to thread pool
 		std::unique_ptr<Future> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::unique_ptr<Future> addTask(std::function<void()>&& task, std::function<void()>&& callback);
+		std::unique_ptr<Future> addTask(std::function<void()>&& task, std::function<void()>&& callback = nullptr);
 
 		/// @brief Add new task to thread pool
 		template<typename R, typename... ArgsT, typename... Args>
@@ -97,8 +98,8 @@ namespace threading
 		/**
 		* @brief Create custom new task of type TaskT and add that task to thread pool
 		*/
-		template<typename TaskT, typename... Args>
-		std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>;
+		template<std::derived_from<BaseTask> TaskT, typename... Args>
+		std::unique_ptr<Future> addTask(Args&&... args);
 
 		/// @brief Reinitialize thread pool
 		/// @param wait Wait all threads execution
@@ -127,6 +128,13 @@ namespace threading
 		/// @return Thread progress or -1 if thread not running any task
 		/// @exception std::out_of_range
 		float getThreadProgress(size_t threadIndex) const;
+
+		/**
+		 * @brief Check specific thread id
+		 * @param threadIndex Index of thread between 0 and threadsCount
+		 * @return Thread id
+		 */
+		std::thread::id getThreadId(size_t threadIndex) const;
 
 		/// @brief Getter for threadsCount
 		/// @return Current count of threads in thread pool
@@ -181,8 +189,8 @@ namespace threading
 		);
 	}
 
-	template<typename TaskT, typename... Args>
-	std::unique_ptr<Future> ThreadPool::addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>
+	template<std::derived_from<BaseTask> TaskT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(Args&&... args)
 	{
 		return this->addTask
 		(
