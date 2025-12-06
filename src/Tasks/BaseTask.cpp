@@ -2,8 +2,6 @@
 
 #include <future>
 
-using namespace std;
-
 namespace threading
 {
 	void BaseTask::callback()
@@ -25,7 +23,7 @@ namespace threading
 		this->notifyFuture();
 	}
 
-	unique_ptr<Future> BaseTask::getFuture()
+	std::unique_ptr<Future> BaseTask::getFuture()
 	{
 		return taskPromise->getFuture();
 	}

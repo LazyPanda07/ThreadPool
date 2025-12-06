@@ -3,9 +3,6 @@
 #include <algorithm>
 #include <chrono>
 
-using namespace std;
-using namespace chrono_literals;
-
 namespace threading
 {
 	void ThreadPool::Worker::workerThread(Worker* worker, std::shared_ptr<utility::ConcurrentQueue<std::unique_ptr<BaseTask>>> tasks, std::shared_ptr<std::counting_semaphore<(std::numeric_limits<int32_t>::max)()>> hasTask)
@@ -16,9 +13,9 @@ namespace threading
 
 			worker->state = ThreadState::running;
 
-			if (optional<unique_ptr<BaseTask>> task = tasks->pop())
+			if (std::optional<std::unique_ptr<BaseTask>> task = tasks->pop())
 			{
-				worker->task = move(*task);
+				worker->task = std::move(*task);
 				worker->task->execute();
 				worker->task.reset();
 			}
@@ -59,11 +56,11 @@ namespace threading
 		this->join();
 	}
 
-	unique_ptr<Future> ThreadPool::addTask(unique_ptr<BaseTask>&& task)
+	std::unique_ptr<Future> ThreadPool::addTask(std::unique_ptr<BaseTask>&& task)
 	{
 		task->taskPromise = task->createTaskPromise();
 
-		unique_ptr<Future> result = task->getFuture();
+		std::unique_ptr<Future> result = task->getFuture();
 
 		tasks->push(move(task));
 
@@ -72,9 +69,9 @@ namespace threading
 		return result;
 	}
 
-	string ThreadPool::getVersion()
+	std::string ThreadPool::getVersion()
 	{
-		string version = "1.8.0";
+		std::string version = "1.8.0";
 
 		return version;
 	}
@@ -84,35 +81,35 @@ namespace threading
 		this->reinit(true, threadsCount);
 	}
 
-	unique_ptr<Future> ThreadPool::addTask(const function<void()>& task, const function<void()>& callback)
+	std::unique_ptr<Future> ThreadPool::addTask(const std::function<void()>& task, const std::function<void()>& callback)
 	{
 		return this->addTask
 		(
-			make_unique<FunctionWrapperTask<void>>(task, callback)
+			std::make_unique<FunctionWrapperTask<void>>(task, callback)
 		);
 	}
 
-	unique_ptr<Future> ThreadPool::addTask(const function<void()>& task, function<void()>&& callback)
+	std::unique_ptr<Future> ThreadPool::addTask(const std::function<void()>& task, std::function<void()>&& callback)
 	{
 		return this->addTask
 		(
-			make_unique<FunctionWrapperTask<void>>(task, move(callback))
+			std::make_unique<FunctionWrapperTask<void>>(task, move(callback))
 		);
 	}
 
-	unique_ptr<Future> ThreadPool::addTask(function<void()>&& task, const function<void()>& callback)
+	std::unique_ptr<Future> ThreadPool::addTask(std::function<void()>&& task, const std::function<void()>& callback)
 	{
 		return this->addTask
 		(
-			make_unique<FunctionWrapperTask<void>>(move(task), callback)
+			std::make_unique<FunctionWrapperTask<void>>(move(task), callback)
 		);
 	}
 
-	unique_ptr<Future> ThreadPool::addTask(function<void()>&& task, function<void()>&& callback)
+	std::unique_ptr<Future> ThreadPool::addTask(std::function<void()>&& task, std::function<void()>&& callback)
 	{
 		return this->addTask
 		(
-			make_unique<FunctionWrapperTask<void>>(move(task), move(callback))
+			std::make_unique<FunctionWrapperTask<void>>(move(task), move(callback))
 		);
 	}
 
@@ -157,11 +154,13 @@ namespace threading
 
 	void ThreadPool::shutdown(bool wait)
 	{
+		using namespace std::chrono_literals;
+
 		if (wait)
 		{
 			while (tasks->size())
 			{
-				this_thread::sleep_for(1s);
+				std::this_thread::sleep_for(1s);
 			}
 
 			for (Worker* worker : workers)
@@ -198,7 +197,7 @@ namespace threading
 
 	bool ThreadPool::isAnyTaskRunning() const
 	{
-		return ranges::any_of(workers, [](Worker* worker) { return worker->state == ThreadState::running; });
+		return std::ranges::any_of(workers, [](Worker* worker) { return worker->state == ThreadState::running; });
 	}
 
 	ThreadPool::ThreadState ThreadPool::getThreadState(size_t threadIndex) const

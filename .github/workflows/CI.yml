@@ -29,8 +29,9 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} -G "NMake Makefiles" ..
-          nmake install
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DCMAKE_INSTALL_PREFIX=install-dir -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} -G "Ninja" ..
+          cmake --build . -j
+          cmake --install .
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -55,8 +56,9 @@ jobs:
         run: |
             mkdir build
             cd build
-            cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} ..
-            make install -j $(nproc)
+            cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DCMAKE_INSTALL_PREFIX=install-dir -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} -G "Ninja" ..
+            cmake --build . -j
+            cmake --install .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -81,8 +83,9 @@ jobs:
         run: |
             mkdir build
             cd build
-            cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} ..
-            make install -j $(nproc)
+            cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DCMAKE_INSTALL_PREFIX=install-dir -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} -G "Ninja" ..
+            cmake --build . -j
+            cmake --install .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -119,8 +122,9 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
-          nmake install
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "Ninja" ..
+          cmake --build . -j
+          cmake --install .
 
     - name: Tests
       working-directory: ${{ github.workspace }}\Tests
@@ -160,8 +164,9 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
-          make install -j $(nproc)
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "Ninja" ..
+          cmake --build . -j
+          cmake --install .
 
     - name: Tests
       working-directory: ${{ github.workspace }}/Tests
@@ -202,8 +207,9 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
-          make install -j $(nproc)
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "Ninja" ..
+          cmake --build . -j
+          cmake --install .
 
     - name: Tests
       working-directory: ${{ github.workspace }}/Tests
@@ -244,8 +250,9 @@ jobs:
       run: |
           mkdir build
           cd build 
-          cmake -DCMAKE_BUILD_TYPE=Release -DVALGRIND=ON ..
-          make install -j $(nproc)
+          cmake -DCMAKE_BUILD_TYPE=Release -DVALGRIND=ON -G "Ninja" ..
+          cmake --build . -j
+          cmake --install .
 
     - name: Memory leak test
       uses: LazyPanda07/check-memory-leaks@v1
