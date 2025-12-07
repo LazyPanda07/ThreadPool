@@ -71,13 +71,13 @@ namespace threading
 		std::unique_ptr<Future> addTask(const std::function<void()>& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::unique_ptr<Future> addTask(const std::function<void()>& task, std::function<void()>&& callback = nullptr);
+		std::unique_ptr<Future> addTask(const std::function<void()>& task, std::function<void()>&& callback);
 
 		/// @brief Add new task to thread pool
 		std::unique_ptr<Future> addTask(std::function<void()>&& task, const std::function<void()>& callback = nullptr);
 
 		/// @brief Add new task to thread pool
-		std::unique_ptr<Future> addTask(std::function<void()>&& task, std::function<void()>&& callback = nullptr);
+		std::unique_ptr<Future> addTask(std::function<void()>&& task, std::function<void()>&& callback);
 
 		/// @brief Add new task to thread pool
 		template<typename R, typename... ArgsT, typename... Args>
